@@ -5,13 +5,26 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "dockers:dev": "docker-compose -f tools/okkino-environment/dev.docker-compose.yml up -d --no-recreate --remove-orphans",
+    "db:migrate:dev": "npx env-cmd -f .local.env npx prisma migrate dev",
+    "db:studio": "npx env-cmd -f .local.env npx prisma studio"
   },
   "private": true,
   "dependencies": {
+    "@fastify/helmet": "^10.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
-    "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/graphql": "^10.1.7",
+    "@nestjs/mercurius": "^10.1.7",
+    "@nestjs/platform-fastify": "^9.2.1",
+    "@prisma/client": "^4.8.0",
+    "@swc/helpers": "~0.4.11",
+    "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "graphql": "^16.6.0",
+    "mercurius": "^10.5.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0"
@@ -26,19 +39,28 @@
     "@nrwl/nest": "15.4.2",
     "@nrwl/node": "15.4.2",
     "@nrwl/workspace": "15.4.2",
+    "@swc/cli": "~0.1.55",
+    "@swc/core": "^1.2.173",
+    "@swc/jest": "0.2.20",
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "28.1.1",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
+    "env-cmd": "^10.1.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "15.4.2",
     "prettier": "^2.6.2",
+    "prisma": "^4.8.0",
+    "prisma-nestjs-graphql": "^17.0.3",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.8.2"
+  },
+  "prisma": {
+    "schema": "libs/api/data-access-db/src/lib/schema.prisma"
   }
 }
-
