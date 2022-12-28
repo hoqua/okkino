@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    ports:
+      - '5555:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      PGDATA: /var/lib/postgresql/data/pgdata
+volumes:
+  db-data:

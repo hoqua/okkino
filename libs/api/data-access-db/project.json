@@ -1,0 +1,26 @@
+{
+  "name": "api-data-access-db",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access-db/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/data-access-db",
+        "main": "libs/api/data-access-db/src/index.ts",
+        "tsConfig": "libs/api/data-access-db/tsconfig.lib.json",
+        "assets": ["libs/api/data-access-db/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/data-access-db/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["scope:api"]
+}
