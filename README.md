@@ -16,7 +16,7 @@ Prerequisites: Docker, Node
 ## Useful commands
 ### NX generators
 
-- GeneratorName: @nrwl/nest:resource, @nrwl/js:library
+- GeneratorName: @nrwl/nest:resource, @nrwl/js:library, @nrwl/next:app
 - LibraryName: library name prefixed utils, shared, feature, ui, etc 
 - RootLibraryDirectory : root directory of the library (e.g. api, web, shared, etc)
 - ScopeName : scope:api, scope:web, scope:shared, etc
