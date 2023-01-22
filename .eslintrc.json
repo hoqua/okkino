@@ -8,7 +8,12 @@
   "plugins": ["@typescript-eslint", "@nrwl/nx", "unicorn", "prettier", "unused-imports"],
   "overrides": [
     {
-      "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended","plugin:unicorn/recommended", "plugin:prettier/recommended"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:unicorn/recommended",
+        "plugin:prettier/recommended"
+      ],
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "prettier/prettier": ["error"],
@@ -20,7 +25,12 @@
         "unused-imports/no-unused-imports": "error",
         "unused-imports/no-unused-vars": [
           "warn",
-          { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
         ],
         "@typescript-eslint/array-type": [
           "error",
