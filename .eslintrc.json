@@ -1,11 +1,46 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "plugins": ["@typescript-eslint", "@nrwl/nx", "unicorn", "prettier", "unused-imports"],
   "overrides": [
     {
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:unicorn/recommended",
+        "plugin:prettier/recommended"
+      ],
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "prettier/prettier": ["error"],
+        "unicorn/prevent-abbreviations": "off",
+        "unicorn/no-null": "off",
+        "unicorn/prefer-module": ["warn"],
+        "unicorn/no-abusive-eslint-disable": ["warn"],
+        "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "array",
+            "readonly": "array"
+          }
+        ],
+        "@typescript-eslint/no-explicit-any": ["error"],
+        "@typescript-eslint/no-shadow": ["error"],
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
@@ -13,8 +48,16 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:api",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:api"]
+              },
+              {
+                "sourceTag": "scope:web",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:web"]
               }
             ]
           }
