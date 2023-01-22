@@ -13,13 +13,6 @@
         "tsConfig": "libs/api/generated-db-types/tsconfig.lib.json",
         "assets": ["libs/api/generated-db-types/*.md"]
       }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/api/generated-db-types/**/*.ts"]
-      }
     }
   },
   "tags": ["scope:api"]
