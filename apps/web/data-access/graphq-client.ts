@@ -1,3 +1,6 @@
 import { getGraphqlClient } from '@okkino/web/data-access-graphql'
+import { webEnv } from '../environments/environment'
 
-export const gql = getGraphqlClient('http://localhost:3333/graphql')
+const { api } = webEnv
+
+export const gql = getGraphqlClient(api.gqlUrl)
