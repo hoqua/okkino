@@ -1,10 +1,10 @@
-import { plainToInstance, Type } from "class-transformer";
-import { apiEnv, IApiEnv } from "../../apps/api/src/environments/environment";
-import { IsNotEmpty, validateSync } from "class-validator";
+import { plainToInstance, Type } from 'class-transformer'
+import { apiEnv, IApiEnv } from '../../apps/api/src/environments/environment'
+import { IsNotEmpty, validateSync } from 'class-validator'
 import { IsBoolean, IsDefined, IsNumber, IsString, ValidateNested } from 'class-validator'
-import "reflect-metadata"
+import 'reflect-metadata'
 
-export class ApiEnvVo  implements IApiEnv {
+export class ApiEnvVo implements IApiEnv {
   @IsBoolean()
   public isProd: boolean
 
@@ -30,11 +30,10 @@ class ApiEnvApiVo {
   public port: number
 }
 
-
 const apiEnvVoInstance = plainToInstance(ApiEnvVo, apiEnv)
 const errors = validateSync(apiEnvVoInstance)
 
-if(errors.length){
-  console.error(errors);
+if (errors.length) {
+  console.error(errors)
   process.exit(1)
 }

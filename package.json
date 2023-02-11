@@ -6,7 +6,7 @@
     "sereve:all": "npx concurrently --kill-others-on-fail \"npm:start:*\"",
     "----START----": "-------------------------",
     "start:gql:watch": "graphql-codegen --config tools/graphql-codegen/codegen.yml --watch",
-    "start:db:watch" : "npm run db:dockers:dev  && npm run db:migrate:dev && npm run db:seed:dev && prisma generate --watch",
+    "start:db:watch": "npm run db:dockers:dev  && npm run db:migrate:dev && npm run db:seed:dev && prisma generate --watch",
     "start:verify-env": "npm run validate:web-env && npm run validate:api-env",
     "start:api": "nx serve api",
     "start:web": "nx serve web",
