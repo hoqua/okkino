@@ -20,12 +20,7 @@
           "optimization": true,
           "extractLicenses": true,
           "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/api/src/environments/environment.ts",
-              "with": "apps/api/src/environments/environment.prod.ts"
-            }
-          ]
+          "fileReplacements": []
         }
       }
     },
@@ -56,5 +51,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["scope:api"]
 }

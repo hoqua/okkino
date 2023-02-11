@@ -1,11 +1,14 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from 'react'
+import { render } from '@testing-library/react'
 
-import Index from '../pages/index';
+import Page from '../app/page'
+import { gql } from '../data-access/graphq-client'
+
+gql.GetUsers = jest.fn().mockResolvedValue({ users: [] })
 
 describe('Index', () => {
-  it('should render successfully', () => {
-    const { baseElement } = render(<Index />);
-    expect(baseElement).toBeTruthy();
-  });
-});
+  it('should render successfully', async () => {
+    const { baseElement } = render((await Page()) as unknown as React.ReactElement)
+    expect(baseElement).toBeTruthy()
+  })
+})
