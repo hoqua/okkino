@@ -4,7 +4,7 @@ import { render } from '@testing-library/react'
 import Page from '../app/page'
 import { gql } from '../data-access/graphq-client'
 
-gql.GetUsers = jest.fn().mockResolvedValue({ users: [] })
+gql.GetHomeImages = jest.fn().mockResolvedValue({ homeBlocks: [] })
 
 describe('Index', () => {
   it('should render successfully', async () => {

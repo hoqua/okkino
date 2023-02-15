@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer'
-import { IsString, validateSync } from "class-validator";
+import { IsString, validateSync } from 'class-validator'
 import { IWebEnv, webEnv } from '../../apps/web/environments/environment'
 
 import { IsBoolean, IsUrl, ValidateNested } from 'class-validator'
@@ -19,7 +19,7 @@ export class WebEnvVo implements IWebEnv {
   public storage: WebStorageVo
 }
 
-class WebStorageVo{
+class WebStorageVo {
   @IsUrl()
   public url: string
 
