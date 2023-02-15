@@ -1,29 +1,38 @@
 import { gql } from '../data-access/graphq-client'
+import { webEnv } from '../environments/environment'
+import Image from 'next/image'
+import Link from 'next/link'
+import { rgbToDataUrl } from '@okkino/web/utils-shared'
 
+const { storage } = webEnv
 export default async function Page() {
-  const { users } = await gql.GetUsers()
+  const { homeBlocks } = await gql.GetHomeImages()
 
-  return users.map((user) => (
-    <figure key={user.id} className="m-6 rounded-xl bg-slate-100 p-8 text-white dark:bg-slate-800">
-      <img
-        className="mx-auto h-24 w-24 rounded-full"
-        src={`https://i.pravatar.cc/150?u=${user.id}`}
-        alt=""
-        width="384"
-        height="512"
-      />
-      <div className="space-y-4 pt-6">
-        <blockquote>
-          <p className="text-lg font-medium">
-            “Tailwind CSS is the only framework that I&apos;ve seen scale on large teams. It’s easy
-            to customize, adapts to any design, and the build size is tiny.”
-          </p>
-        </blockquote>
-        <figcaption>
-          <div>{user.id}</div>
-          <div>{user.email}</div>
-        </figcaption>
-      </div>
-    </figure>
-  ))
+  return (
+    <div className="grid gap-4 lg:grid-cols-2 lg:gap-7 xl:gap-12">
+      {homeBlocks.map((block) => {
+        const { r, g, b } = block.rgbBackground
+        return (
+          <Link
+            href={block.navigationPath}
+            key={block.id}
+            className="flex h-[calc(50vh-5.5rem)] min-h-[232px] items-center justify-center gap-4 overflow-hidden sm:h-[auto] md:h-[calc(50vh-7.5rem)] lg:h-[calc(100vh-18rem)]"
+          >
+            <Image
+              src={`${storage.url}/${block.imagePath}`}
+              alt={block.title}
+              height={774}
+              width={774}
+              className={
+                'hover:transition-{scale} h-full object-cover duration-1000 hover:scale-105'
+              }
+              placeholder="blur"
+              blurDataURL={rgbToDataUrl(r, g, b)}
+              title={block.title}
+            ></Image>
+          </Link>
+        )
+      })}
+    </div>
+  )
 }

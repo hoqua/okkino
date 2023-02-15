@@ -44,3 +44,48 @@ model User {
   /// @HideField()
   password String
 }
+
+model HomeBlock {
+  id String @id @default(uuid())
+
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  title String
+
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  imagePath String
+
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  navigationPath String
+
+  rgbBackground   RgbBackground @relation(fields: [rgbBackgroundId], references: [id]) // references `id` of `RgbBackground`
+  rgbBackgroundId String        @unique // relation scalar field (used in the `@relation` attribute above)
+}
+
+model RgbBackground {
+  id String @id @default(uuid())
+
+  /// @Validator.IsInt()
+  /// @Validator.Min(0)
+  /// @Validator.Max(255)
+  r Int
+
+  /// @Validator.IsInt()
+  /// @Validator.Min(0)
+  /// @Validator.Max(255)
+  g Int
+
+  /// @Validator.IsInt()
+  /// @Validator.Min(0)
+  /// @Validator.Max(255)
+  b Int
+
+  a Float?
+
+  homeBlock HomeBlock?
+}
