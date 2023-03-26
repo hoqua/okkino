@@ -8,8 +8,8 @@ import { InputType } from '@nestjs/graphql';
 import * as Validator from 'class-validator';
 import { registerEnumType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
-import { Float } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
 
 export enum UserScalarFieldEnum {
     id = "id",
@@ -18,12 +18,20 @@ export enum UserScalarFieldEnum {
     password = "password"
 }
 
-export enum RgbBackgroundScalarFieldEnum {
+export enum RgbColorScalarFieldEnum {
     id = "id",
     r = "r",
     g = "g",
     b = "b",
-    a = "a"
+    a = "a",
+    productId = "productId"
+}
+
+export enum ProductScalarFieldEnum {
+    id = "id",
+    name = "name",
+    price = "price",
+    discountPrice = "discountPrice"
 }
 
 export enum TransactionIsolationLevel {
@@ -43,19 +51,27 @@ export enum QueryMode {
     insensitive = "insensitive"
 }
 
-export enum HomeBlockScalarFieldEnum {
+export enum ImageScalarFieldEnum {
     id = "id",
     title = "title",
     imagePath = "imagePath",
+    rgbBackgroundId = "rgbBackgroundId",
+    productId = "productId"
+}
+
+export enum HomeBlockScalarFieldEnum {
+    id = "id",
     navigationPath = "navigationPath",
-    rgbBackgroundId = "rgbBackgroundId"
+    imageId = "imageId"
 }
 
 registerEnumType(HomeBlockScalarFieldEnum, { name: 'HomeBlockScalarFieldEnum', description: undefined })
+registerEnumType(ImageScalarFieldEnum, { name: 'ImageScalarFieldEnum', description: undefined })
 registerEnumType(QueryMode, { name: 'QueryMode', description: undefined })
 registerEnumType(SortOrder, { name: 'SortOrder', description: undefined })
 registerEnumType(TransactionIsolationLevel, { name: 'TransactionIsolationLevel', description: undefined })
-registerEnumType(RgbBackgroundScalarFieldEnum, { name: 'RgbBackgroundScalarFieldEnum', description: undefined })
+registerEnumType(ProductScalarFieldEnum, { name: 'ProductScalarFieldEnum', description: undefined })
+registerEnumType(RgbColorScalarFieldEnum, { name: 'RgbColorScalarFieldEnum', description: undefined })
 registerEnumType(UserScalarFieldEnum, { name: 'UserScalarFieldEnum', description: undefined })
 
 @ObjectType()
@@ -199,13 +215,9 @@ export class HomeBlockCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
     @Field(() => Boolean, {nullable:true})
-    title?: true;
-    @Field(() => Boolean, {nullable:true})
-    imagePath?: true;
-    @Field(() => Boolean, {nullable:true})
     navigationPath?: true;
     @Field(() => Boolean, {nullable:true})
-    rgbBackgroundId?: true;
+    imageId?: true;
     @Field(() => Boolean, {nullable:true})
     _all?: true;
 }
@@ -215,13 +227,9 @@ export class HomeBlockCountAggregate {
     @Field(() => Int, {nullable:false})
     id!: number;
     @Field(() => Int, {nullable:false})
-    title!: number;
-    @Field(() => Int, {nullable:false})
-    imagePath!: number;
-    @Field(() => Int, {nullable:false})
     navigationPath!: number;
     @Field(() => Int, {nullable:false})
-    rgbBackgroundId!: number;
+    imageId!: number;
     @Field(() => Int, {nullable:false})
     _all!: number;
 }
@@ -231,13 +239,9 @@ export class HomeBlockCountOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    title?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    imagePath?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    rgbBackgroundId?: keyof typeof SortOrder;
+    imageId?: keyof typeof SortOrder;
 }
 
 @InputType()
@@ -248,58 +252,38 @@ export class HomeBlockCreateManyInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath!: string;
     @Field(() => String, {nullable:false})
-    rgbBackgroundId!: string;
+    imageId!: string;
 }
 
 @InputType()
-export class HomeBlockCreateNestedOneWithoutRgbBackgroundInput {
-    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
-    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
-    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
+export class HomeBlockCreateNestedOneWithoutImageInput {
+    @Field(() => HomeBlockCreateWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutImageInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutImageInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutImageInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutImageInput>;
     @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
     @Type(() => HomeBlockWhereUniqueInput)
     connect?: InstanceType<typeof HomeBlockWhereUniqueInput>;
 }
 
 @InputType()
-export class HomeBlockCreateOrConnectWithoutRgbBackgroundInput {
+export class HomeBlockCreateOrConnectWithoutImageInput {
     @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
     @Type(() => HomeBlockWhereUniqueInput)
     where!: InstanceType<typeof HomeBlockWhereUniqueInput>;
-    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:false})
-    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
-    create!: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockCreateWithoutImageInput, {nullable:false})
+    @Type(() => HomeBlockCreateWithoutImageInput)
+    create!: InstanceType<typeof HomeBlockCreateWithoutImageInput>;
 }
 
 @InputType()
-export class HomeBlockCreateWithoutRgbBackgroundInput {
+export class HomeBlockCreateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    title!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -315,19 +299,9 @@ export class HomeBlockCreateInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath!: string;
-    @Field(() => RgbBackgroundCreateNestedOneWithoutHomeBlockInput, {nullable:false})
-    rgbBackground!: InstanceType<typeof RgbBackgroundCreateNestedOneWithoutHomeBlockInput>;
+    @Field(() => ImageCreateNestedOneWithoutHomeBlockInput, {nullable:false})
+    image!: InstanceType<typeof ImageCreateNestedOneWithoutHomeBlockInput>;
 }
 
 @ArgsType()
@@ -362,19 +336,9 @@ export class HomeBlockGroupBy {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath!: string;
     @Field(() => String, {nullable:false})
-    rgbBackgroundId!: string;
+    imageId!: string;
     @Field(() => HomeBlockCountAggregate, {nullable:true})
     _count?: InstanceType<typeof HomeBlockCountAggregate>;
     @Field(() => HomeBlockMinAggregate, {nullable:true})
@@ -388,13 +352,9 @@ export class HomeBlockMaxAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
     @Field(() => Boolean, {nullable:true})
-    title?: true;
-    @Field(() => Boolean, {nullable:true})
-    imagePath?: true;
-    @Field(() => Boolean, {nullable:true})
     navigationPath?: true;
     @Field(() => Boolean, {nullable:true})
-    rgbBackgroundId?: true;
+    imageId?: true;
 }
 
 @ObjectType()
@@ -405,19 +365,9 @@ export class HomeBlockMaxAggregate {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath?: string;
     @Field(() => String, {nullable:true})
-    rgbBackgroundId?: string;
+    imageId?: string;
 }
 
 @InputType()
@@ -425,13 +375,9 @@ export class HomeBlockMaxOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    title?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    imagePath?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    rgbBackgroundId?: keyof typeof SortOrder;
+    imageId?: keyof typeof SortOrder;
 }
 
 @InputType()
@@ -439,13 +385,9 @@ export class HomeBlockMinAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
     @Field(() => Boolean, {nullable:true})
-    title?: true;
-    @Field(() => Boolean, {nullable:true})
-    imagePath?: true;
-    @Field(() => Boolean, {nullable:true})
     navigationPath?: true;
     @Field(() => Boolean, {nullable:true})
-    rgbBackgroundId?: true;
+    imageId?: true;
 }
 
 @ObjectType()
@@ -456,19 +398,9 @@ export class HomeBlockMinAggregate {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath?: string;
     @Field(() => String, {nullable:true})
-    rgbBackgroundId?: string;
+    imageId?: string;
 }
 
 @InputType()
@@ -476,13 +408,9 @@ export class HomeBlockMinOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    title?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    imagePath?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    rgbBackgroundId?: keyof typeof SortOrder;
+    imageId?: keyof typeof SortOrder;
 }
 
 @InputType()
@@ -490,13 +418,9 @@ export class HomeBlockOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    title?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    imagePath?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    rgbBackgroundId?: keyof typeof SortOrder;
+    imageId?: keyof typeof SortOrder;
     @Field(() => HomeBlockCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof HomeBlockCountOrderByAggregateInput>;
     @Field(() => HomeBlockMaxOrderByAggregateInput, {nullable:true})
@@ -510,15 +434,11 @@ export class HomeBlockOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    title?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    imagePath?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
-    @Field(() => RgbBackgroundOrderByWithRelationInput, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbBackgroundOrderByWithRelationInput>;
+    @Field(() => ImageOrderByWithRelationInput, {nullable:true})
+    image?: InstanceType<typeof ImageOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
-    rgbBackgroundId?: keyof typeof SortOrder;
+    imageId?: keyof typeof SortOrder;
 }
 
 @InputType()
@@ -540,42 +460,28 @@ export class HomeBlockScalarWhereWithAggregatesInput {
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     id?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => StringWithAggregatesFilter, {nullable:true})
-    title?: InstanceType<typeof StringWithAggregatesFilter>;
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    imagePath?: InstanceType<typeof StringWithAggregatesFilter>;
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
     navigationPath?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => StringWithAggregatesFilter, {nullable:true})
-    rgbBackgroundId?: InstanceType<typeof StringWithAggregatesFilter>;
+    imageId?: InstanceType<typeof StringWithAggregatesFilter>;
 }
 
 @InputType()
-export class HomeBlockUncheckedCreateNestedOneWithoutRgbBackgroundInput {
-    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
-    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
-    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
+export class HomeBlockUncheckedCreateNestedOneWithoutImageInput {
+    @Field(() => HomeBlockCreateWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutImageInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutImageInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutImageInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutImageInput>;
     @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
     @Type(() => HomeBlockWhereUniqueInput)
     connect?: InstanceType<typeof HomeBlockWhereUniqueInput>;
 }
 
 @InputType()
-export class HomeBlockUncheckedCreateWithoutRgbBackgroundInput {
+export class HomeBlockUncheckedCreateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    title!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -591,19 +497,9 @@ export class HomeBlockUncheckedCreateInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath!: string;
     @Field(() => String, {nullable:false})
-    rgbBackgroundId!: string;
+    imageId!: string;
 }
 
 @InputType()
@@ -614,32 +510,22 @@ export class HomeBlockUncheckedUpdateManyInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath?: string;
     @Field(() => String, {nullable:true})
-    rgbBackgroundId?: string;
+    imageId?: string;
 }
 
 @InputType()
-export class HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput {
-    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
-    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
-    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockUpsertWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockUpsertWithoutRgbBackgroundInput)
-    upsert?: InstanceType<typeof HomeBlockUpsertWithoutRgbBackgroundInput>;
+export class HomeBlockUncheckedUpdateOneWithoutImageNestedInput {
+    @Field(() => HomeBlockCreateWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutImageInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutImageInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutImageInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutImageInput>;
+    @Field(() => HomeBlockUpsertWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockUpsertWithoutImageInput)
+    upsert?: InstanceType<typeof HomeBlockUpsertWithoutImageInput>;
     @Field(() => Boolean, {nullable:true})
     disconnect?: boolean;
     @Field(() => Boolean, {nullable:true})
@@ -647,25 +533,15 @@ export class HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput {
     @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
     @Type(() => HomeBlockWhereUniqueInput)
     connect?: InstanceType<typeof HomeBlockWhereUniqueInput>;
-    @Field(() => HomeBlockUpdateWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockUpdateWithoutRgbBackgroundInput)
-    update?: InstanceType<typeof HomeBlockUpdateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockUpdateWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockUpdateWithoutImageInput)
+    update?: InstanceType<typeof HomeBlockUpdateWithoutImageInput>;
 }
 
 @InputType()
-export class HomeBlockUncheckedUpdateWithoutRgbBackgroundInput {
+export class HomeBlockUncheckedUpdateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
     @Field(() => String, {nullable:true})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -681,19 +557,9 @@ export class HomeBlockUncheckedUpdateInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath?: string;
     @Field(() => String, {nullable:true})
-    rgbBackgroundId?: string;
+    imageId?: string;
 }
 
 @InputType()
@@ -704,30 +570,20 @@ export class HomeBlockUpdateManyMutationInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath?: string;
 }
 
 @InputType()
-export class HomeBlockUpdateOneWithoutRgbBackgroundNestedInput {
-    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
-    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
-    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockUpsertWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockUpsertWithoutRgbBackgroundInput)
-    upsert?: InstanceType<typeof HomeBlockUpsertWithoutRgbBackgroundInput>;
+export class HomeBlockUpdateOneWithoutImageNestedInput {
+    @Field(() => HomeBlockCreateWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutImageInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutImageInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutImageInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutImageInput>;
+    @Field(() => HomeBlockUpsertWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockUpsertWithoutImageInput)
+    upsert?: InstanceType<typeof HomeBlockUpsertWithoutImageInput>;
     @Field(() => Boolean, {nullable:true})
     disconnect?: boolean;
     @Field(() => Boolean, {nullable:true})
@@ -735,25 +591,15 @@ export class HomeBlockUpdateOneWithoutRgbBackgroundNestedInput {
     @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
     @Type(() => HomeBlockWhereUniqueInput)
     connect?: InstanceType<typeof HomeBlockWhereUniqueInput>;
-    @Field(() => HomeBlockUpdateWithoutRgbBackgroundInput, {nullable:true})
-    @Type(() => HomeBlockUpdateWithoutRgbBackgroundInput)
-    update?: InstanceType<typeof HomeBlockUpdateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockUpdateWithoutImageInput, {nullable:true})
+    @Type(() => HomeBlockUpdateWithoutImageInput)
+    update?: InstanceType<typeof HomeBlockUpdateWithoutImageInput>;
 }
 
 @InputType()
-export class HomeBlockUpdateWithoutRgbBackgroundInput {
+export class HomeBlockUpdateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
     @Field(() => String, {nullable:true})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -769,29 +615,19 @@ export class HomeBlockUpdateInput {
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    imagePath?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     navigationPath?: string;
-    @Field(() => RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput>;
+    @Field(() => ImageUpdateOneRequiredWithoutHomeBlockNestedInput, {nullable:true})
+    image?: InstanceType<typeof ImageUpdateOneRequiredWithoutHomeBlockNestedInput>;
 }
 
 @InputType()
-export class HomeBlockUpsertWithoutRgbBackgroundInput {
-    @Field(() => HomeBlockUpdateWithoutRgbBackgroundInput, {nullable:false})
-    @Type(() => HomeBlockUpdateWithoutRgbBackgroundInput)
-    update!: InstanceType<typeof HomeBlockUpdateWithoutRgbBackgroundInput>;
-    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:false})
-    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
-    create!: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+export class HomeBlockUpsertWithoutImageInput {
+    @Field(() => HomeBlockUpdateWithoutImageInput, {nullable:false})
+    @Type(() => HomeBlockUpdateWithoutImageInput)
+    update!: InstanceType<typeof HomeBlockUpdateWithoutImageInput>;
+    @Field(() => HomeBlockCreateWithoutImageInput, {nullable:false})
+    @Type(() => HomeBlockCreateWithoutImageInput)
+    create!: InstanceType<typeof HomeBlockCreateWithoutImageInput>;
 }
 
 @InputType()
@@ -799,7 +635,7 @@ export class HomeBlockWhereUniqueInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => String, {nullable:true})
-    rgbBackgroundId?: string;
+    imageId?: string;
 }
 
 @InputType()
@@ -813,15 +649,11 @@ export class HomeBlockWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
-    title?: InstanceType<typeof StringFilter>;
-    @Field(() => StringFilter, {nullable:true})
-    imagePath?: InstanceType<typeof StringFilter>;
-    @Field(() => StringFilter, {nullable:true})
     navigationPath?: InstanceType<typeof StringFilter>;
-    @Field(() => RgbBackgroundRelationFilter, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbBackgroundRelationFilter>;
+    @Field(() => ImageRelationFilter, {nullable:true})
+    image?: InstanceType<typeof ImageRelationFilter>;
     @Field(() => StringFilter, {nullable:true})
-    rgbBackgroundId?: InstanceType<typeof StringFilter>;
+    imageId?: InstanceType<typeof StringFilter>;
 }
 
 @ObjectType()
@@ -829,15 +661,11 @@ export class HomeBlock {
     @Field(() => ID, {nullable:false})
     id!: string;
     @Field(() => String, {nullable:false})
-    title!: string;
-    @Field(() => String, {nullable:false})
-    imagePath!: string;
-    @Field(() => String, {nullable:false})
     navigationPath!: string;
-    @Field(() => RgbBackground, {nullable:false})
-    rgbBackground?: InstanceType<typeof RgbBackground>;
+    @Field(() => Image, {nullable:false})
+    image?: InstanceType<typeof Image>;
     @Field(() => String, {nullable:false})
-    rgbBackgroundId!: string;
+    imageId!: string;
 }
 
 @ArgsType()
@@ -876,6 +704,1352 @@ export class UpsertOneHomeBlockArgs {
     @Field(() => HomeBlockUpdateInput, {nullable:false})
     @Type(() => HomeBlockUpdateInput)
     update!: InstanceType<typeof HomeBlockUpdateInput>;
+}
+
+@ObjectType()
+export class AggregateImage {
+    @Field(() => ImageCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof ImageCountAggregate>;
+    @Field(() => ImageMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof ImageMinAggregate>;
+    @Field(() => ImageMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof ImageMaxAggregate>;
+}
+
+@ArgsType()
+export class CreateManyImageArgs {
+    @Field(() => [ImageCreateManyInput], {nullable:false})
+    @Type(() => ImageCreateManyInput)
+    @ValidateNested()
+    data!: Array<ImageCreateManyInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@ArgsType()
+export class CreateOneImageArgs {
+    @Field(() => ImageCreateInput, {nullable:false})
+    @Type(() => ImageCreateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ImageCreateInput>;
+}
+
+@ArgsType()
+export class DeleteManyImageArgs {
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+}
+
+@ArgsType()
+export class DeleteOneImageArgs {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+}
+
+@ArgsType()
+export class FindFirstImageOrThrowArgs {
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => [ImageOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ImageOrderByWithRelationInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [ImageScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ImageScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindFirstImageArgs {
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => [ImageOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ImageOrderByWithRelationInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [ImageScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ImageScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindManyImageArgs {
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => [ImageOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ImageOrderByWithRelationInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [ImageScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ImageScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindUniqueImageOrThrowArgs {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+}
+
+@ArgsType()
+export class FindUniqueImageArgs {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+}
+
+@ArgsType()
+export class ImageAggregateArgs {
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => [ImageOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ImageOrderByWithRelationInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => ImageCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ImageCountAggregateInput>;
+    @Field(() => ImageMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ImageMinAggregateInput>;
+    @Field(() => ImageMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ImageMaxAggregateInput>;
+}
+
+@InputType()
+export class ImageCountAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    title?: true;
+    @Field(() => Boolean, {nullable:true})
+    imagePath?: true;
+    @Field(() => Boolean, {nullable:true})
+    rgbBackgroundId?: true;
+    @Field(() => Boolean, {nullable:true})
+    productId?: true;
+    @Field(() => Boolean, {nullable:true})
+    _all?: true;
+}
+
+@ObjectType()
+export class ImageCountAggregate {
+    @Field(() => Int, {nullable:false})
+    id!: number;
+    @Field(() => Int, {nullable:false})
+    title!: number;
+    @Field(() => Int, {nullable:false})
+    imagePath!: number;
+    @Field(() => Int, {nullable:false})
+    rgbBackgroundId!: number;
+    @HideField()
+    productId!: number;
+    @Field(() => Int, {nullable:false})
+    _all!: number;
+}
+
+@InputType()
+export class ImageCountOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ImageCreateManyProductInputEnvelope {
+    @Field(() => [ImageCreateManyProductInput], {nullable:false})
+    @Type(() => ImageCreateManyProductInput)
+    data!: Array<ImageCreateManyProductInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@InputType()
+export class ImageCreateManyProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+}
+
+@InputType()
+export class ImageCreateManyRgbBackgroundInputEnvelope {
+    @Field(() => [ImageCreateManyRgbBackgroundInput], {nullable:false})
+    @Type(() => ImageCreateManyRgbBackgroundInput)
+    data!: Array<ImageCreateManyRgbBackgroundInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@InputType()
+export class ImageCreateManyRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageCreateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageCreateNestedManyWithoutProductInput {
+    @Field(() => [ImageCreateWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateWithoutProductInput)
+    create?: Array<ImageCreateWithoutProductInput>;
+    @Field(() => [ImageCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutProductInput>;
+    @Field(() => ImageCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyProductInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+}
+
+@InputType()
+export class ImageCreateNestedManyWithoutRgbBackgroundInput {
+    @Field(() => [ImageCreateWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateWithoutRgbBackgroundInput)
+    create?: Array<ImageCreateWithoutRgbBackgroundInput>;
+    @Field(() => [ImageCreateOrConnectWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => ImageCreateManyRgbBackgroundInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyRgbBackgroundInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyRgbBackgroundInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+}
+
+@InputType()
+export class ImageCreateNestedOneWithoutHomeBlockInput {
+    @Field(() => ImageCreateWithoutHomeBlockInput, {nullable:true})
+    @Type(() => ImageCreateWithoutHomeBlockInput)
+    create?: InstanceType<typeof ImageCreateWithoutHomeBlockInput>;
+    @Field(() => ImageCreateOrConnectWithoutHomeBlockInput, {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutHomeBlockInput)
+    connectOrCreate?: InstanceType<typeof ImageCreateOrConnectWithoutHomeBlockInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: InstanceType<typeof ImageWhereUniqueInput>;
+}
+
+@InputType()
+export class ImageCreateOrConnectWithoutHomeBlockInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageCreateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => ImageCreateWithoutHomeBlockInput)
+    create!: InstanceType<typeof ImageCreateWithoutHomeBlockInput>;
+}
+
+@InputType()
+export class ImageCreateOrConnectWithoutProductInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageCreateWithoutProductInput, {nullable:false})
+    @Type(() => ImageCreateWithoutProductInput)
+    create!: InstanceType<typeof ImageCreateWithoutProductInput>;
+}
+
+@InputType()
+export class ImageCreateOrConnectWithoutRgbBackgroundInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageCreateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => ImageCreateWithoutRgbBackgroundInput)
+    create!: InstanceType<typeof ImageCreateWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class ImageCreateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => RgbColorCreateNestedOneWithoutImageInput, {nullable:false})
+    rgbBackground!: InstanceType<typeof RgbColorCreateNestedOneWithoutImageInput>;
+    @Field(() => ProductCreateNestedOneWithoutImagesInput, {nullable:true})
+    product?: InstanceType<typeof ProductCreateNestedOneWithoutImagesInput>;
+}
+
+@InputType()
+export class ImageCreateWithoutProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => RgbColorCreateNestedOneWithoutImageInput, {nullable:false})
+    rgbBackground!: InstanceType<typeof RgbColorCreateNestedOneWithoutImageInput>;
+    @Field(() => HomeBlockCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockCreateNestedOneWithoutImageInput>;
+}
+
+@InputType()
+export class ImageCreateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => HomeBlockCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockCreateNestedOneWithoutImageInput>;
+    @Field(() => ProductCreateNestedOneWithoutImagesInput, {nullable:true})
+    product?: InstanceType<typeof ProductCreateNestedOneWithoutImagesInput>;
+}
+
+@InputType()
+export class ImageCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => RgbColorCreateNestedOneWithoutImageInput, {nullable:false})
+    rgbBackground!: InstanceType<typeof RgbColorCreateNestedOneWithoutImageInput>;
+    @Field(() => HomeBlockCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockCreateNestedOneWithoutImageInput>;
+    @Field(() => ProductCreateNestedOneWithoutImagesInput, {nullable:true})
+    product?: InstanceType<typeof ProductCreateNestedOneWithoutImagesInput>;
+}
+
+@ArgsType()
+export class ImageGroupByArgs {
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => [ImageOrderByWithAggregationInput], {nullable:true})
+    orderBy?: Array<ImageOrderByWithAggregationInput>;
+    @Field(() => [ImageScalarFieldEnum], {nullable:false})
+    by!: Array<keyof typeof ImageScalarFieldEnum>;
+    @Field(() => ImageScalarWhereWithAggregatesInput, {nullable:true})
+    having?: InstanceType<typeof ImageScalarWhereWithAggregatesInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => ImageCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ImageCountAggregateInput>;
+    @Field(() => ImageMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ImageMinAggregateInput>;
+    @Field(() => ImageMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ImageMaxAggregateInput>;
+}
+
+@ObjectType()
+export class ImageGroupBy {
+    @Field(() => String, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @HideField()
+    productId?: string;
+    @Field(() => ImageCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof ImageCountAggregate>;
+    @Field(() => ImageMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof ImageMinAggregate>;
+    @Field(() => ImageMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof ImageMaxAggregate>;
+}
+
+@InputType()
+export class ImageListRelationFilter {
+    @Field(() => ImageWhereInput, {nullable:true})
+    every?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => ImageWhereInput, {nullable:true})
+    some?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => ImageWhereInput, {nullable:true})
+    none?: InstanceType<typeof ImageWhereInput>;
+}
+
+@InputType()
+export class ImageMaxAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    title?: true;
+    @Field(() => Boolean, {nullable:true})
+    imagePath?: true;
+    @Field(() => Boolean, {nullable:true})
+    rgbBackgroundId?: true;
+    @Field(() => Boolean, {nullable:true})
+    productId?: true;
+}
+
+@ObjectType()
+export class ImageMaxAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @HideField()
+    productId?: string;
+}
+
+@InputType()
+export class ImageMaxOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ImageMinAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    title?: true;
+    @Field(() => Boolean, {nullable:true})
+    imagePath?: true;
+    @Field(() => Boolean, {nullable:true})
+    rgbBackgroundId?: true;
+    @Field(() => Boolean, {nullable:true})
+    productId?: true;
+}
+
+@ObjectType()
+export class ImageMinAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @HideField()
+    productId?: string;
+}
+
+@InputType()
+export class ImageMinOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ImageOrderByRelationAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    _count?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ImageOrderByWithAggregationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+    @Field(() => ImageCountOrderByAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ImageCountOrderByAggregateInput>;
+    @Field(() => ImageMaxOrderByAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ImageMaxOrderByAggregateInput>;
+    @Field(() => ImageMinOrderByAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ImageMinOrderByAggregateInput>;
+}
+
+@InputType()
+export class ImageOrderByWithRelationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => RgbColorOrderByWithRelationInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorOrderByWithRelationInput>;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => HomeBlockOrderByWithRelationInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockOrderByWithRelationInput>;
+    @Field(() => ProductOrderByWithRelationInput, {nullable:true})
+    product?: InstanceType<typeof ProductOrderByWithRelationInput>;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ImageRelationFilter {
+    @Field(() => ImageWhereInput, {nullable:true})
+    is?: InstanceType<typeof ImageWhereInput>;
+    @Field(() => ImageWhereInput, {nullable:true})
+    isNot?: InstanceType<typeof ImageWhereInput>;
+}
+
+@InputType()
+export class ImageScalarWhereWithAggregatesInput {
+    @Field(() => [ImageScalarWhereWithAggregatesInput], {nullable:true})
+    AND?: Array<ImageScalarWhereWithAggregatesInput>;
+    @Field(() => [ImageScalarWhereWithAggregatesInput], {nullable:true})
+    OR?: Array<ImageScalarWhereWithAggregatesInput>;
+    @Field(() => [ImageScalarWhereWithAggregatesInput], {nullable:true})
+    NOT?: Array<ImageScalarWhereWithAggregatesInput>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    id?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    title?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    imagePath?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    rgbBackgroundId?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    productId?: InstanceType<typeof StringWithAggregatesFilter>;
+}
+
+@InputType()
+export class ImageScalarWhereInput {
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    AND?: Array<ImageScalarWhereInput>;
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    OR?: Array<ImageScalarWhereInput>;
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    NOT?: Array<ImageScalarWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    title?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    imagePath?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    rgbBackgroundId?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    productId?: InstanceType<typeof StringFilter>;
+}
+
+@InputType()
+export class ImageUncheckedCreateNestedManyWithoutProductInput {
+    @Field(() => [ImageCreateWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateWithoutProductInput)
+    create?: Array<ImageCreateWithoutProductInput>;
+    @Field(() => [ImageCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutProductInput>;
+    @Field(() => ImageCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyProductInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+}
+
+@InputType()
+export class ImageUncheckedCreateNestedManyWithoutRgbBackgroundInput {
+    @Field(() => [ImageCreateWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateWithoutRgbBackgroundInput)
+    create?: Array<ImageCreateWithoutRgbBackgroundInput>;
+    @Field(() => [ImageCreateOrConnectWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => ImageCreateManyRgbBackgroundInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyRgbBackgroundInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyRgbBackgroundInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+}
+
+@InputType()
+export class ImageUncheckedCreateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedCreateWithoutProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
+}
+
+@InputType()
+export class ImageUncheckedCreateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedUpdateManyWithoutImageInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedUpdateManyWithoutImagesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+}
+
+@InputType()
+export class ImageUncheckedUpdateManyWithoutProductNestedInput {
+    @Field(() => [ImageCreateWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateWithoutProductInput)
+    create?: Array<ImageCreateWithoutProductInput>;
+    @Field(() => [ImageCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutProductInput>;
+    @Field(() => [ImageUpsertWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => ImageUpsertWithWhereUniqueWithoutProductInput)
+    upsert?: Array<ImageUpsertWithWhereUniqueWithoutProductInput>;
+    @Field(() => ImageCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyProductInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    set?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    disconnect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    delete?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageUpdateWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => ImageUpdateWithWhereUniqueWithoutProductInput)
+    update?: Array<ImageUpdateWithWhereUniqueWithoutProductInput>;
+    @Field(() => [ImageUpdateManyWithWhereWithoutProductInput], {nullable:true})
+    @Type(() => ImageUpdateManyWithWhereWithoutProductInput)
+    updateMany?: Array<ImageUpdateManyWithWhereWithoutProductInput>;
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    @Type(() => ImageScalarWhereInput)
+    deleteMany?: Array<ImageScalarWhereInput>;
+}
+
+@InputType()
+export class ImageUncheckedUpdateManyWithoutRgbBackgroundNestedInput {
+    @Field(() => [ImageCreateWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateWithoutRgbBackgroundInput)
+    create?: Array<ImageCreateWithoutRgbBackgroundInput>;
+    @Field(() => [ImageCreateOrConnectWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => [ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput)
+    upsert?: Array<ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput>;
+    @Field(() => ImageCreateManyRgbBackgroundInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyRgbBackgroundInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyRgbBackgroundInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    set?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    disconnect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    delete?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput)
+    update?: Array<ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput>;
+    @Field(() => [ImageUpdateManyWithWhereWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageUpdateManyWithWhereWithoutRgbBackgroundInput)
+    updateMany?: Array<ImageUpdateManyWithWhereWithoutRgbBackgroundInput>;
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    @Type(() => ImageScalarWhereInput)
+    deleteMany?: Array<ImageScalarWhereInput>;
+}
+
+@InputType()
+export class ImageUncheckedUpdateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedUpdateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedUpdateWithoutProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
+}
+
+@InputType()
+export class ImageUncheckedUpdateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUncheckedUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class ImageUpdateManyMutationInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+}
+
+@InputType()
+export class ImageUpdateManyWithWhereWithoutProductInput {
+    @Field(() => ImageScalarWhereInput, {nullable:false})
+    @Type(() => ImageScalarWhereInput)
+    where!: InstanceType<typeof ImageScalarWhereInput>;
+    @Field(() => ImageUpdateManyMutationInput, {nullable:false})
+    @Type(() => ImageUpdateManyMutationInput)
+    data!: InstanceType<typeof ImageUpdateManyMutationInput>;
+}
+
+@InputType()
+export class ImageUpdateManyWithWhereWithoutRgbBackgroundInput {
+    @Field(() => ImageScalarWhereInput, {nullable:false})
+    @Type(() => ImageScalarWhereInput)
+    where!: InstanceType<typeof ImageScalarWhereInput>;
+    @Field(() => ImageUpdateManyMutationInput, {nullable:false})
+    @Type(() => ImageUpdateManyMutationInput)
+    data!: InstanceType<typeof ImageUpdateManyMutationInput>;
+}
+
+@InputType()
+export class ImageUpdateManyWithoutProductNestedInput {
+    @Field(() => [ImageCreateWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateWithoutProductInput)
+    create?: Array<ImageCreateWithoutProductInput>;
+    @Field(() => [ImageCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutProductInput>;
+    @Field(() => [ImageUpsertWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => ImageUpsertWithWhereUniqueWithoutProductInput)
+    upsert?: Array<ImageUpsertWithWhereUniqueWithoutProductInput>;
+    @Field(() => ImageCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyProductInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    set?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    disconnect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    delete?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageUpdateWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => ImageUpdateWithWhereUniqueWithoutProductInput)
+    update?: Array<ImageUpdateWithWhereUniqueWithoutProductInput>;
+    @Field(() => [ImageUpdateManyWithWhereWithoutProductInput], {nullable:true})
+    @Type(() => ImageUpdateManyWithWhereWithoutProductInput)
+    updateMany?: Array<ImageUpdateManyWithWhereWithoutProductInput>;
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    @Type(() => ImageScalarWhereInput)
+    deleteMany?: Array<ImageScalarWhereInput>;
+}
+
+@InputType()
+export class ImageUpdateManyWithoutRgbBackgroundNestedInput {
+    @Field(() => [ImageCreateWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateWithoutRgbBackgroundInput)
+    create?: Array<ImageCreateWithoutRgbBackgroundInput>;
+    @Field(() => [ImageCreateOrConnectWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: Array<ImageCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => [ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput)
+    upsert?: Array<ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput>;
+    @Field(() => ImageCreateManyRgbBackgroundInputEnvelope, {nullable:true})
+    @Type(() => ImageCreateManyRgbBackgroundInputEnvelope)
+    createMany?: InstanceType<typeof ImageCreateManyRgbBackgroundInputEnvelope>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    set?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    disconnect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    delete?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageWhereUniqueInput], {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: Array<ImageWhereUniqueInput>;
+    @Field(() => [ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput)
+    update?: Array<ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput>;
+    @Field(() => [ImageUpdateManyWithWhereWithoutRgbBackgroundInput], {nullable:true})
+    @Type(() => ImageUpdateManyWithWhereWithoutRgbBackgroundInput)
+    updateMany?: Array<ImageUpdateManyWithWhereWithoutRgbBackgroundInput>;
+    @Field(() => [ImageScalarWhereInput], {nullable:true})
+    @Type(() => ImageScalarWhereInput)
+    deleteMany?: Array<ImageScalarWhereInput>;
+}
+
+@InputType()
+export class ImageUpdateOneRequiredWithoutHomeBlockNestedInput {
+    @Field(() => ImageCreateWithoutHomeBlockInput, {nullable:true})
+    @Type(() => ImageCreateWithoutHomeBlockInput)
+    create?: InstanceType<typeof ImageCreateWithoutHomeBlockInput>;
+    @Field(() => ImageCreateOrConnectWithoutHomeBlockInput, {nullable:true})
+    @Type(() => ImageCreateOrConnectWithoutHomeBlockInput)
+    connectOrCreate?: InstanceType<typeof ImageCreateOrConnectWithoutHomeBlockInput>;
+    @Field(() => ImageUpsertWithoutHomeBlockInput, {nullable:true})
+    @Type(() => ImageUpsertWithoutHomeBlockInput)
+    upsert?: InstanceType<typeof ImageUpsertWithoutHomeBlockInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:true})
+    @Type(() => ImageWhereUniqueInput)
+    connect?: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageUpdateWithoutHomeBlockInput, {nullable:true})
+    @Type(() => ImageUpdateWithoutHomeBlockInput)
+    update?: InstanceType<typeof ImageUpdateWithoutHomeBlockInput>;
+}
+
+@InputType()
+export class ImageUpdateWithWhereUniqueWithoutProductInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageUpdateWithoutProductInput, {nullable:false})
+    @Type(() => ImageUpdateWithoutProductInput)
+    data!: InstanceType<typeof ImageUpdateWithoutProductInput>;
+}
+
+@InputType()
+export class ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageUpdateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => ImageUpdateWithoutRgbBackgroundInput)
+    data!: InstanceType<typeof ImageUpdateWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class ImageUpdateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => RgbColorUpdateOneRequiredWithoutImageNestedInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorUpdateOneRequiredWithoutImageNestedInput>;
+    @Field(() => ProductUpdateOneWithoutImagesNestedInput, {nullable:true})
+    product?: InstanceType<typeof ProductUpdateOneWithoutImagesNestedInput>;
+}
+
+@InputType()
+export class ImageUpdateWithoutProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => RgbColorUpdateOneRequiredWithoutImageNestedInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorUpdateOneRequiredWithoutImageNestedInput>;
+    @Field(() => HomeBlockUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUpdateOneWithoutImageNestedInput>;
+}
+
+@InputType()
+export class ImageUpdateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => HomeBlockUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUpdateOneWithoutImageNestedInput>;
+    @Field(() => ProductUpdateOneWithoutImagesNestedInput, {nullable:true})
+    product?: InstanceType<typeof ProductUpdateOneWithoutImagesNestedInput>;
+}
+
+@InputType()
+export class ImageUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => RgbColorUpdateOneRequiredWithoutImageNestedInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorUpdateOneRequiredWithoutImageNestedInput>;
+    @Field(() => HomeBlockUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUpdateOneWithoutImageNestedInput>;
+    @Field(() => ProductUpdateOneWithoutImagesNestedInput, {nullable:true})
+    product?: InstanceType<typeof ProductUpdateOneWithoutImagesNestedInput>;
+}
+
+@InputType()
+export class ImageUpsertWithWhereUniqueWithoutProductInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageUpdateWithoutProductInput, {nullable:false})
+    @Type(() => ImageUpdateWithoutProductInput)
+    update!: InstanceType<typeof ImageUpdateWithoutProductInput>;
+    @Field(() => ImageCreateWithoutProductInput, {nullable:false})
+    @Type(() => ImageCreateWithoutProductInput)
+    create!: InstanceType<typeof ImageCreateWithoutProductInput>;
+}
+
+@InputType()
+export class ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageUpdateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => ImageUpdateWithoutRgbBackgroundInput)
+    update!: InstanceType<typeof ImageUpdateWithoutRgbBackgroundInput>;
+    @Field(() => ImageCreateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => ImageCreateWithoutRgbBackgroundInput)
+    create!: InstanceType<typeof ImageCreateWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class ImageUpsertWithoutHomeBlockInput {
+    @Field(() => ImageUpdateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => ImageUpdateWithoutHomeBlockInput)
+    update!: InstanceType<typeof ImageUpdateWithoutHomeBlockInput>;
+    @Field(() => ImageCreateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => ImageCreateWithoutHomeBlockInput)
+    create!: InstanceType<typeof ImageCreateWithoutHomeBlockInput>;
+}
+
+@InputType()
+export class ImageWhereUniqueInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+}
+
+@InputType()
+export class ImageWhereInput {
+    @Field(() => [ImageWhereInput], {nullable:true})
+    AND?: Array<ImageWhereInput>;
+    @Field(() => [ImageWhereInput], {nullable:true})
+    OR?: Array<ImageWhereInput>;
+    @Field(() => [ImageWhereInput], {nullable:true})
+    NOT?: Array<ImageWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    title?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    imagePath?: InstanceType<typeof StringFilter>;
+    @Field(() => RgbColorRelationFilter, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorRelationFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    rgbBackgroundId?: InstanceType<typeof StringFilter>;
+    @Field(() => HomeBlockRelationFilter, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockRelationFilter>;
+    @Field(() => ProductRelationFilter, {nullable:true})
+    product?: InstanceType<typeof ProductRelationFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    productId?: InstanceType<typeof StringFilter>;
+}
+
+@ObjectType()
+export class Image {
+    @Field(() => ID, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:true})
+    title!: string | null;
+    @Field(() => String, {nullable:false})
+    imagePath!: string;
+    @Field(() => RgbColor, {nullable:false})
+    rgbBackground?: InstanceType<typeof RgbColor>;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @HideField()
+    homeBlock?: InstanceType<typeof HomeBlock> | null;
+    @HideField()
+    product?: InstanceType<typeof Product> | null;
+    @HideField()
+    productId!: string | null;
+}
+
+@ArgsType()
+export class UpdateManyImageArgs {
+    @Field(() => ImageUpdateManyMutationInput, {nullable:false})
+    @Type(() => ImageUpdateManyMutationInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ImageUpdateManyMutationInput>;
+    @Field(() => ImageWhereInput, {nullable:true})
+    @Type(() => ImageWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ImageWhereInput>;
+}
+
+@ArgsType()
+export class UpdateOneImageArgs {
+    @Field(() => ImageUpdateInput, {nullable:false})
+    @Type(() => ImageUpdateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ImageUpdateInput>;
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+}
+
+@ArgsType()
+export class UpsertOneImageArgs {
+    @Field(() => ImageWhereUniqueInput, {nullable:false})
+    @Type(() => ImageWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ImageWhereUniqueInput>;
+    @Field(() => ImageCreateInput, {nullable:false})
+    @Type(() => ImageCreateInput)
+    create!: InstanceType<typeof ImageCreateInput>;
+    @Field(() => ImageUpdateInput, {nullable:false})
+    @Type(() => ImageUpdateInput)
+    update!: InstanceType<typeof ImageUpdateInput>;
 }
 
 @ObjectType()
@@ -1047,151 +2221,1054 @@ export class StringWithAggregatesFilter {
 }
 
 @ObjectType()
-export class AggregateRgbBackground {
-    @Field(() => RgbBackgroundCountAggregate, {nullable:true})
-    _count?: InstanceType<typeof RgbBackgroundCountAggregate>;
-    @Field(() => RgbBackgroundAvgAggregate, {nullable:true})
-    _avg?: InstanceType<typeof RgbBackgroundAvgAggregate>;
-    @Field(() => RgbBackgroundSumAggregate, {nullable:true})
-    _sum?: InstanceType<typeof RgbBackgroundSumAggregate>;
-    @Field(() => RgbBackgroundMinAggregate, {nullable:true})
-    _min?: InstanceType<typeof RgbBackgroundMinAggregate>;
-    @Field(() => RgbBackgroundMaxAggregate, {nullable:true})
-    _max?: InstanceType<typeof RgbBackgroundMaxAggregate>;
+export class AggregateProduct {
+    @Field(() => ProductCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof ProductCountAggregate>;
+    @Field(() => ProductAvgAggregate, {nullable:true})
+    _avg?: InstanceType<typeof ProductAvgAggregate>;
+    @Field(() => ProductSumAggregate, {nullable:true})
+    _sum?: InstanceType<typeof ProductSumAggregate>;
+    @Field(() => ProductMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof ProductMinAggregate>;
+    @Field(() => ProductMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof ProductMaxAggregate>;
 }
 
 @ArgsType()
-export class CreateManyRgbBackgroundArgs {
-    @Field(() => [RgbBackgroundCreateManyInput], {nullable:false})
-    @Type(() => RgbBackgroundCreateManyInput)
+export class CreateManyProductArgs {
+    @Field(() => [ProductCreateManyInput], {nullable:false})
+    @Type(() => ProductCreateManyInput)
     @ValidateNested()
-    data!: Array<RgbBackgroundCreateManyInput>;
+    data!: Array<ProductCreateManyInput>;
     @Field(() => Boolean, {nullable:true})
     skipDuplicates?: boolean;
 }
 
 @ArgsType()
-export class CreateOneRgbBackgroundArgs {
-    @Field(() => RgbBackgroundCreateInput, {nullable:false})
-    @Type(() => RgbBackgroundCreateInput)
+export class CreateOneProductArgs {
+    @Field(() => ProductCreateInput, {nullable:false})
+    @Type(() => ProductCreateInput)
     @ValidateNested()
-    data!: InstanceType<typeof RgbBackgroundCreateInput>;
+    data!: InstanceType<typeof ProductCreateInput>;
 }
 
 @ArgsType()
-export class DeleteManyRgbBackgroundArgs {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+export class DeleteManyProductArgs {
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    where?: InstanceType<typeof ProductWhereInput>;
 }
 
 @ArgsType()
-export class DeleteOneRgbBackgroundArgs {
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
-    @Type(() => RgbBackgroundWhereUniqueInput)
+export class DeleteOneProductArgs {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
     @ValidateNested()
-    where!: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
 }
 
 @ArgsType()
-export class FindFirstRgbBackgroundOrThrowArgs {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+export class FindFirstProductOrThrowArgs {
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => [ProductOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductOrderByWithRelationInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductWhereUniqueInput>;
     @Field(() => Int, {nullable:true})
     take?: number;
     @Field(() => Int, {nullable:true})
     skip?: number;
-    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:true})
-    distinct?: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+    @Field(() => [ProductScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ProductScalarFieldEnum>;
 }
 
 @ArgsType()
-export class FindFirstRgbBackgroundArgs {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+export class FindFirstProductArgs {
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => [ProductOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductOrderByWithRelationInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductWhereUniqueInput>;
     @Field(() => Int, {nullable:true})
     take?: number;
     @Field(() => Int, {nullable:true})
     skip?: number;
-    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:true})
-    distinct?: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+    @Field(() => [ProductScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ProductScalarFieldEnum>;
 }
 
 @ArgsType()
-export class FindManyRgbBackgroundArgs {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+export class FindManyProductArgs {
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => [ProductOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductOrderByWithRelationInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductWhereUniqueInput>;
     @Field(() => Int, {nullable:true})
     take?: number;
     @Field(() => Int, {nullable:true})
     skip?: number;
-    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:true})
-    distinct?: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+    @Field(() => [ProductScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ProductScalarFieldEnum>;
 }
 
 @ArgsType()
-export class FindUniqueRgbBackgroundOrThrowArgs {
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
-    @Type(() => RgbBackgroundWhereUniqueInput)
+export class FindUniqueProductOrThrowArgs {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
     @ValidateNested()
-    where!: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
 }
 
 @ArgsType()
-export class FindUniqueRgbBackgroundArgs {
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
-    @Type(() => RgbBackgroundWhereUniqueInput)
+export class FindUniqueProductArgs {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
     @ValidateNested()
-    where!: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
 }
 
 @ArgsType()
-export class RgbBackgroundAggregateArgs {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+export class ProductAggregateArgs {
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => [ProductOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductOrderByWithRelationInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductWhereUniqueInput>;
     @Field(() => Int, {nullable:true})
     take?: number;
     @Field(() => Int, {nullable:true})
     skip?: number;
-    @Field(() => RgbBackgroundCountAggregateInput, {nullable:true})
-    _count?: InstanceType<typeof RgbBackgroundCountAggregateInput>;
-    @Field(() => RgbBackgroundAvgAggregateInput, {nullable:true})
-    _avg?: InstanceType<typeof RgbBackgroundAvgAggregateInput>;
-    @Field(() => RgbBackgroundSumAggregateInput, {nullable:true})
-    _sum?: InstanceType<typeof RgbBackgroundSumAggregateInput>;
-    @Field(() => RgbBackgroundMinAggregateInput, {nullable:true})
-    _min?: InstanceType<typeof RgbBackgroundMinAggregateInput>;
-    @Field(() => RgbBackgroundMaxAggregateInput, {nullable:true})
-    _max?: InstanceType<typeof RgbBackgroundMaxAggregateInput>;
+    @Field(() => ProductCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ProductCountAggregateInput>;
+    @Field(() => ProductAvgAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof ProductAvgAggregateInput>;
+    @Field(() => ProductSumAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof ProductSumAggregateInput>;
+    @Field(() => ProductMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ProductMinAggregateInput>;
+    @Field(() => ProductMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ProductMaxAggregateInput>;
 }
 
 @InputType()
-export class RgbBackgroundAvgAggregateInput {
+export class ProductAvgAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    price?: true;
+    @Field(() => Boolean, {nullable:true})
+    discountPrice?: true;
+}
+
+@ObjectType()
+export class ProductAvgAggregate {
+    @Field(() => Float, {nullable:true})
+    price?: number;
+    @Field(() => Float, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductAvgOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductCountAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+    @Field(() => Boolean, {nullable:true})
+    price?: true;
+    @Field(() => Boolean, {nullable:true})
+    discountPrice?: true;
+    @Field(() => Boolean, {nullable:true})
+    _all?: true;
+}
+
+@ObjectType()
+export class ProductCountAggregate {
+    @Field(() => Int, {nullable:false})
+    id!: number;
+    @Field(() => Int, {nullable:false})
+    name!: number;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:false})
+    discountPrice!: number;
+    @Field(() => Int, {nullable:false})
+    _all!: number;
+}
+
+@InputType()
+export class ProductCountOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+}
+
+@ObjectType()
+export class ProductCount {
+    @Field(() => Int, {nullable:false})
+    images?: number;
+    @Field(() => Int, {nullable:false})
+    availableColors?: number;
+}
+
+@InputType()
+export class ProductCreateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductCreateNestedOneWithoutAvailableColorsInput {
+    @Field(() => ProductCreateWithoutAvailableColorsInput, {nullable:true})
+    @Type(() => ProductCreateWithoutAvailableColorsInput)
+    create?: InstanceType<typeof ProductCreateWithoutAvailableColorsInput>;
+    @Field(() => ProductCreateOrConnectWithoutAvailableColorsInput, {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutAvailableColorsInput)
+    connectOrCreate?: InstanceType<typeof ProductCreateOrConnectWithoutAvailableColorsInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: InstanceType<typeof ProductWhereUniqueInput>;
+}
+
+@InputType()
+export class ProductCreateNestedOneWithoutImagesInput {
+    @Field(() => ProductCreateWithoutImagesInput, {nullable:true})
+    @Type(() => ProductCreateWithoutImagesInput)
+    create?: InstanceType<typeof ProductCreateWithoutImagesInput>;
+    @Field(() => ProductCreateOrConnectWithoutImagesInput, {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutImagesInput)
+    connectOrCreate?: InstanceType<typeof ProductCreateOrConnectWithoutImagesInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: InstanceType<typeof ProductWhereUniqueInput>;
+}
+
+@InputType()
+export class ProductCreateOrConnectWithoutAvailableColorsInput {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductCreateWithoutAvailableColorsInput, {nullable:false})
+    @Type(() => ProductCreateWithoutAvailableColorsInput)
+    create!: InstanceType<typeof ProductCreateWithoutAvailableColorsInput>;
+}
+
+@InputType()
+export class ProductCreateOrConnectWithoutImagesInput {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductCreateWithoutImagesInput, {nullable:false})
+    @Type(() => ProductCreateWithoutImagesInput)
+    create!: InstanceType<typeof ProductCreateWithoutImagesInput>;
+}
+
+@InputType()
+export class ProductCreateWithoutAvailableColorsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageCreateNestedManyWithoutProductInput, {nullable:true})
+    images?: InstanceType<typeof ImageCreateNestedManyWithoutProductInput>;
+}
+
+@InputType()
+export class ProductCreateWithoutImagesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => RgbColorCreateNestedManyWithoutProductInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorCreateNestedManyWithoutProductInput>;
+}
+
+@InputType()
+export class ProductCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageCreateNestedManyWithoutProductInput, {nullable:true})
+    images?: InstanceType<typeof ImageCreateNestedManyWithoutProductInput>;
+    @Field(() => RgbColorCreateNestedManyWithoutProductInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorCreateNestedManyWithoutProductInput>;
+}
+
+@ArgsType()
+export class ProductGroupByArgs {
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => [ProductOrderByWithAggregationInput], {nullable:true})
+    orderBy?: Array<ProductOrderByWithAggregationInput>;
+    @Field(() => [ProductScalarFieldEnum], {nullable:false})
+    by!: Array<keyof typeof ProductScalarFieldEnum>;
+    @Field(() => ProductScalarWhereWithAggregatesInput, {nullable:true})
+    having?: InstanceType<typeof ProductScalarWhereWithAggregatesInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => ProductCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ProductCountAggregateInput>;
+    @Field(() => ProductAvgAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof ProductAvgAggregateInput>;
+    @Field(() => ProductSumAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof ProductSumAggregateInput>;
+    @Field(() => ProductMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ProductMinAggregateInput>;
+    @Field(() => ProductMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ProductMaxAggregateInput>;
+}
+
+@ObjectType()
+export class ProductGroupBy {
+    @Field(() => String, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ProductCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof ProductCountAggregate>;
+    @Field(() => ProductAvgAggregate, {nullable:true})
+    _avg?: InstanceType<typeof ProductAvgAggregate>;
+    @Field(() => ProductSumAggregate, {nullable:true})
+    _sum?: InstanceType<typeof ProductSumAggregate>;
+    @Field(() => ProductMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof ProductMinAggregate>;
+    @Field(() => ProductMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof ProductMaxAggregate>;
+}
+
+@InputType()
+export class ProductMaxAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+    @Field(() => Boolean, {nullable:true})
+    price?: true;
+    @Field(() => Boolean, {nullable:true})
+    discountPrice?: true;
+}
+
+@ObjectType()
+export class ProductMaxAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductMaxOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductMinAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+    @Field(() => Boolean, {nullable:true})
+    price?: true;
+    @Field(() => Boolean, {nullable:true})
+    discountPrice?: true;
+}
+
+@ObjectType()
+export class ProductMinAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductMinOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductOrderByWithAggregationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+    @Field(() => ProductCountOrderByAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ProductCountOrderByAggregateInput>;
+    @Field(() => ProductAvgOrderByAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof ProductAvgOrderByAggregateInput>;
+    @Field(() => ProductMaxOrderByAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ProductMaxOrderByAggregateInput>;
+    @Field(() => ProductMinOrderByAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ProductMinOrderByAggregateInput>;
+    @Field(() => ProductSumOrderByAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof ProductSumOrderByAggregateInput>;
+}
+
+@InputType()
+export class ProductOrderByWithRelationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+    @Field(() => ImageOrderByRelationAggregateInput, {nullable:true})
+    images?: InstanceType<typeof ImageOrderByRelationAggregateInput>;
+    @Field(() => RgbColorOrderByRelationAggregateInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorOrderByRelationAggregateInput>;
+}
+
+@InputType()
+export class ProductRelationFilter {
+    @Field(() => ProductWhereInput, {nullable:true})
+    is?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => ProductWhereInput, {nullable:true})
+    isNot?: InstanceType<typeof ProductWhereInput>;
+}
+
+@InputType()
+export class ProductScalarWhereWithAggregatesInput {
+    @Field(() => [ProductScalarWhereWithAggregatesInput], {nullable:true})
+    AND?: Array<ProductScalarWhereWithAggregatesInput>;
+    @Field(() => [ProductScalarWhereWithAggregatesInput], {nullable:true})
+    OR?: Array<ProductScalarWhereWithAggregatesInput>;
+    @Field(() => [ProductScalarWhereWithAggregatesInput], {nullable:true})
+    NOT?: Array<ProductScalarWhereWithAggregatesInput>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    id?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    name?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => IntWithAggregatesFilter, {nullable:true})
+    price?: InstanceType<typeof IntWithAggregatesFilter>;
+    @Field(() => IntWithAggregatesFilter, {nullable:true})
+    discountPrice?: InstanceType<typeof IntWithAggregatesFilter>;
+}
+
+@InputType()
+export class ProductSumAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    price?: true;
+    @Field(() => Boolean, {nullable:true})
+    discountPrice?: true;
+}
+
+@ObjectType()
+export class ProductSumAggregate {
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductSumOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    price?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    discountPrice?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductUncheckedCreateWithoutAvailableColorsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
+    images?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutProductInput>;
+}
+
+@InputType()
+export class ProductUncheckedCreateWithoutImagesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => RgbColorUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUncheckedCreateNestedManyWithoutProductInput>;
+}
+
+@InputType()
+export class ProductUncheckedCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
+    images?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutProductInput>;
+    @Field(() => RgbColorUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUncheckedCreateNestedManyWithoutProductInput>;
+}
+
+@InputType()
+export class ProductUncheckedUpdateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductUncheckedUpdateWithoutAvailableColorsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
+    images?: InstanceType<typeof ImageUncheckedUpdateManyWithoutProductNestedInput>;
+}
+
+@InputType()
+export class ProductUncheckedUpdateWithoutImagesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => RgbColorUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUncheckedUpdateManyWithoutProductNestedInput>;
+}
+
+@InputType()
+export class ProductUncheckedUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
+    images?: InstanceType<typeof ImageUncheckedUpdateManyWithoutProductNestedInput>;
+    @Field(() => RgbColorUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUncheckedUpdateManyWithoutProductNestedInput>;
+}
+
+@InputType()
+export class ProductUpdateManyMutationInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+}
+
+@InputType()
+export class ProductUpdateOneWithoutAvailableColorsNestedInput {
+    @Field(() => ProductCreateWithoutAvailableColorsInput, {nullable:true})
+    @Type(() => ProductCreateWithoutAvailableColorsInput)
+    create?: InstanceType<typeof ProductCreateWithoutAvailableColorsInput>;
+    @Field(() => ProductCreateOrConnectWithoutAvailableColorsInput, {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutAvailableColorsInput)
+    connectOrCreate?: InstanceType<typeof ProductCreateOrConnectWithoutAvailableColorsInput>;
+    @Field(() => ProductUpsertWithoutAvailableColorsInput, {nullable:true})
+    @Type(() => ProductUpsertWithoutAvailableColorsInput)
+    upsert?: InstanceType<typeof ProductUpsertWithoutAvailableColorsInput>;
+    @Field(() => Boolean, {nullable:true})
+    disconnect?: boolean;
+    @Field(() => Boolean, {nullable:true})
+    delete?: boolean;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductUpdateWithoutAvailableColorsInput, {nullable:true})
+    @Type(() => ProductUpdateWithoutAvailableColorsInput)
+    update?: InstanceType<typeof ProductUpdateWithoutAvailableColorsInput>;
+}
+
+@InputType()
+export class ProductUpdateOneWithoutImagesNestedInput {
+    @Field(() => ProductCreateWithoutImagesInput, {nullable:true})
+    @Type(() => ProductCreateWithoutImagesInput)
+    create?: InstanceType<typeof ProductCreateWithoutImagesInput>;
+    @Field(() => ProductCreateOrConnectWithoutImagesInput, {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutImagesInput)
+    connectOrCreate?: InstanceType<typeof ProductCreateOrConnectWithoutImagesInput>;
+    @Field(() => ProductUpsertWithoutImagesInput, {nullable:true})
+    @Type(() => ProductUpsertWithoutImagesInput)
+    upsert?: InstanceType<typeof ProductUpsertWithoutImagesInput>;
+    @Field(() => Boolean, {nullable:true})
+    disconnect?: boolean;
+    @Field(() => Boolean, {nullable:true})
+    delete?: boolean;
+    @Field(() => ProductWhereUniqueInput, {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductUpdateWithoutImagesInput, {nullable:true})
+    @Type(() => ProductUpdateWithoutImagesInput)
+    update?: InstanceType<typeof ProductUpdateWithoutImagesInput>;
+}
+
+@InputType()
+export class ProductUpdateWithoutAvailableColorsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUpdateManyWithoutProductNestedInput, {nullable:true})
+    images?: InstanceType<typeof ImageUpdateManyWithoutProductNestedInput>;
+}
+
+@InputType()
+export class ProductUpdateWithoutImagesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => RgbColorUpdateManyWithoutProductNestedInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUpdateManyWithoutProductNestedInput>;
+}
+
+@InputType()
+export class ProductUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUpdateManyWithoutProductNestedInput, {nullable:true})
+    images?: InstanceType<typeof ImageUpdateManyWithoutProductNestedInput>;
+    @Field(() => RgbColorUpdateManyWithoutProductNestedInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUpdateManyWithoutProductNestedInput>;
+}
+
+@InputType()
+export class ProductUpsertWithoutAvailableColorsInput {
+    @Field(() => ProductUpdateWithoutAvailableColorsInput, {nullable:false})
+    @Type(() => ProductUpdateWithoutAvailableColorsInput)
+    update!: InstanceType<typeof ProductUpdateWithoutAvailableColorsInput>;
+    @Field(() => ProductCreateWithoutAvailableColorsInput, {nullable:false})
+    @Type(() => ProductCreateWithoutAvailableColorsInput)
+    create!: InstanceType<typeof ProductCreateWithoutAvailableColorsInput>;
+}
+
+@InputType()
+export class ProductUpsertWithoutImagesInput {
+    @Field(() => ProductUpdateWithoutImagesInput, {nullable:false})
+    @Type(() => ProductUpdateWithoutImagesInput)
+    update!: InstanceType<typeof ProductUpdateWithoutImagesInput>;
+    @Field(() => ProductCreateWithoutImagesInput, {nullable:false})
+    @Type(() => ProductCreateWithoutImagesInput)
+    create!: InstanceType<typeof ProductCreateWithoutImagesInput>;
+}
+
+@InputType()
+export class ProductWhereUniqueInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+}
+
+@InputType()
+export class ProductWhereInput {
+    @Field(() => [ProductWhereInput], {nullable:true})
+    AND?: Array<ProductWhereInput>;
+    @Field(() => [ProductWhereInput], {nullable:true})
+    OR?: Array<ProductWhereInput>;
+    @Field(() => [ProductWhereInput], {nullable:true})
+    NOT?: Array<ProductWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    name?: InstanceType<typeof StringFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    price?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    discountPrice?: InstanceType<typeof IntFilter>;
+    @Field(() => ImageListRelationFilter, {nullable:true})
+    images?: InstanceType<typeof ImageListRelationFilter>;
+    @Field(() => RgbColorListRelationFilter, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorListRelationFilter>;
+}
+
+@ObjectType()
+export class Product {
+    @Field(() => ID, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+    /**
+     * @Validator .@IsInt()
+     * @Validator .@Min(1)
+     * @Validator .@Max(100_000)
+     */
+    @Field(() => Int, {nullable:false,description:'@Validator.@IsInt()\n@Validator.@Min(1)\n@Validator.@Max(100_000)'})
+    price!: number;
+    /**
+     * @Validator .@IsInt()
+     * @Validator .@Min(1)
+     * @Validator .@Max(100_000)
+     */
+    @Field(() => Int, {nullable:true,description:'@Validator.@IsInt()\n@Validator.@Min(1)\n@Validator.@Max(100_000)'})
+    discountPrice!: number | null;
+    @Field(() => [Image], {nullable:true})
+    images?: Array<Image>;
+    @Field(() => [RgbColor], {nullable:true})
+    availableColors?: Array<RgbColor>;
+    @Field(() => ProductCount, {nullable:false})
+    _count?: InstanceType<typeof ProductCount>;
+}
+
+@ArgsType()
+export class UpdateManyProductArgs {
+    @Field(() => ProductUpdateManyMutationInput, {nullable:false})
+    @Type(() => ProductUpdateManyMutationInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ProductUpdateManyMutationInput>;
+    @Field(() => ProductWhereInput, {nullable:true})
+    @Type(() => ProductWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductWhereInput>;
+}
+
+@ArgsType()
+export class UpdateOneProductArgs {
+    @Field(() => ProductUpdateInput, {nullable:false})
+    @Type(() => ProductUpdateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ProductUpdateInput>;
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+}
+
+@ArgsType()
+export class UpsertOneProductArgs {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductCreateInput, {nullable:false})
+    @Type(() => ProductCreateInput)
+    create!: InstanceType<typeof ProductCreateInput>;
+    @Field(() => ProductUpdateInput, {nullable:false})
+    @Type(() => ProductUpdateInput)
+    update!: InstanceType<typeof ProductUpdateInput>;
+}
+
+@ObjectType()
+export class AggregateRgbColor {
+    @Field(() => RgbColorCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof RgbColorCountAggregate>;
+    @Field(() => RgbColorAvgAggregate, {nullable:true})
+    _avg?: InstanceType<typeof RgbColorAvgAggregate>;
+    @Field(() => RgbColorSumAggregate, {nullable:true})
+    _sum?: InstanceType<typeof RgbColorSumAggregate>;
+    @Field(() => RgbColorMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof RgbColorMinAggregate>;
+    @Field(() => RgbColorMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof RgbColorMaxAggregate>;
+}
+
+@ArgsType()
+export class CreateManyRgbColorArgs {
+    @Field(() => [RgbColorCreateManyInput], {nullable:false})
+    @Type(() => RgbColorCreateManyInput)
+    @ValidateNested()
+    data!: Array<RgbColorCreateManyInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@ArgsType()
+export class CreateOneRgbColorArgs {
+    @Field(() => RgbColorCreateInput, {nullable:false})
+    @Type(() => RgbColorCreateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof RgbColorCreateInput>;
+}
+
+@ArgsType()
+export class DeleteManyRgbColorArgs {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbColorWhereInput>;
+}
+
+@ArgsType()
+export class DeleteOneRgbColorArgs {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+}
+
+@ArgsType()
+export class FindFirstRgbColorOrThrowArgs {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => [RgbColorOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbColorOrderByWithRelationInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [RgbColorScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof RgbColorScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindFirstRgbColorArgs {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => [RgbColorOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbColorOrderByWithRelationInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [RgbColorScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof RgbColorScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindManyRgbColorArgs {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => [RgbColorOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbColorOrderByWithRelationInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [RgbColorScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof RgbColorScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindUniqueRgbColorOrThrowArgs {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+}
+
+@ArgsType()
+export class FindUniqueRgbColorArgs {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+}
+
+@ArgsType()
+export class RgbColorAggregateArgs {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => [RgbColorOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbColorOrderByWithRelationInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => RgbColorCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof RgbColorCountAggregateInput>;
+    @Field(() => RgbColorAvgAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof RgbColorAvgAggregateInput>;
+    @Field(() => RgbColorSumAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof RgbColorSumAggregateInput>;
+    @Field(() => RgbColorMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof RgbColorMinAggregateInput>;
+    @Field(() => RgbColorMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof RgbColorMaxAggregateInput>;
+}
+
+@InputType()
+export class RgbColorAvgAggregateInput {
     @Field(() => Boolean, {nullable:true})
     r?: true;
     @Field(() => Boolean, {nullable:true})
@@ -1203,19 +3280,19 @@ export class RgbBackgroundAvgAggregateInput {
 }
 
 @ObjectType()
-export class RgbBackgroundAvgAggregate {
+export class RgbColorAvgAggregate {
     @Field(() => Float, {nullable:true})
     r?: number;
     @Field(() => Float, {nullable:true})
     g?: number;
     @Field(() => Float, {nullable:true})
     b?: number;
-    @Field(() => Float, {nullable:true})
+    @HideField()
     a?: number;
 }
 
 @InputType()
-export class RgbBackgroundAvgOrderByAggregateInput {
+export class RgbColorAvgOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     r?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1227,7 +3304,7 @@ export class RgbBackgroundAvgOrderByAggregateInput {
 }
 
 @InputType()
-export class RgbBackgroundCountAggregateInput {
+export class RgbColorCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
     @Field(() => Boolean, {nullable:true})
@@ -1239,11 +3316,13 @@ export class RgbBackgroundCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     a?: true;
     @Field(() => Boolean, {nullable:true})
+    productId?: true;
+    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }
 
 @ObjectType()
-export class RgbBackgroundCountAggregate {
+export class RgbColorCountAggregate {
     @Field(() => Int, {nullable:false})
     id!: number;
     @Field(() => Int, {nullable:false})
@@ -1261,14 +3340,16 @@ export class RgbBackgroundCountAggregate {
     @Validator.Min(0)
     @Validator.Max(255)
     b!: number;
-    @Field(() => Int, {nullable:false})
+    @HideField()
     a!: number;
+    @HideField()
+    productId!: number;
     @Field(() => Int, {nullable:false})
     _all!: number;
 }
 
 @InputType()
-export class RgbBackgroundCountOrderByAggregateInput {
+export class RgbColorCountOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1279,10 +3360,27 @@ export class RgbBackgroundCountOrderByAggregateInput {
     b?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     a?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+}
+
+@ObjectType()
+export class RgbColorCount {
+    @Field(() => Int, {nullable:false})
+    Image?: number;
 }
 
 @InputType()
-export class RgbBackgroundCreateManyInput {
+export class RgbColorCreateManyProductInputEnvelope {
+    @Field(() => [RgbColorCreateManyProductInput], {nullable:false})
+    @Type(() => RgbColorCreateManyProductInput)
+    data!: Array<RgbColorCreateManyProductInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@InputType()
+export class RgbColorCreateManyProductInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:false})
@@ -1305,30 +3403,7 @@ export class RgbBackgroundCreateManyInput {
 }
 
 @InputType()
-export class RgbBackgroundCreateNestedOneWithoutHomeBlockInput {
-    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:true})
-    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
-    create?: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
-    @Field(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput, {nullable:true})
-    @Type(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput)
-    connectOrCreate?: InstanceType<typeof RgbBackgroundCreateOrConnectWithoutHomeBlockInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereUniqueInput)
-    connect?: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
-}
-
-@InputType()
-export class RgbBackgroundCreateOrConnectWithoutHomeBlockInput {
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
-    @Type(() => RgbBackgroundWhereUniqueInput)
-    where!: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
-    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:false})
-    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
-    create!: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
-}
-
-@InputType()
-export class RgbBackgroundCreateWithoutHomeBlockInput {
+export class RgbColorCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:false})
@@ -1348,10 +3423,61 @@ export class RgbBackgroundCreateWithoutHomeBlockInput {
     b!: number;
     @Field(() => Float, {nullable:true})
     a?: number;
+    @Field(() => String, {nullable:true})
+    productId?: string;
 }
 
 @InputType()
-export class RgbBackgroundCreateInput {
+export class RgbColorCreateNestedManyWithoutProductInput {
+    @Field(() => [RgbColorCreateWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateWithoutProductInput)
+    create?: Array<RgbColorCreateWithoutProductInput>;
+    @Field(() => [RgbColorCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<RgbColorCreateOrConnectWithoutProductInput>;
+    @Field(() => RgbColorCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => RgbColorCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof RgbColorCreateManyProductInputEnvelope>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    connect?: Array<RgbColorWhereUniqueInput>;
+}
+
+@InputType()
+export class RgbColorCreateNestedOneWithoutImageInput {
+    @Field(() => RgbColorCreateWithoutImageInput, {nullable:true})
+    @Type(() => RgbColorCreateWithoutImageInput)
+    create?: InstanceType<typeof RgbColorCreateWithoutImageInput>;
+    @Field(() => RgbColorCreateOrConnectWithoutImageInput, {nullable:true})
+    @Type(() => RgbColorCreateOrConnectWithoutImageInput)
+    connectOrCreate?: InstanceType<typeof RgbColorCreateOrConnectWithoutImageInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    connect?: InstanceType<typeof RgbColorWhereUniqueInput>;
+}
+
+@InputType()
+export class RgbColorCreateOrConnectWithoutImageInput {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => RgbColorCreateWithoutImageInput, {nullable:false})
+    @Type(() => RgbColorCreateWithoutImageInput)
+    create!: InstanceType<typeof RgbColorCreateWithoutImageInput>;
+}
+
+@InputType()
+export class RgbColorCreateOrConnectWithoutProductInput {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => RgbColorCreateWithoutProductInput, {nullable:false})
+    @Type(() => RgbColorCreateWithoutProductInput)
+    create!: InstanceType<typeof RgbColorCreateWithoutProductInput>;
+}
+
+@InputType()
+export class RgbColorCreateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:false})
@@ -1371,40 +3497,92 @@ export class RgbBackgroundCreateInput {
     b!: number;
     @Field(() => Float, {nullable:true})
     a?: number;
-    @Field(() => HomeBlockCreateNestedOneWithoutRgbBackgroundInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockCreateNestedOneWithoutRgbBackgroundInput>;
+    @Field(() => ProductCreateNestedOneWithoutAvailableColorsInput, {nullable:true})
+    product?: InstanceType<typeof ProductCreateNestedOneWithoutAvailableColorsInput>;
+}
+
+@InputType()
+export class RgbColorCreateWithoutProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => ImageCreateNestedManyWithoutRgbBackgroundInput, {nullable:true})
+    Image?: InstanceType<typeof ImageCreateNestedManyWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class RgbColorCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => ProductCreateNestedOneWithoutAvailableColorsInput, {nullable:true})
+    product?: InstanceType<typeof ProductCreateNestedOneWithoutAvailableColorsInput>;
+    @Field(() => ImageCreateNestedManyWithoutRgbBackgroundInput, {nullable:true})
+    Image?: InstanceType<typeof ImageCreateNestedManyWithoutRgbBackgroundInput>;
 }
 
 @ArgsType()
-export class RgbBackgroundGroupByArgs {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+export class RgbColorGroupByArgs {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundOrderByWithAggregationInput], {nullable:true})
-    orderBy?: Array<RgbBackgroundOrderByWithAggregationInput>;
-    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:false})
-    by!: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
-    @Field(() => RgbBackgroundScalarWhereWithAggregatesInput, {nullable:true})
-    having?: InstanceType<typeof RgbBackgroundScalarWhereWithAggregatesInput>;
+    where?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => [RgbColorOrderByWithAggregationInput], {nullable:true})
+    orderBy?: Array<RgbColorOrderByWithAggregationInput>;
+    @Field(() => [RgbColorScalarFieldEnum], {nullable:false})
+    by!: Array<keyof typeof RgbColorScalarFieldEnum>;
+    @Field(() => RgbColorScalarWhereWithAggregatesInput, {nullable:true})
+    having?: InstanceType<typeof RgbColorScalarWhereWithAggregatesInput>;
     @Field(() => Int, {nullable:true})
     take?: number;
     @Field(() => Int, {nullable:true})
     skip?: number;
-    @Field(() => RgbBackgroundCountAggregateInput, {nullable:true})
-    _count?: InstanceType<typeof RgbBackgroundCountAggregateInput>;
-    @Field(() => RgbBackgroundAvgAggregateInput, {nullable:true})
-    _avg?: InstanceType<typeof RgbBackgroundAvgAggregateInput>;
-    @Field(() => RgbBackgroundSumAggregateInput, {nullable:true})
-    _sum?: InstanceType<typeof RgbBackgroundSumAggregateInput>;
-    @Field(() => RgbBackgroundMinAggregateInput, {nullable:true})
-    _min?: InstanceType<typeof RgbBackgroundMinAggregateInput>;
-    @Field(() => RgbBackgroundMaxAggregateInput, {nullable:true})
-    _max?: InstanceType<typeof RgbBackgroundMaxAggregateInput>;
+    @Field(() => RgbColorCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof RgbColorCountAggregateInput>;
+    @Field(() => RgbColorAvgAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof RgbColorAvgAggregateInput>;
+    @Field(() => RgbColorSumAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof RgbColorSumAggregateInput>;
+    @Field(() => RgbColorMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof RgbColorMinAggregateInput>;
+    @Field(() => RgbColorMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof RgbColorMaxAggregateInput>;
 }
 
 @ObjectType()
-export class RgbBackgroundGroupBy {
+export class RgbColorGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
     @Field(() => Int, {nullable:false})
@@ -1422,22 +3600,34 @@ export class RgbBackgroundGroupBy {
     @Validator.Min(0)
     @Validator.Max(255)
     b!: number;
-    @Field(() => Float, {nullable:true})
+    @HideField()
     a?: number;
-    @Field(() => RgbBackgroundCountAggregate, {nullable:true})
-    _count?: InstanceType<typeof RgbBackgroundCountAggregate>;
-    @Field(() => RgbBackgroundAvgAggregate, {nullable:true})
-    _avg?: InstanceType<typeof RgbBackgroundAvgAggregate>;
-    @Field(() => RgbBackgroundSumAggregate, {nullable:true})
-    _sum?: InstanceType<typeof RgbBackgroundSumAggregate>;
-    @Field(() => RgbBackgroundMinAggregate, {nullable:true})
-    _min?: InstanceType<typeof RgbBackgroundMinAggregate>;
-    @Field(() => RgbBackgroundMaxAggregate, {nullable:true})
-    _max?: InstanceType<typeof RgbBackgroundMaxAggregate>;
+    @HideField()
+    productId?: string;
+    @Field(() => RgbColorCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof RgbColorCountAggregate>;
+    @Field(() => RgbColorAvgAggregate, {nullable:true})
+    _avg?: InstanceType<typeof RgbColorAvgAggregate>;
+    @Field(() => RgbColorSumAggregate, {nullable:true})
+    _sum?: InstanceType<typeof RgbColorSumAggregate>;
+    @Field(() => RgbColorMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof RgbColorMinAggregate>;
+    @Field(() => RgbColorMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof RgbColorMaxAggregate>;
 }
 
 @InputType()
-export class RgbBackgroundMaxAggregateInput {
+export class RgbColorListRelationFilter {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    every?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    some?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    none?: InstanceType<typeof RgbColorWhereInput>;
+}
+
+@InputType()
+export class RgbColorMaxAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
     @Field(() => Boolean, {nullable:true})
@@ -1448,10 +3638,12 @@ export class RgbBackgroundMaxAggregateInput {
     b?: true;
     @Field(() => Boolean, {nullable:true})
     a?: true;
+    @Field(() => Boolean, {nullable:true})
+    productId?: true;
 }
 
 @ObjectType()
-export class RgbBackgroundMaxAggregate {
+export class RgbColorMaxAggregate {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1469,12 +3661,14 @@ export class RgbBackgroundMaxAggregate {
     @Validator.Min(0)
     @Validator.Max(255)
     b?: number;
-    @Field(() => Float, {nullable:true})
+    @HideField()
     a?: number;
+    @HideField()
+    productId?: string;
 }
 
 @InputType()
-export class RgbBackgroundMaxOrderByAggregateInput {
+export class RgbColorMaxOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1485,10 +3679,12 @@ export class RgbBackgroundMaxOrderByAggregateInput {
     b?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     a?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
 }
 
 @InputType()
-export class RgbBackgroundMinAggregateInput {
+export class RgbColorMinAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
     @Field(() => Boolean, {nullable:true})
@@ -1499,10 +3695,12 @@ export class RgbBackgroundMinAggregateInput {
     b?: true;
     @Field(() => Boolean, {nullable:true})
     a?: true;
+    @Field(() => Boolean, {nullable:true})
+    productId?: true;
 }
 
 @ObjectType()
-export class RgbBackgroundMinAggregate {
+export class RgbColorMinAggregate {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1520,12 +3718,14 @@ export class RgbBackgroundMinAggregate {
     @Validator.Min(0)
     @Validator.Max(255)
     b?: number;
-    @Field(() => Float, {nullable:true})
+    @HideField()
     a?: number;
+    @HideField()
+    productId?: string;
 }
 
 @InputType()
-export class RgbBackgroundMinOrderByAggregateInput {
+export class RgbColorMinOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1536,10 +3736,18 @@ export class RgbBackgroundMinOrderByAggregateInput {
     b?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     a?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
 }
 
 @InputType()
-export class RgbBackgroundOrderByWithAggregationInput {
+export class RgbColorOrderByRelationAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    _count?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class RgbColorOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1550,20 +3758,22 @@ export class RgbBackgroundOrderByWithAggregationInput {
     b?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     a?: keyof typeof SortOrder;
-    @Field(() => RgbBackgroundCountOrderByAggregateInput, {nullable:true})
-    _count?: InstanceType<typeof RgbBackgroundCountOrderByAggregateInput>;
-    @Field(() => RgbBackgroundAvgOrderByAggregateInput, {nullable:true})
-    _avg?: InstanceType<typeof RgbBackgroundAvgOrderByAggregateInput>;
-    @Field(() => RgbBackgroundMaxOrderByAggregateInput, {nullable:true})
-    _max?: InstanceType<typeof RgbBackgroundMaxOrderByAggregateInput>;
-    @Field(() => RgbBackgroundMinOrderByAggregateInput, {nullable:true})
-    _min?: InstanceType<typeof RgbBackgroundMinOrderByAggregateInput>;
-    @Field(() => RgbBackgroundSumOrderByAggregateInput, {nullable:true})
-    _sum?: InstanceType<typeof RgbBackgroundSumOrderByAggregateInput>;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+    @Field(() => RgbColorCountOrderByAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof RgbColorCountOrderByAggregateInput>;
+    @Field(() => RgbColorAvgOrderByAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof RgbColorAvgOrderByAggregateInput>;
+    @Field(() => RgbColorMaxOrderByAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof RgbColorMaxOrderByAggregateInput>;
+    @Field(() => RgbColorMinOrderByAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof RgbColorMinOrderByAggregateInput>;
+    @Field(() => RgbColorSumOrderByAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof RgbColorSumOrderByAggregateInput>;
 }
 
 @InputType()
-export class RgbBackgroundOrderByWithRelationInput {
+export class RgbColorOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1574,26 +3784,30 @@ export class RgbBackgroundOrderByWithRelationInput {
     b?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     a?: keyof typeof SortOrder;
-    @Field(() => HomeBlockOrderByWithRelationInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockOrderByWithRelationInput>;
+    @Field(() => ProductOrderByWithRelationInput, {nullable:true})
+    product?: InstanceType<typeof ProductOrderByWithRelationInput>;
+    @Field(() => SortOrder, {nullable:true})
+    productId?: keyof typeof SortOrder;
+    @Field(() => ImageOrderByRelationAggregateInput, {nullable:true})
+    Image?: InstanceType<typeof ImageOrderByRelationAggregateInput>;
 }
 
 @InputType()
-export class RgbBackgroundRelationFilter {
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    is?: InstanceType<typeof RgbBackgroundWhereInput>;
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    isNot?: InstanceType<typeof RgbBackgroundWhereInput>;
+export class RgbColorRelationFilter {
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    is?: InstanceType<typeof RgbColorWhereInput>;
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    isNot?: InstanceType<typeof RgbColorWhereInput>;
 }
 
 @InputType()
-export class RgbBackgroundScalarWhereWithAggregatesInput {
-    @Field(() => [RgbBackgroundScalarWhereWithAggregatesInput], {nullable:true})
-    AND?: Array<RgbBackgroundScalarWhereWithAggregatesInput>;
-    @Field(() => [RgbBackgroundScalarWhereWithAggregatesInput], {nullable:true})
-    OR?: Array<RgbBackgroundScalarWhereWithAggregatesInput>;
-    @Field(() => [RgbBackgroundScalarWhereWithAggregatesInput], {nullable:true})
-    NOT?: Array<RgbBackgroundScalarWhereWithAggregatesInput>;
+export class RgbColorScalarWhereWithAggregatesInput {
+    @Field(() => [RgbColorScalarWhereWithAggregatesInput], {nullable:true})
+    AND?: Array<RgbColorScalarWhereWithAggregatesInput>;
+    @Field(() => [RgbColorScalarWhereWithAggregatesInput], {nullable:true})
+    OR?: Array<RgbColorScalarWhereWithAggregatesInput>;
+    @Field(() => [RgbColorScalarWhereWithAggregatesInput], {nullable:true})
+    NOT?: Array<RgbColorScalarWhereWithAggregatesInput>;
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     id?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => IntWithAggregatesFilter, {nullable:true})
@@ -1604,10 +3818,34 @@ export class RgbBackgroundScalarWhereWithAggregatesInput {
     b?: InstanceType<typeof IntWithAggregatesFilter>;
     @Field(() => FloatWithAggregatesFilter, {nullable:true})
     a?: InstanceType<typeof FloatWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    productId?: InstanceType<typeof StringWithAggregatesFilter>;
 }
 
 @InputType()
-export class RgbBackgroundSumAggregateInput {
+export class RgbColorScalarWhereInput {
+    @Field(() => [RgbColorScalarWhereInput], {nullable:true})
+    AND?: Array<RgbColorScalarWhereInput>;
+    @Field(() => [RgbColorScalarWhereInput], {nullable:true})
+    OR?: Array<RgbColorScalarWhereInput>;
+    @Field(() => [RgbColorScalarWhereInput], {nullable:true})
+    NOT?: Array<RgbColorScalarWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    r?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    g?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    b?: InstanceType<typeof IntFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    a?: InstanceType<typeof FloatFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    productId?: InstanceType<typeof StringFilter>;
+}
+
+@InputType()
+export class RgbColorSumAggregateInput {
     @Field(() => Boolean, {nullable:true})
     r?: true;
     @Field(() => Boolean, {nullable:true})
@@ -1619,7 +3857,7 @@ export class RgbBackgroundSumAggregateInput {
 }
 
 @ObjectType()
-export class RgbBackgroundSumAggregate {
+export class RgbColorSumAggregate {
     @Field(() => Int, {nullable:true})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -1635,12 +3873,12 @@ export class RgbBackgroundSumAggregate {
     @Validator.Min(0)
     @Validator.Max(255)
     b?: number;
-    @Field(() => Float, {nullable:true})
+    @HideField()
     a?: number;
 }
 
 @InputType()
-export class RgbBackgroundSumOrderByAggregateInput {
+export class RgbColorSumOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     r?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -1652,7 +3890,23 @@ export class RgbBackgroundSumOrderByAggregateInput {
 }
 
 @InputType()
-export class RgbBackgroundUncheckedCreateWithoutHomeBlockInput {
+export class RgbColorUncheckedCreateNestedManyWithoutProductInput {
+    @Field(() => [RgbColorCreateWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateWithoutProductInput)
+    create?: Array<RgbColorCreateWithoutProductInput>;
+    @Field(() => [RgbColorCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<RgbColorCreateOrConnectWithoutProductInput>;
+    @Field(() => RgbColorCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => RgbColorCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof RgbColorCreateManyProductInputEnvelope>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    connect?: Array<RgbColorWhereUniqueInput>;
+}
+
+@InputType()
+export class RgbColorUncheckedCreateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:false})
@@ -1672,10 +3926,12 @@ export class RgbBackgroundUncheckedCreateWithoutHomeBlockInput {
     b!: number;
     @Field(() => Float, {nullable:true})
     a?: number;
+    @Field(() => String, {nullable:true})
+    productId?: string;
 }
 
 @InputType()
-export class RgbBackgroundUncheckedCreateInput {
+export class RgbColorUncheckedCreateWithoutProductInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:false})
@@ -1695,12 +3951,39 @@ export class RgbBackgroundUncheckedCreateInput {
     b!: number;
     @Field(() => Float, {nullable:true})
     a?: number;
-    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutRgbBackgroundInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutRgbBackgroundInput>;
+    @Field(() => ImageUncheckedCreateNestedManyWithoutRgbBackgroundInput, {nullable:true})
+    Image?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutRgbBackgroundInput>;
 }
 
 @InputType()
-export class RgbBackgroundUncheckedUpdateManyInput {
+export class RgbColorUncheckedCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+    @Field(() => ImageUncheckedCreateNestedManyWithoutRgbBackgroundInput, {nullable:true})
+    Image?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class RgbColorUncheckedUpdateManyWithoutAvailableColorsInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1723,7 +4006,146 @@ export class RgbBackgroundUncheckedUpdateManyInput {
 }
 
 @InputType()
-export class RgbBackgroundUncheckedUpdateWithoutHomeBlockInput {
+export class RgbColorUncheckedUpdateManyWithoutProductNestedInput {
+    @Field(() => [RgbColorCreateWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateWithoutProductInput)
+    create?: Array<RgbColorCreateWithoutProductInput>;
+    @Field(() => [RgbColorCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<RgbColorCreateOrConnectWithoutProductInput>;
+    @Field(() => [RgbColorUpsertWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorUpsertWithWhereUniqueWithoutProductInput)
+    upsert?: Array<RgbColorUpsertWithWhereUniqueWithoutProductInput>;
+    @Field(() => RgbColorCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => RgbColorCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof RgbColorCreateManyProductInputEnvelope>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    set?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    disconnect?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    delete?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    connect?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorUpdateWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorUpdateWithWhereUniqueWithoutProductInput)
+    update?: Array<RgbColorUpdateWithWhereUniqueWithoutProductInput>;
+    @Field(() => [RgbColorUpdateManyWithWhereWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorUpdateManyWithWhereWithoutProductInput)
+    updateMany?: Array<RgbColorUpdateManyWithWhereWithoutProductInput>;
+    @Field(() => [RgbColorScalarWhereInput], {nullable:true})
+    @Type(() => RgbColorScalarWhereInput)
+    deleteMany?: Array<RgbColorScalarWhereInput>;
+}
+
+@InputType()
+export class RgbColorUncheckedUpdateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class RgbColorUncheckedUpdateWithoutImageInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+}
+
+@InputType()
+export class RgbColorUncheckedUpdateWithoutProductInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => ImageUncheckedUpdateManyWithoutRgbBackgroundNestedInput, {nullable:true})
+    Image?: InstanceType<typeof ImageUncheckedUpdateManyWithoutRgbBackgroundNestedInput>;
+}
+
+@InputType()
+export class RgbColorUncheckedUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => String, {nullable:true})
+    productId?: string;
+    @Field(() => ImageUncheckedUpdateManyWithoutRgbBackgroundNestedInput, {nullable:true})
+    Image?: InstanceType<typeof ImageUncheckedUpdateManyWithoutRgbBackgroundNestedInput>;
+}
+
+@InputType()
+export class RgbColorUpdateManyMutationInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1746,7 +4168,83 @@ export class RgbBackgroundUncheckedUpdateWithoutHomeBlockInput {
 }
 
 @InputType()
-export class RgbBackgroundUncheckedUpdateInput {
+export class RgbColorUpdateManyWithWhereWithoutProductInput {
+    @Field(() => RgbColorScalarWhereInput, {nullable:false})
+    @Type(() => RgbColorScalarWhereInput)
+    where!: InstanceType<typeof RgbColorScalarWhereInput>;
+    @Field(() => RgbColorUpdateManyMutationInput, {nullable:false})
+    @Type(() => RgbColorUpdateManyMutationInput)
+    data!: InstanceType<typeof RgbColorUpdateManyMutationInput>;
+}
+
+@InputType()
+export class RgbColorUpdateManyWithoutProductNestedInput {
+    @Field(() => [RgbColorCreateWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateWithoutProductInput)
+    create?: Array<RgbColorCreateWithoutProductInput>;
+    @Field(() => [RgbColorCreateOrConnectWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorCreateOrConnectWithoutProductInput)
+    connectOrCreate?: Array<RgbColorCreateOrConnectWithoutProductInput>;
+    @Field(() => [RgbColorUpsertWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorUpsertWithWhereUniqueWithoutProductInput)
+    upsert?: Array<RgbColorUpsertWithWhereUniqueWithoutProductInput>;
+    @Field(() => RgbColorCreateManyProductInputEnvelope, {nullable:true})
+    @Type(() => RgbColorCreateManyProductInputEnvelope)
+    createMany?: InstanceType<typeof RgbColorCreateManyProductInputEnvelope>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    set?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    disconnect?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    delete?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorWhereUniqueInput], {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    connect?: Array<RgbColorWhereUniqueInput>;
+    @Field(() => [RgbColorUpdateWithWhereUniqueWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorUpdateWithWhereUniqueWithoutProductInput)
+    update?: Array<RgbColorUpdateWithWhereUniqueWithoutProductInput>;
+    @Field(() => [RgbColorUpdateManyWithWhereWithoutProductInput], {nullable:true})
+    @Type(() => RgbColorUpdateManyWithWhereWithoutProductInput)
+    updateMany?: Array<RgbColorUpdateManyWithWhereWithoutProductInput>;
+    @Field(() => [RgbColorScalarWhereInput], {nullable:true})
+    @Type(() => RgbColorScalarWhereInput)
+    deleteMany?: Array<RgbColorScalarWhereInput>;
+}
+
+@InputType()
+export class RgbColorUpdateOneRequiredWithoutImageNestedInput {
+    @Field(() => RgbColorCreateWithoutImageInput, {nullable:true})
+    @Type(() => RgbColorCreateWithoutImageInput)
+    create?: InstanceType<typeof RgbColorCreateWithoutImageInput>;
+    @Field(() => RgbColorCreateOrConnectWithoutImageInput, {nullable:true})
+    @Type(() => RgbColorCreateOrConnectWithoutImageInput)
+    connectOrCreate?: InstanceType<typeof RgbColorCreateOrConnectWithoutImageInput>;
+    @Field(() => RgbColorUpsertWithoutImageInput, {nullable:true})
+    @Type(() => RgbColorUpsertWithoutImageInput)
+    upsert?: InstanceType<typeof RgbColorUpsertWithoutImageInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:true})
+    @Type(() => RgbColorWhereUniqueInput)
+    connect?: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => RgbColorUpdateWithoutImageInput, {nullable:true})
+    @Type(() => RgbColorUpdateWithoutImageInput)
+    update?: InstanceType<typeof RgbColorUpdateWithoutImageInput>;
+}
+
+@InputType()
+export class RgbColorUpdateWithWhereUniqueWithoutProductInput {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => RgbColorUpdateWithoutProductInput, {nullable:false})
+    @Type(() => RgbColorUpdateWithoutProductInput)
+    data!: InstanceType<typeof RgbColorUpdateWithoutProductInput>;
+}
+
+@InputType()
+export class RgbColorUpdateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1766,12 +4264,12 @@ export class RgbBackgroundUncheckedUpdateInput {
     b?: number;
     @Field(() => Float, {nullable:true})
     a?: number;
-    @Field(() => HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput>;
+    @Field(() => ProductUpdateOneWithoutAvailableColorsNestedInput, {nullable:true})
+    product?: InstanceType<typeof ProductUpdateOneWithoutAvailableColorsNestedInput>;
 }
 
 @InputType()
-export class RgbBackgroundUpdateManyMutationInput {
+export class RgbColorUpdateWithoutProductInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1791,29 +4289,12 @@ export class RgbBackgroundUpdateManyMutationInput {
     b?: number;
     @Field(() => Float, {nullable:true})
     a?: number;
+    @Field(() => ImageUpdateManyWithoutRgbBackgroundNestedInput, {nullable:true})
+    Image?: InstanceType<typeof ImageUpdateManyWithoutRgbBackgroundNestedInput>;
 }
 
 @InputType()
-export class RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput {
-    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:true})
-    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
-    create?: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
-    @Field(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput, {nullable:true})
-    @Type(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput)
-    connectOrCreate?: InstanceType<typeof RgbBackgroundCreateOrConnectWithoutHomeBlockInput>;
-    @Field(() => RgbBackgroundUpsertWithoutHomeBlockInput, {nullable:true})
-    @Type(() => RgbBackgroundUpsertWithoutHomeBlockInput)
-    upsert?: InstanceType<typeof RgbBackgroundUpsertWithoutHomeBlockInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereUniqueInput)
-    connect?: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
-    @Field(() => RgbBackgroundUpdateWithoutHomeBlockInput, {nullable:true})
-    @Type(() => RgbBackgroundUpdateWithoutHomeBlockInput)
-    update?: InstanceType<typeof RgbBackgroundUpdateWithoutHomeBlockInput>;
-}
-
-@InputType()
-export class RgbBackgroundUpdateWithoutHomeBlockInput {
+export class RgbColorUpdateInput {
     @Field(() => String, {nullable:true})
     id?: string;
     @Field(() => Int, {nullable:true})
@@ -1833,57 +4314,49 @@ export class RgbBackgroundUpdateWithoutHomeBlockInput {
     b?: number;
     @Field(() => Float, {nullable:true})
     a?: number;
+    @Field(() => ProductUpdateOneWithoutAvailableColorsNestedInput, {nullable:true})
+    product?: InstanceType<typeof ProductUpdateOneWithoutAvailableColorsNestedInput>;
+    @Field(() => ImageUpdateManyWithoutRgbBackgroundNestedInput, {nullable:true})
+    Image?: InstanceType<typeof ImageUpdateManyWithoutRgbBackgroundNestedInput>;
 }
 
 @InputType()
-export class RgbBackgroundUpdateInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => Int, {nullable:true})
-    @Validator.IsInt()
-    @Validator.Min(0)
-    @Validator.Max(255)
-    r?: number;
-    @Field(() => Int, {nullable:true})
-    @Validator.IsInt()
-    @Validator.Min(0)
-    @Validator.Max(255)
-    g?: number;
-    @Field(() => Int, {nullable:true})
-    @Validator.IsInt()
-    @Validator.Min(0)
-    @Validator.Max(255)
-    b?: number;
-    @Field(() => Float, {nullable:true})
-    a?: number;
-    @Field(() => HomeBlockUpdateOneWithoutRgbBackgroundNestedInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUpdateOneWithoutRgbBackgroundNestedInput>;
+export class RgbColorUpsertWithWhereUniqueWithoutProductInput {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => RgbColorUpdateWithoutProductInput, {nullable:false})
+    @Type(() => RgbColorUpdateWithoutProductInput)
+    update!: InstanceType<typeof RgbColorUpdateWithoutProductInput>;
+    @Field(() => RgbColorCreateWithoutProductInput, {nullable:false})
+    @Type(() => RgbColorCreateWithoutProductInput)
+    create!: InstanceType<typeof RgbColorCreateWithoutProductInput>;
 }
 
 @InputType()
-export class RgbBackgroundUpsertWithoutHomeBlockInput {
-    @Field(() => RgbBackgroundUpdateWithoutHomeBlockInput, {nullable:false})
-    @Type(() => RgbBackgroundUpdateWithoutHomeBlockInput)
-    update!: InstanceType<typeof RgbBackgroundUpdateWithoutHomeBlockInput>;
-    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:false})
-    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
-    create!: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
+export class RgbColorUpsertWithoutImageInput {
+    @Field(() => RgbColorUpdateWithoutImageInput, {nullable:false})
+    @Type(() => RgbColorUpdateWithoutImageInput)
+    update!: InstanceType<typeof RgbColorUpdateWithoutImageInput>;
+    @Field(() => RgbColorCreateWithoutImageInput, {nullable:false})
+    @Type(() => RgbColorCreateWithoutImageInput)
+    create!: InstanceType<typeof RgbColorCreateWithoutImageInput>;
 }
 
 @InputType()
-export class RgbBackgroundWhereUniqueInput {
+export class RgbColorWhereUniqueInput {
     @Field(() => String, {nullable:true})
     id?: string;
 }
 
 @InputType()
-export class RgbBackgroundWhereInput {
-    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
-    AND?: Array<RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
-    OR?: Array<RgbBackgroundWhereInput>;
-    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
-    NOT?: Array<RgbBackgroundWhereInput>;
+export class RgbColorWhereInput {
+    @Field(() => [RgbColorWhereInput], {nullable:true})
+    AND?: Array<RgbColorWhereInput>;
+    @Field(() => [RgbColorWhereInput], {nullable:true})
+    OR?: Array<RgbColorWhereInput>;
+    @Field(() => [RgbColorWhereInput], {nullable:true})
+    NOT?: Array<RgbColorWhereInput>;
     @Field(() => StringFilter, {nullable:true})
     id?: InstanceType<typeof StringFilter>;
     @Field(() => IntFilter, {nullable:true})
@@ -1894,12 +4367,16 @@ export class RgbBackgroundWhereInput {
     b?: InstanceType<typeof IntFilter>;
     @Field(() => FloatFilter, {nullable:true})
     a?: InstanceType<typeof FloatFilter>;
-    @Field(() => HomeBlockRelationFilter, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockRelationFilter>;
+    @Field(() => ProductRelationFilter, {nullable:true})
+    product?: InstanceType<typeof ProductRelationFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    productId?: InstanceType<typeof StringFilter>;
+    @Field(() => ImageListRelationFilter, {nullable:true})
+    Image?: InstanceType<typeof ImageListRelationFilter>;
 }
 
 @ObjectType()
-export class RgbBackground {
+export class RgbColor {
     @Field(() => ID, {nullable:false})
     id!: string;
     @Field(() => Int, {nullable:false})
@@ -1908,48 +4385,54 @@ export class RgbBackground {
     g!: number;
     @Field(() => Int, {nullable:false})
     b!: number;
-    @Field(() => Float, {nullable:true})
+    @HideField()
     a!: number | null;
-    @Field(() => HomeBlock, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlock> | null;
+    @HideField()
+    product?: InstanceType<typeof Product> | null;
+    @HideField()
+    productId!: string | null;
+    @Field(() => [Image], {nullable:true})
+    Image?: Array<Image>;
+    @Field(() => RgbColorCount, {nullable:false})
+    _count?: InstanceType<typeof RgbColorCount>;
 }
 
 @ArgsType()
-export class UpdateManyRgbBackgroundArgs {
-    @Field(() => RgbBackgroundUpdateManyMutationInput, {nullable:false})
-    @Type(() => RgbBackgroundUpdateManyMutationInput)
+export class UpdateManyRgbColorArgs {
+    @Field(() => RgbColorUpdateManyMutationInput, {nullable:false})
+    @Type(() => RgbColorUpdateManyMutationInput)
     @ValidateNested()
-    data!: InstanceType<typeof RgbBackgroundUpdateManyMutationInput>;
-    @Field(() => RgbBackgroundWhereInput, {nullable:true})
-    @Type(() => RgbBackgroundWhereInput)
+    data!: InstanceType<typeof RgbColorUpdateManyMutationInput>;
+    @Field(() => RgbColorWhereInput, {nullable:true})
+    @Type(() => RgbColorWhereInput)
     @ValidateNested()
-    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    where?: InstanceType<typeof RgbColorWhereInput>;
 }
 
 @ArgsType()
-export class UpdateOneRgbBackgroundArgs {
-    @Field(() => RgbBackgroundUpdateInput, {nullable:false})
-    @Type(() => RgbBackgroundUpdateInput)
+export class UpdateOneRgbColorArgs {
+    @Field(() => RgbColorUpdateInput, {nullable:false})
+    @Type(() => RgbColorUpdateInput)
     @ValidateNested()
-    data!: InstanceType<typeof RgbBackgroundUpdateInput>;
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
-    @Type(() => RgbBackgroundWhereUniqueInput)
+    data!: InstanceType<typeof RgbColorUpdateInput>;
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
     @ValidateNested()
-    where!: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
 }
 
 @ArgsType()
-export class UpsertOneRgbBackgroundArgs {
-    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
-    @Type(() => RgbBackgroundWhereUniqueInput)
+export class UpsertOneRgbColorArgs {
+    @Field(() => RgbColorWhereUniqueInput, {nullable:false})
+    @Type(() => RgbColorWhereUniqueInput)
     @ValidateNested()
-    where!: InstanceType<typeof RgbBackgroundWhereUniqueInput>;
-    @Field(() => RgbBackgroundCreateInput, {nullable:false})
-    @Type(() => RgbBackgroundCreateInput)
-    create!: InstanceType<typeof RgbBackgroundCreateInput>;
-    @Field(() => RgbBackgroundUpdateInput, {nullable:false})
-    @Type(() => RgbBackgroundUpdateInput)
-    update!: InstanceType<typeof RgbBackgroundUpdateInput>;
+    where!: InstanceType<typeof RgbColorWhereUniqueInput>;
+    @Field(() => RgbColorCreateInput, {nullable:false})
+    @Type(() => RgbColorCreateInput)
+    create!: InstanceType<typeof RgbColorCreateInput>;
+    @Field(() => RgbColorUpdateInput, {nullable:false})
+    @Type(() => RgbColorUpdateInput)
+    update!: InstanceType<typeof RgbColorUpdateInput>;
 }
 
 @ObjectType()

@@ -6,6 +6,15 @@ import {
   FindUniqueHomeBlockArgs,
   UpdateOneHomeBlockArgs
 } from '@okkino/api/generated-db-types'
+import { Prisma } from '@prisma/client'
+
+const include: Prisma.HomeBlockInclude = {
+  image: {
+    include: {
+      rgbBackground: true
+    }
+  }
+}
 
 @Injectable()
 export class HomeBlockService {
@@ -14,31 +23,30 @@ export class HomeBlockService {
   create(createOneHomeBlockArgs: CreateOneHomeBlockArgs) {
     return this.prisma.homeBlock.create({
       data: createOneHomeBlockArgs.data,
-      include: { rgbBackground: true }
+      include
     })
   }
 
   findAll() {
-    return this.prisma.homeBlock.findMany({ include: { rgbBackground: true } })
+    return this.prisma.homeBlock.findMany({ include })
   }
 
   findOne(findUniqueHomeBlockArgs: FindUniqueHomeBlockArgs) {
     const { where } = findUniqueHomeBlockArgs
-    return this.prisma.homeBlock.findUnique({ where, include: { rgbBackground: true } })
+    return this.prisma.homeBlock.findUnique({ where, include })
   }
 
   update(updateOneHomeBlockArgs: UpdateOneHomeBlockArgs) {
     return this.prisma.homeBlock.update({
       data: updateOneHomeBlockArgs.data,
       where: updateOneHomeBlockArgs.where,
-      include: { rgbBackground: true }
+      include
     })
   }
 
   remove(deleteOneHomeBlockArgs: DeleteOneHomeBlockArgs) {
     return this.prisma.homeBlock.delete({
-      where: deleteOneHomeBlockArgs.where,
-      include: { rgbBackground: true }
+      where: deleteOneHomeBlockArgs.where
     })
   }
 }

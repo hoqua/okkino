@@ -17,6 +17,7 @@
     "paths": {
       "@okkino/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
       "@okkino/api/feature-home-block": ["libs/api/feature-home-block/src/index.ts"],
+      "@okkino/api/feature-product": ["libs/api/feature-product/src/index.ts"],
       "@okkino/api/feature-user": ["libs/api/feature-user/src/index.ts"],
       "@okkino/api/generated-db-types": ["libs/api/generated-db-types/src/index.ts"],
       "@okkino/web/data-access-graphql": ["libs/web/data-access-graphql/src/index.ts"],
