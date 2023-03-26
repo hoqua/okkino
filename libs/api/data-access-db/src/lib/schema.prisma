@@ -8,36 +8,33 @@ datasource db {
 }
 
 generator nestgraphql {
-    provider                = "node node_modules/prisma-nestjs-graphql"
-    output                  = "../../../generated-db-types/src"
-    purgeOutput                   = false
-    combineScalarFilters          = true
-    emitSingle                    = true
-    noAtomicOperations            = true
-    // field validator
-    fields_Validator_input        = true
-    fields_Validator_output       = true
-    fields_Validator_model        = true
-    fields_Validator_from         = "class-validator"
-    // Args where|data nested validator
-    decorate_1_type               = "*Args"
-    decorate_1_field              = "@(data|where)"
-    decorate_1_name               = ValidateNested
-    decorate_1_from               = "class-validator"
-    decorate_1_arguments          = "[]"
+  provider                = "node node_modules/prisma-nestjs-graphql"
+  output                  = "../../../generated-db-types/src"
+  purgeOutput             = false
+  combineScalarFilters    = true
+  emitSingle              = true
+  noAtomicOperations      = true
+  // field validator
+  fields_Validator_input  = true
+  fields_Validator_output = true
+  fields_Validator_model  = true
+  fields_Validator_from   = "class-validator"
+  // Args where|data nested validator
+  decorate_1_type         = "*Args"
+  decorate_1_field        = "@(data|where)"
+  decorate_1_name         = ValidateNested
+  decorate_1_from         = "class-validator"
+  decorate_1_arguments    = "[]"
 }
 
 model User {
   id String @id @default(uuid())
-
   /// @Validator.IsEmail()
   email String @unique
-
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
   name String?
-
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(8)
@@ -47,45 +44,73 @@ model User {
 
 model HomeBlock {
   id String @id @default(uuid())
-
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  title String
-
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  imagePath String
-
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
   navigationPath String
-
-  rgbBackground   RgbBackground @relation(fields: [rgbBackgroundId], references: [id]) // references `id` of `RgbBackground`
-  rgbBackgroundId String        @unique // relation scalar field (used in the `@relation` attribute above)
+  image   Image  @relation(fields: [imageId], references: [id])
+  imageId String @unique
 }
 
-model RgbBackground {
+model Product {
   id String @id @default(uuid())
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  name String @unique
+  /// @Validator.@IsInt()
+  /// @Validator.@Min(1)
+  /// @Validator.@Max(100_000)
+  price Int
+  /// @Validator.@IsInt()
+  /// @Validator.@Min(1)
+  /// @Validator.@Max(100_000)
+  discountPrice Int?
+  images          Image[]
+  availableColors RgbColor[]
+}
 
+model Image {
+  id String @id @default(uuid())
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  title String?
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  imagePath String
+  rgbBackground   RgbColor @relation(fields: [rgbBackgroundId], references: [id])
+  rgbBackgroundId String
+  //----Relations----//
+  /// @HideField()
+  homeBlock HomeBlock?
+  /// @HideField()
+  product   Product? @relation(fields: [productId], references: [id])
+  /// @HideField()
+  productId String?
+}
+
+model RgbColor {
+  id String @id @default(uuid())
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)
   r Int
-
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)
   g Int
-
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)
   b Int
-
+  /// @HideField()
   a Float?
-
-  homeBlock HomeBlock?
+  //----Relations----//
+  /// @HideField()
+  product   Product? @relation(fields: [productId], references: [id])
+  /// @HideField()
+  productId String?
+  Image     Image[]
 }

@@ -12,11 +12,11 @@ if (swcJestConfig.swcrc === undefined) {
 }
 
 export default {
-  displayName: 'api-feature-user',
+  displayName: 'api-feature-product',
   preset: '../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig]
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/api/feature-user'
+  coverageDirectory: '../../../coverage/libs/api/feature-product'
 }

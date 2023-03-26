@@ -11,7 +11,12 @@ export type GetUsers = { __typename?: 'Query', users: Array<{ __typename?: 'User
 export type GetHomeImagesVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetHomeImages = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, title: string, imagePath: string, navigationPath: string, rgbBackground: { __typename?: 'RgbBackground', r: number, g: number, b: number } }> };
+export type GetHomeImages = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, navigationPath: string, image: { __typename?: 'Image', title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } } }> };
+
+export type GetProductsVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetProducts = { __typename?: 'Query', products: Array<{ __typename?: 'Product', name: string, price: number, discountPrice?: number | null, images?: Array<{ __typename?: 'Image', title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', r: number, g: number, b: number }> | null }> };
 
 
 export const GetUsersDocument = /*#__PURE__*/ gql`
@@ -27,10 +32,35 @@ export const GetHomeImagesDocument = /*#__PURE__*/ gql`
     query GetHomeImages {
   homeBlocks {
     id
-    title
-    imagePath
     navigationPath
-    rgbBackground {
+    image {
+      title
+      imagePath
+      rgbBackground {
+        r
+        g
+        b
+      }
+    }
+  }
+}
+    `;
+export const GetProductsDocument = /*#__PURE__*/ gql`
+    query GetProducts {
+  products {
+    name
+    price
+    discountPrice
+    images {
+      title
+      imagePath
+      rgbBackground {
+        r
+        g
+        b
+      }
+    }
+    availableColors {
       r
       g
       b
@@ -51,6 +81,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetHomeImages(variables?: GetHomeImagesVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetHomeImages> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHomeImages>(GetHomeImagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHomeImages', 'query');
+    },
+    GetProducts(variables?: GetProductsVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProducts> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProducts>(GetProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProducts', 'query');
     }
   };
 }
