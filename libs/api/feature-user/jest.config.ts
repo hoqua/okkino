@@ -1,17 +1,15 @@
 /* eslint-disable */
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs'
 
 // Reading the SWC compilation config and remove the "exclude"
 // for the test files to be compiled by SWC
-const { exclude: _, ...swcJestConfig } = JSON.parse(
-  readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8')
-);
+const { exclude: _, ...swcJestConfig } = JSON.parse(readFileSync(`${__dirname}/.swcrc`, 'utf-8'))
 export default {
   displayName: 'api-feature-user',
   preset: '../../../jest.preset.js',
   transform: {
-    '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
+    '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig]
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/api/feature-user',
-};
+  coverageDirectory: '../../../coverage/libs/api/feature-user'
+}
