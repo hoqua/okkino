@@ -29,8 +29,8 @@ const GET_HOME_BLOCKS = gql`
 `
 
 const GET_PRODUCTS = gql`
-  query GetProducts {
-    products {
+  query GetProducts($productCategory: String) {
+    products(productCategory: $productCategory) {
       name
       price
       discountPrice
@@ -48,6 +48,14 @@ const GET_PRODUCTS = gql`
         g
         b
       }
+    }
+  }
+`
+
+const GET_PRODUCT_CATEGORIES = gql`
+  query GetProductCategories {
+    productCategories {
+      name
     }
   }
 `

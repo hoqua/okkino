@@ -4,6 +4,7 @@ import {
   RgbColorCreateInput,
   User
 } from '../../libs/api/generated-db-types/src'
+import { PRODUCT_CATEGORIES } from './seed-data.prod'
 
 export const USERS_SEED_DATA: User[] = [
   {
@@ -80,6 +81,13 @@ export const PRODUCT_DATA: ProductCreateInput[] = PRODUCTS.map((product, index) 
     price: 100 + index * 100,
     discountPrice: 100 * index,
     images: {},
-    availableColors: {}
+    availableColors: {},
+    productCategories: {
+      connect: [
+        {
+          name: PRODUCT_CATEGORIES[index % PRODUCT_CATEGORIES.length].name
+        }
+      ]
+    }
   }
 })

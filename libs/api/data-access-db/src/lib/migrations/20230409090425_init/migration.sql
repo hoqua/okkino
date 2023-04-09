@@ -50,6 +50,20 @@ CREATE TABLE "RgbColor" (
     CONSTRAINT "RgbColor_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "ProductCategory" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "ProductCategory_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_ProductToProductCategory" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -58,6 +72,15 @@ CREATE UNIQUE INDEX "HomeBlock_imageId_key" ON "HomeBlock"("imageId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ProductCategory_name_key" ON "ProductCategory"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_ProductToProductCategory_AB_unique" ON "_ProductToProductCategory"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_ProductToProductCategory_B_index" ON "_ProductToProductCategory"("B");
 
 -- AddForeignKey
 ALTER TABLE "HomeBlock" ADD CONSTRAINT "HomeBlock_imageId_fkey" FOREIGN KEY ("imageId") REFERENCES "Image"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -70,3 +93,9 @@ ALTER TABLE "Image" ADD CONSTRAINT "Image_productId_fkey" FOREIGN KEY ("productI
 
 -- AddForeignKey
 ALTER TABLE "RgbColor" ADD CONSTRAINT "RgbColor_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_ProductToProductCategory" ADD CONSTRAINT "_ProductToProductCategory_A_fkey" FOREIGN KEY ("A") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_ProductToProductCategory" ADD CONSTRAINT "_ProductToProductCategory_B_fkey" FOREIGN KEY ("B") REFERENCES "ProductCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;

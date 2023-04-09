@@ -27,6 +27,11 @@ export enum RgbColorScalarFieldEnum {
     productId = "productId"
 }
 
+export enum ProductCategoryScalarFieldEnum {
+    id = "id",
+    name = "name"
+}
+
 export enum ProductScalarFieldEnum {
     id = "id",
     name = "name",
@@ -71,6 +76,7 @@ registerEnumType(QueryMode, { name: 'QueryMode', description: undefined })
 registerEnumType(SortOrder, { name: 'SortOrder', description: undefined })
 registerEnumType(TransactionIsolationLevel, { name: 'TransactionIsolationLevel', description: undefined })
 registerEnumType(ProductScalarFieldEnum, { name: 'ProductScalarFieldEnum', description: undefined })
+registerEnumType(ProductCategoryScalarFieldEnum, { name: 'ProductCategoryScalarFieldEnum', description: undefined })
 registerEnumType(RgbColorScalarFieldEnum, { name: 'RgbColorScalarFieldEnum', description: undefined })
 registerEnumType(UserScalarFieldEnum, { name: 'UserScalarFieldEnum', description: undefined })
 
@@ -2388,6 +2394,34 @@ export class ProductAvgOrderByAggregateInput {
     discountPrice?: keyof typeof SortOrder;
 }
 
+@ArgsType()
+export class ProductCategoryAggregateArgs {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductCategoryOrderByWithRelationInput>;
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => ProductCategoryCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ProductCategoryCountAggregateInput>;
+    @Field(() => ProductCategoryMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ProductCategoryMinAggregateInput>;
+    @Field(() => ProductCategoryMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ProductCategoryMaxAggregateInput>;
+}
+
+@ObjectType()
+export class ProductCategoryCount {
+    @Field(() => Int, {nullable:false})
+    products?: number;
+}
+
 @InputType()
 export class ProductCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
@@ -2434,6 +2468,8 @@ export class ProductCount {
     images?: number;
     @Field(() => Int, {nullable:false})
     availableColors?: number;
+    @Field(() => Int, {nullable:false})
+    productCategories?: number;
 }
 
 @InputType()
@@ -2449,6 +2485,19 @@ export class ProductCreateManyInput {
     price!: number;
     @Field(() => Int, {nullable:true})
     discountPrice?: number;
+}
+
+@InputType()
+export class ProductCreateNestedManyWithoutProductCategoriesInput {
+    @Field(() => [ProductCreateWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateWithoutProductCategoriesInput)
+    create?: Array<ProductCreateWithoutProductCategoriesInput>;
+    @Field(() => [ProductCreateOrConnectWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutProductCategoriesInput)
+    connectOrCreate?: Array<ProductCreateOrConnectWithoutProductCategoriesInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: Array<ProductWhereUniqueInput>;
 }
 
 @InputType()
@@ -2498,6 +2547,16 @@ export class ProductCreateOrConnectWithoutImagesInput {
 }
 
 @InputType()
+export class ProductCreateOrConnectWithoutProductCategoriesInput {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductCreateWithoutProductCategoriesInput, {nullable:false})
+    @Type(() => ProductCreateWithoutProductCategoriesInput)
+    create!: InstanceType<typeof ProductCreateWithoutProductCategoriesInput>;
+}
+
+@InputType()
 export class ProductCreateWithoutAvailableColorsInput {
     @Field(() => String, {nullable:true})
     id?: string;
@@ -2512,6 +2571,8 @@ export class ProductCreateWithoutAvailableColorsInput {
     discountPrice?: number;
     @Field(() => ImageCreateNestedManyWithoutProductInput, {nullable:true})
     images?: InstanceType<typeof ImageCreateNestedManyWithoutProductInput>;
+    @Field(() => ProductCategoryCreateNestedManyWithoutProductsInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryCreateNestedManyWithoutProductsInput>;
 }
 
 @InputType()
@@ -2527,6 +2588,27 @@ export class ProductCreateWithoutImagesInput {
     price!: number;
     @Field(() => Int, {nullable:true})
     discountPrice?: number;
+    @Field(() => RgbColorCreateNestedManyWithoutProductInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorCreateNestedManyWithoutProductInput>;
+    @Field(() => ProductCategoryCreateNestedManyWithoutProductsInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryCreateNestedManyWithoutProductsInput>;
+}
+
+@InputType()
+export class ProductCreateWithoutProductCategoriesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageCreateNestedManyWithoutProductInput, {nullable:true})
+    images?: InstanceType<typeof ImageCreateNestedManyWithoutProductInput>;
     @Field(() => RgbColorCreateNestedManyWithoutProductInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorCreateNestedManyWithoutProductInput>;
 }
@@ -2548,6 +2630,8 @@ export class ProductCreateInput {
     images?: InstanceType<typeof ImageCreateNestedManyWithoutProductInput>;
     @Field(() => RgbColorCreateNestedManyWithoutProductInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorCreateNestedManyWithoutProductInput>;
+    @Field(() => ProductCategoryCreateNestedManyWithoutProductsInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryCreateNestedManyWithoutProductsInput>;
 }
 
 @ArgsType()
@@ -2601,6 +2685,16 @@ export class ProductGroupBy {
     _min?: InstanceType<typeof ProductMinAggregate>;
     @Field(() => ProductMaxAggregate, {nullable:true})
     _max?: InstanceType<typeof ProductMaxAggregate>;
+}
+
+@InputType()
+export class ProductListRelationFilter {
+    @Field(() => ProductWhereInput, {nullable:true})
+    every?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => ProductWhereInput, {nullable:true})
+    some?: InstanceType<typeof ProductWhereInput>;
+    @Field(() => ProductWhereInput, {nullable:true})
+    none?: InstanceType<typeof ProductWhereInput>;
 }
 
 @InputType()
@@ -2682,6 +2776,12 @@ export class ProductMinOrderByAggregateInput {
 }
 
 @InputType()
+export class ProductOrderByRelationAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    _count?: keyof typeof SortOrder;
+}
+
+@InputType()
 export class ProductOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
@@ -2717,6 +2817,8 @@ export class ProductOrderByWithRelationInput {
     images?: InstanceType<typeof ImageOrderByRelationAggregateInput>;
     @Field(() => RgbColorOrderByRelationAggregateInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorOrderByRelationAggregateInput>;
+    @Field(() => ProductCategoryOrderByRelationAggregateInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryOrderByRelationAggregateInput>;
 }
 
 @InputType()
@@ -2746,6 +2848,24 @@ export class ProductScalarWhereWithAggregatesInput {
 }
 
 @InputType()
+export class ProductScalarWhereInput {
+    @Field(() => [ProductScalarWhereInput], {nullable:true})
+    AND?: Array<ProductScalarWhereInput>;
+    @Field(() => [ProductScalarWhereInput], {nullable:true})
+    OR?: Array<ProductScalarWhereInput>;
+    @Field(() => [ProductScalarWhereInput], {nullable:true})
+    NOT?: Array<ProductScalarWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    name?: InstanceType<typeof StringFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    price?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    discountPrice?: InstanceType<typeof IntFilter>;
+}
+
+@InputType()
 export class ProductSumAggregateInput {
     @Field(() => Boolean, {nullable:true})
     price?: true;
@@ -2770,6 +2890,19 @@ export class ProductSumOrderByAggregateInput {
 }
 
 @InputType()
+export class ProductUncheckedCreateNestedManyWithoutProductCategoriesInput {
+    @Field(() => [ProductCreateWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateWithoutProductCategoriesInput)
+    create?: Array<ProductCreateWithoutProductCategoriesInput>;
+    @Field(() => [ProductCreateOrConnectWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutProductCategoriesInput)
+    connectOrCreate?: Array<ProductCreateOrConnectWithoutProductCategoriesInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: Array<ProductWhereUniqueInput>;
+}
+
+@InputType()
 export class ProductUncheckedCreateWithoutAvailableColorsInput {
     @Field(() => String, {nullable:true})
     id?: string;
@@ -2784,6 +2917,8 @@ export class ProductUncheckedCreateWithoutAvailableColorsInput {
     discountPrice?: number;
     @Field(() => ImageUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
     images?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutProductInput>;
+    @Field(() => ProductCategoryUncheckedCreateNestedManyWithoutProductsInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUncheckedCreateNestedManyWithoutProductsInput>;
 }
 
 @InputType()
@@ -2799,6 +2934,27 @@ export class ProductUncheckedCreateWithoutImagesInput {
     price!: number;
     @Field(() => Int, {nullable:true})
     discountPrice?: number;
+    @Field(() => RgbColorUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUncheckedCreateNestedManyWithoutProductInput>;
+    @Field(() => ProductCategoryUncheckedCreateNestedManyWithoutProductsInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUncheckedCreateNestedManyWithoutProductsInput>;
+}
+
+@InputType()
+export class ProductUncheckedCreateWithoutProductCategoriesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name!: string;
+    @Field(() => Int, {nullable:false})
+    price!: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
+    images?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutProductInput>;
     @Field(() => RgbColorUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorUncheckedCreateNestedManyWithoutProductInput>;
 }
@@ -2820,6 +2976,57 @@ export class ProductUncheckedCreateInput {
     images?: InstanceType<typeof ImageUncheckedCreateNestedManyWithoutProductInput>;
     @Field(() => RgbColorUncheckedCreateNestedManyWithoutProductInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorUncheckedCreateNestedManyWithoutProductInput>;
+    @Field(() => ProductCategoryUncheckedCreateNestedManyWithoutProductsInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUncheckedCreateNestedManyWithoutProductsInput>;
+}
+
+@InputType()
+export class ProductUncheckedUpdateManyWithoutProductCategoriesNestedInput {
+    @Field(() => [ProductCreateWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateWithoutProductCategoriesInput)
+    create?: Array<ProductCreateWithoutProductCategoriesInput>;
+    @Field(() => [ProductCreateOrConnectWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutProductCategoriesInput)
+    connectOrCreate?: Array<ProductCreateOrConnectWithoutProductCategoriesInput>;
+    @Field(() => [ProductUpsertWithWhereUniqueWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductUpsertWithWhereUniqueWithoutProductCategoriesInput)
+    upsert?: Array<ProductUpsertWithWhereUniqueWithoutProductCategoriesInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    set?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    disconnect?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    delete?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductUpdateWithWhereUniqueWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductUpdateWithWhereUniqueWithoutProductCategoriesInput)
+    update?: Array<ProductUpdateWithWhereUniqueWithoutProductCategoriesInput>;
+    @Field(() => [ProductUpdateManyWithWhereWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductUpdateManyWithWhereWithoutProductCategoriesInput)
+    updateMany?: Array<ProductUpdateManyWithWhereWithoutProductCategoriesInput>;
+    @Field(() => [ProductScalarWhereInput], {nullable:true})
+    @Type(() => ProductScalarWhereInput)
+    deleteMany?: Array<ProductScalarWhereInput>;
+}
+
+@InputType()
+export class ProductUncheckedUpdateManyWithoutProductsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
 }
 
 @InputType()
@@ -2852,6 +3059,8 @@ export class ProductUncheckedUpdateWithoutAvailableColorsInput {
     discountPrice?: number;
     @Field(() => ImageUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
     images?: InstanceType<typeof ImageUncheckedUpdateManyWithoutProductNestedInput>;
+    @Field(() => ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput>;
 }
 
 @InputType()
@@ -2867,6 +3076,27 @@ export class ProductUncheckedUpdateWithoutImagesInput {
     price?: number;
     @Field(() => Int, {nullable:true})
     discountPrice?: number;
+    @Field(() => RgbColorUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUncheckedUpdateManyWithoutProductNestedInput>;
+    @Field(() => ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput>;
+}
+
+@InputType()
+export class ProductUncheckedUpdateWithoutProductCategoriesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
+    images?: InstanceType<typeof ImageUncheckedUpdateManyWithoutProductNestedInput>;
     @Field(() => RgbColorUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorUncheckedUpdateManyWithoutProductNestedInput>;
 }
@@ -2888,6 +3118,8 @@ export class ProductUncheckedUpdateInput {
     images?: InstanceType<typeof ImageUncheckedUpdateManyWithoutProductNestedInput>;
     @Field(() => RgbColorUncheckedUpdateManyWithoutProductNestedInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorUncheckedUpdateManyWithoutProductNestedInput>;
+    @Field(() => ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput>;
 }
 
 @InputType()
@@ -2903,6 +3135,50 @@ export class ProductUpdateManyMutationInput {
     price?: number;
     @Field(() => Int, {nullable:true})
     discountPrice?: number;
+}
+
+@InputType()
+export class ProductUpdateManyWithWhereWithoutProductCategoriesInput {
+    @Field(() => ProductScalarWhereInput, {nullable:false})
+    @Type(() => ProductScalarWhereInput)
+    where!: InstanceType<typeof ProductScalarWhereInput>;
+    @Field(() => ProductUpdateManyMutationInput, {nullable:false})
+    @Type(() => ProductUpdateManyMutationInput)
+    data!: InstanceType<typeof ProductUpdateManyMutationInput>;
+}
+
+@InputType()
+export class ProductUpdateManyWithoutProductCategoriesNestedInput {
+    @Field(() => [ProductCreateWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateWithoutProductCategoriesInput)
+    create?: Array<ProductCreateWithoutProductCategoriesInput>;
+    @Field(() => [ProductCreateOrConnectWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductCreateOrConnectWithoutProductCategoriesInput)
+    connectOrCreate?: Array<ProductCreateOrConnectWithoutProductCategoriesInput>;
+    @Field(() => [ProductUpsertWithWhereUniqueWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductUpsertWithWhereUniqueWithoutProductCategoriesInput)
+    upsert?: Array<ProductUpsertWithWhereUniqueWithoutProductCategoriesInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    set?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    disconnect?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    delete?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductWhereUniqueInput], {nullable:true})
+    @Type(() => ProductWhereUniqueInput)
+    connect?: Array<ProductWhereUniqueInput>;
+    @Field(() => [ProductUpdateWithWhereUniqueWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductUpdateWithWhereUniqueWithoutProductCategoriesInput)
+    update?: Array<ProductUpdateWithWhereUniqueWithoutProductCategoriesInput>;
+    @Field(() => [ProductUpdateManyWithWhereWithoutProductCategoriesInput], {nullable:true})
+    @Type(() => ProductUpdateManyWithWhereWithoutProductCategoriesInput)
+    updateMany?: Array<ProductUpdateManyWithWhereWithoutProductCategoriesInput>;
+    @Field(() => [ProductScalarWhereInput], {nullable:true})
+    @Type(() => ProductScalarWhereInput)
+    deleteMany?: Array<ProductScalarWhereInput>;
 }
 
 @InputType()
@@ -2952,6 +3228,16 @@ export class ProductUpdateOneWithoutImagesNestedInput {
 }
 
 @InputType()
+export class ProductUpdateWithWhereUniqueWithoutProductCategoriesInput {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductUpdateWithoutProductCategoriesInput, {nullable:false})
+    @Type(() => ProductUpdateWithoutProductCategoriesInput)
+    data!: InstanceType<typeof ProductUpdateWithoutProductCategoriesInput>;
+}
+
+@InputType()
 export class ProductUpdateWithoutAvailableColorsInput {
     @Field(() => String, {nullable:true})
     id?: string;
@@ -2966,6 +3252,8 @@ export class ProductUpdateWithoutAvailableColorsInput {
     discountPrice?: number;
     @Field(() => ImageUpdateManyWithoutProductNestedInput, {nullable:true})
     images?: InstanceType<typeof ImageUpdateManyWithoutProductNestedInput>;
+    @Field(() => ProductCategoryUpdateManyWithoutProductsNestedInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUpdateManyWithoutProductsNestedInput>;
 }
 
 @InputType()
@@ -2981,6 +3269,27 @@ export class ProductUpdateWithoutImagesInput {
     price?: number;
     @Field(() => Int, {nullable:true})
     discountPrice?: number;
+    @Field(() => RgbColorUpdateManyWithoutProductNestedInput, {nullable:true})
+    availableColors?: InstanceType<typeof RgbColorUpdateManyWithoutProductNestedInput>;
+    @Field(() => ProductCategoryUpdateManyWithoutProductsNestedInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUpdateManyWithoutProductsNestedInput>;
+}
+
+@InputType()
+export class ProductUpdateWithoutProductCategoriesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => Int, {nullable:true})
+    price?: number;
+    @Field(() => Int, {nullable:true})
+    discountPrice?: number;
+    @Field(() => ImageUpdateManyWithoutProductNestedInput, {nullable:true})
+    images?: InstanceType<typeof ImageUpdateManyWithoutProductNestedInput>;
     @Field(() => RgbColorUpdateManyWithoutProductNestedInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorUpdateManyWithoutProductNestedInput>;
 }
@@ -3002,6 +3311,21 @@ export class ProductUpdateInput {
     images?: InstanceType<typeof ImageUpdateManyWithoutProductNestedInput>;
     @Field(() => RgbColorUpdateManyWithoutProductNestedInput, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorUpdateManyWithoutProductNestedInput>;
+    @Field(() => ProductCategoryUpdateManyWithoutProductsNestedInput, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryUpdateManyWithoutProductsNestedInput>;
+}
+
+@InputType()
+export class ProductUpsertWithWhereUniqueWithoutProductCategoriesInput {
+    @Field(() => ProductWhereUniqueInput, {nullable:false})
+    @Type(() => ProductWhereUniqueInput)
+    where!: InstanceType<typeof ProductWhereUniqueInput>;
+    @Field(() => ProductUpdateWithoutProductCategoriesInput, {nullable:false})
+    @Type(() => ProductUpdateWithoutProductCategoriesInput)
+    update!: InstanceType<typeof ProductUpdateWithoutProductCategoriesInput>;
+    @Field(() => ProductCreateWithoutProductCategoriesInput, {nullable:false})
+    @Type(() => ProductCreateWithoutProductCategoriesInput)
+    create!: InstanceType<typeof ProductCreateWithoutProductCategoriesInput>;
 }
 
 @InputType()
@@ -3055,6 +3379,8 @@ export class ProductWhereInput {
     images?: InstanceType<typeof ImageListRelationFilter>;
     @Field(() => RgbColorListRelationFilter, {nullable:true})
     availableColors?: InstanceType<typeof RgbColorListRelationFilter>;
+    @Field(() => ProductCategoryListRelationFilter, {nullable:true})
+    productCategories?: InstanceType<typeof ProductCategoryListRelationFilter>;
 }
 
 @ObjectType()
@@ -3081,6 +3407,8 @@ export class Product {
     images?: Array<Image>;
     @Field(() => [RgbColor], {nullable:true})
     availableColors?: Array<RgbColor>;
+    @Field(() => [ProductCategory], {nullable:true})
+    productCategories?: Array<ProductCategory>;
     @Field(() => ProductCount, {nullable:false})
     _count?: InstanceType<typeof ProductCount>;
 }
@@ -3121,6 +3449,617 @@ export class UpsertOneProductArgs {
     @Field(() => ProductUpdateInput, {nullable:false})
     @Type(() => ProductUpdateInput)
     update!: InstanceType<typeof ProductUpdateInput>;
+}
+
+@ObjectType()
+export class AggregateProductCategory {
+    @Field(() => ProductCategoryCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof ProductCategoryCountAggregate>;
+    @Field(() => ProductCategoryMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof ProductCategoryMinAggregate>;
+    @Field(() => ProductCategoryMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof ProductCategoryMaxAggregate>;
+}
+
+@ArgsType()
+export class CreateManyProductCategoryArgs {
+    @Field(() => [ProductCategoryCreateManyInput], {nullable:false})
+    @Type(() => ProductCategoryCreateManyInput)
+    @ValidateNested()
+    data!: Array<ProductCategoryCreateManyInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@ArgsType()
+export class CreateOneProductCategoryArgs {
+    @Field(() => ProductCategoryCreateInput, {nullable:false})
+    @Type(() => ProductCategoryCreateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ProductCategoryCreateInput>;
+}
+
+@ArgsType()
+export class DeleteManyProductCategoryArgs {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+}
+
+@ArgsType()
+export class DeleteOneProductCategoryArgs {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+}
+
+@ArgsType()
+export class FindFirstProductCategoryOrThrowArgs {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductCategoryOrderByWithRelationInput>;
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [ProductCategoryScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ProductCategoryScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindFirstProductCategoryArgs {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductCategoryOrderByWithRelationInput>;
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [ProductCategoryScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ProductCategoryScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindManyProductCategoryArgs {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<ProductCategoryOrderByWithRelationInput>;
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:true})
+    cursor?: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [ProductCategoryScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof ProductCategoryScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindUniqueProductCategoryOrThrowArgs {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+}
+
+@ArgsType()
+export class FindUniqueProductCategoryArgs {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+}
+
+@InputType()
+export class ProductCategoryCountAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+    @Field(() => Boolean, {nullable:true})
+    _all?: true;
+}
+
+@ObjectType()
+export class ProductCategoryCountAggregate {
+    @Field(() => Int, {nullable:false})
+    id!: number;
+    @Field(() => Int, {nullable:false})
+    name!: number;
+    @Field(() => Int, {nullable:false})
+    _all!: number;
+}
+
+@InputType()
+export class ProductCategoryCountOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductCategoryCreateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+}
+
+@InputType()
+export class ProductCategoryCreateNestedManyWithoutProductsInput {
+    @Field(() => [ProductCategoryCreateWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateWithoutProductsInput)
+    create?: Array<ProductCategoryCreateWithoutProductsInput>;
+    @Field(() => [ProductCategoryCreateOrConnectWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateOrConnectWithoutProductsInput)
+    connectOrCreate?: Array<ProductCategoryCreateOrConnectWithoutProductsInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    connect?: Array<ProductCategoryWhereUniqueInput>;
+}
+
+@InputType()
+export class ProductCategoryCreateOrConnectWithoutProductsInput {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => ProductCategoryCreateWithoutProductsInput, {nullable:false})
+    @Type(() => ProductCategoryCreateWithoutProductsInput)
+    create!: InstanceType<typeof ProductCategoryCreateWithoutProductsInput>;
+}
+
+@InputType()
+export class ProductCategoryCreateWithoutProductsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+}
+
+@InputType()
+export class ProductCategoryCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+    @Field(() => ProductCreateNestedManyWithoutProductCategoriesInput, {nullable:true})
+    products?: InstanceType<typeof ProductCreateNestedManyWithoutProductCategoriesInput>;
+}
+
+@ArgsType()
+export class ProductCategoryGroupByArgs {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryOrderByWithAggregationInput], {nullable:true})
+    orderBy?: Array<ProductCategoryOrderByWithAggregationInput>;
+    @Field(() => [ProductCategoryScalarFieldEnum], {nullable:false})
+    by!: Array<keyof typeof ProductCategoryScalarFieldEnum>;
+    @Field(() => ProductCategoryScalarWhereWithAggregatesInput, {nullable:true})
+    having?: InstanceType<typeof ProductCategoryScalarWhereWithAggregatesInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => ProductCategoryCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ProductCategoryCountAggregateInput>;
+    @Field(() => ProductCategoryMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ProductCategoryMinAggregateInput>;
+    @Field(() => ProductCategoryMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ProductCategoryMaxAggregateInput>;
+}
+
+@ObjectType()
+export class ProductCategoryGroupBy {
+    @Field(() => String, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+    @Field(() => ProductCategoryCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof ProductCategoryCountAggregate>;
+    @Field(() => ProductCategoryMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof ProductCategoryMinAggregate>;
+    @Field(() => ProductCategoryMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof ProductCategoryMaxAggregate>;
+}
+
+@InputType()
+export class ProductCategoryListRelationFilter {
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    every?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    some?: InstanceType<typeof ProductCategoryWhereInput>;
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    none?: InstanceType<typeof ProductCategoryWhereInput>;
+}
+
+@InputType()
+export class ProductCategoryMaxAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+}
+
+@ObjectType()
+export class ProductCategoryMaxAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryMaxOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductCategoryMinAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+}
+
+@ObjectType()
+export class ProductCategoryMinAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryMinOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductCategoryOrderByRelationAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    _count?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class ProductCategoryOrderByWithAggregationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => ProductCategoryCountOrderByAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof ProductCategoryCountOrderByAggregateInput>;
+    @Field(() => ProductCategoryMaxOrderByAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof ProductCategoryMaxOrderByAggregateInput>;
+    @Field(() => ProductCategoryMinOrderByAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof ProductCategoryMinOrderByAggregateInput>;
+}
+
+@InputType()
+export class ProductCategoryOrderByWithRelationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+    @Field(() => ProductOrderByRelationAggregateInput, {nullable:true})
+    products?: InstanceType<typeof ProductOrderByRelationAggregateInput>;
+}
+
+@InputType()
+export class ProductCategoryScalarWhereWithAggregatesInput {
+    @Field(() => [ProductCategoryScalarWhereWithAggregatesInput], {nullable:true})
+    AND?: Array<ProductCategoryScalarWhereWithAggregatesInput>;
+    @Field(() => [ProductCategoryScalarWhereWithAggregatesInput], {nullable:true})
+    OR?: Array<ProductCategoryScalarWhereWithAggregatesInput>;
+    @Field(() => [ProductCategoryScalarWhereWithAggregatesInput], {nullable:true})
+    NOT?: Array<ProductCategoryScalarWhereWithAggregatesInput>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    id?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    name?: InstanceType<typeof StringWithAggregatesFilter>;
+}
+
+@InputType()
+export class ProductCategoryScalarWhereInput {
+    @Field(() => [ProductCategoryScalarWhereInput], {nullable:true})
+    AND?: Array<ProductCategoryScalarWhereInput>;
+    @Field(() => [ProductCategoryScalarWhereInput], {nullable:true})
+    OR?: Array<ProductCategoryScalarWhereInput>;
+    @Field(() => [ProductCategoryScalarWhereInput], {nullable:true})
+    NOT?: Array<ProductCategoryScalarWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    name?: InstanceType<typeof StringFilter>;
+}
+
+@InputType()
+export class ProductCategoryUncheckedCreateNestedManyWithoutProductsInput {
+    @Field(() => [ProductCategoryCreateWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateWithoutProductsInput)
+    create?: Array<ProductCategoryCreateWithoutProductsInput>;
+    @Field(() => [ProductCategoryCreateOrConnectWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateOrConnectWithoutProductsInput)
+    connectOrCreate?: Array<ProductCategoryCreateOrConnectWithoutProductsInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    connect?: Array<ProductCategoryWhereUniqueInput>;
+}
+
+@InputType()
+export class ProductCategoryUncheckedCreateWithoutProductsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+}
+
+@InputType()
+export class ProductCategoryUncheckedCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+    @Field(() => ProductUncheckedCreateNestedManyWithoutProductCategoriesInput, {nullable:true})
+    products?: InstanceType<typeof ProductUncheckedCreateNestedManyWithoutProductCategoriesInput>;
+}
+
+@InputType()
+export class ProductCategoryUncheckedUpdateManyWithoutProductCategoriesInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryUncheckedUpdateManyWithoutProductsNestedInput {
+    @Field(() => [ProductCategoryCreateWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateWithoutProductsInput)
+    create?: Array<ProductCategoryCreateWithoutProductsInput>;
+    @Field(() => [ProductCategoryCreateOrConnectWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateOrConnectWithoutProductsInput)
+    connectOrCreate?: Array<ProductCategoryCreateOrConnectWithoutProductsInput>;
+    @Field(() => [ProductCategoryUpsertWithWhereUniqueWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryUpsertWithWhereUniqueWithoutProductsInput)
+    upsert?: Array<ProductCategoryUpsertWithWhereUniqueWithoutProductsInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    set?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    disconnect?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    delete?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    connect?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryUpdateWithWhereUniqueWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryUpdateWithWhereUniqueWithoutProductsInput)
+    update?: Array<ProductCategoryUpdateWithWhereUniqueWithoutProductsInput>;
+    @Field(() => [ProductCategoryUpdateManyWithWhereWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryUpdateManyWithWhereWithoutProductsInput)
+    updateMany?: Array<ProductCategoryUpdateManyWithWhereWithoutProductsInput>;
+    @Field(() => [ProductCategoryScalarWhereInput], {nullable:true})
+    @Type(() => ProductCategoryScalarWhereInput)
+    deleteMany?: Array<ProductCategoryScalarWhereInput>;
+}
+
+@InputType()
+export class ProductCategoryUncheckedUpdateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryUncheckedUpdateWithoutProductsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryUncheckedUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+    @Field(() => ProductUncheckedUpdateManyWithoutProductCategoriesNestedInput, {nullable:true})
+    products?: InstanceType<typeof ProductUncheckedUpdateManyWithoutProductCategoriesNestedInput>;
+}
+
+@InputType()
+export class ProductCategoryUpdateManyMutationInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryUpdateManyWithWhereWithoutProductsInput {
+    @Field(() => ProductCategoryScalarWhereInput, {nullable:false})
+    @Type(() => ProductCategoryScalarWhereInput)
+    where!: InstanceType<typeof ProductCategoryScalarWhereInput>;
+    @Field(() => ProductCategoryUpdateManyMutationInput, {nullable:false})
+    @Type(() => ProductCategoryUpdateManyMutationInput)
+    data!: InstanceType<typeof ProductCategoryUpdateManyMutationInput>;
+}
+
+@InputType()
+export class ProductCategoryUpdateManyWithoutProductsNestedInput {
+    @Field(() => [ProductCategoryCreateWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateWithoutProductsInput)
+    create?: Array<ProductCategoryCreateWithoutProductsInput>;
+    @Field(() => [ProductCategoryCreateOrConnectWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryCreateOrConnectWithoutProductsInput)
+    connectOrCreate?: Array<ProductCategoryCreateOrConnectWithoutProductsInput>;
+    @Field(() => [ProductCategoryUpsertWithWhereUniqueWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryUpsertWithWhereUniqueWithoutProductsInput)
+    upsert?: Array<ProductCategoryUpsertWithWhereUniqueWithoutProductsInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    set?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    disconnect?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    delete?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryWhereUniqueInput], {nullable:true})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    connect?: Array<ProductCategoryWhereUniqueInput>;
+    @Field(() => [ProductCategoryUpdateWithWhereUniqueWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryUpdateWithWhereUniqueWithoutProductsInput)
+    update?: Array<ProductCategoryUpdateWithWhereUniqueWithoutProductsInput>;
+    @Field(() => [ProductCategoryUpdateManyWithWhereWithoutProductsInput], {nullable:true})
+    @Type(() => ProductCategoryUpdateManyWithWhereWithoutProductsInput)
+    updateMany?: Array<ProductCategoryUpdateManyWithWhereWithoutProductsInput>;
+    @Field(() => [ProductCategoryScalarWhereInput], {nullable:true})
+    @Type(() => ProductCategoryScalarWhereInput)
+    deleteMany?: Array<ProductCategoryScalarWhereInput>;
+}
+
+@InputType()
+export class ProductCategoryUpdateWithWhereUniqueWithoutProductsInput {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => ProductCategoryUpdateWithoutProductsInput, {nullable:false})
+    @Type(() => ProductCategoryUpdateWithoutProductsInput)
+    data!: InstanceType<typeof ProductCategoryUpdateWithoutProductsInput>;
+}
+
+@InputType()
+export class ProductCategoryUpdateWithoutProductsInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+    @Field(() => ProductUpdateManyWithoutProductCategoriesNestedInput, {nullable:true})
+    products?: InstanceType<typeof ProductUpdateManyWithoutProductCategoriesNestedInput>;
+}
+
+@InputType()
+export class ProductCategoryUpsertWithWhereUniqueWithoutProductsInput {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => ProductCategoryUpdateWithoutProductsInput, {nullable:false})
+    @Type(() => ProductCategoryUpdateWithoutProductsInput)
+    update!: InstanceType<typeof ProductCategoryUpdateWithoutProductsInput>;
+    @Field(() => ProductCategoryCreateWithoutProductsInput, {nullable:false})
+    @Type(() => ProductCategoryCreateWithoutProductsInput)
+    create!: InstanceType<typeof ProductCategoryCreateWithoutProductsInput>;
+}
+
+@InputType()
+export class ProductCategoryWhereUniqueInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    name?: string;
+}
+
+@InputType()
+export class ProductCategoryWhereInput {
+    @Field(() => [ProductCategoryWhereInput], {nullable:true})
+    AND?: Array<ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryWhereInput], {nullable:true})
+    OR?: Array<ProductCategoryWhereInput>;
+    @Field(() => [ProductCategoryWhereInput], {nullable:true})
+    NOT?: Array<ProductCategoryWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    name?: InstanceType<typeof StringFilter>;
+    @Field(() => ProductListRelationFilter, {nullable:true})
+    products?: InstanceType<typeof ProductListRelationFilter>;
+}
+
+@ObjectType()
+export class ProductCategory {
+    @Field(() => ID, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:false})
+    name!: string;
+    @Field(() => [Product], {nullable:true})
+    products?: Array<Product>;
+    @Field(() => ProductCategoryCount, {nullable:false})
+    _count?: InstanceType<typeof ProductCategoryCount>;
+}
+
+@ArgsType()
+export class UpdateManyProductCategoryArgs {
+    @Field(() => ProductCategoryUpdateManyMutationInput, {nullable:false})
+    @Type(() => ProductCategoryUpdateManyMutationInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ProductCategoryUpdateManyMutationInput>;
+    @Field(() => ProductCategoryWhereInput, {nullable:true})
+    @Type(() => ProductCategoryWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof ProductCategoryWhereInput>;
+}
+
+@ArgsType()
+export class UpdateOneProductCategoryArgs {
+    @Field(() => ProductCategoryUpdateInput, {nullable:false})
+    @Type(() => ProductCategoryUpdateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof ProductCategoryUpdateInput>;
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+}
+
+@ArgsType()
+export class UpsertOneProductCategoryArgs {
+    @Field(() => ProductCategoryWhereUniqueInput, {nullable:false})
+    @Type(() => ProductCategoryWhereUniqueInput)
+    @ValidateNested()
+    where!: InstanceType<typeof ProductCategoryWhereUniqueInput>;
+    @Field(() => ProductCategoryCreateInput, {nullable:false})
+    @Type(() => ProductCategoryCreateInput)
+    create!: InstanceType<typeof ProductCategoryCreateInput>;
+    @Field(() => ProductCategoryUpdateInput, {nullable:false})
+    @Type(() => ProductCategoryUpdateInput)
+    update!: InstanceType<typeof ProductCategoryUpdateInput>;
 }
 
 @ObjectType()

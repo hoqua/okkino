@@ -6,6 +6,7 @@ import { UserModule } from '@okkino/api/feature-user'
 import { APP_PIPE } from '@nestjs/core'
 import { HomeBlockModule } from '@okkino/api/feature-home-block'
 import { ProductModule } from '@okkino/api/feature-product'
+import { ProductCategoryModule } from '@okkino/api/feature-product-category'
 
 const validationProvider = {
   provide: APP_PIPE,
@@ -21,7 +22,8 @@ const validationProvider = {
     }),
     UserModule,
     HomeBlockModule,
-    ProductModule
+    ProductModule,
+    ProductCategoryModule
   ],
   providers: [validationProvider]
 })
