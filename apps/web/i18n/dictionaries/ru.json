@@ -1,6 +1,15 @@
 {
-  "navBar": {
+  "navigation": {
     "menu": "Меню",
-    "cart": "Корзина"
+    "cart": "Корзина",
+    "shop": "Магазин",
+    "language": "Язык"
+  },
+  "product_categories": {
+    "all": "Все",
+    "coats_and_jackets": "Пальто и куртки",
+    "dresses": "Платья",
+    "new_arrivals": "Новые поступления",
+    "pants_and_skirts": "Брюки и юбки"
   }
 }

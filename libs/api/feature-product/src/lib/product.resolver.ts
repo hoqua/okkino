@@ -7,6 +7,7 @@ import {
   Product,
   UpdateOneProductArgs
 } from '@okkino/api/generated-db-types'
+import { FindAllProductsArgs } from './dto/find-all-products.args'
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -18,8 +19,8 @@ export class ProductResolver {
   }
 
   @Query(() => [Product])
-  products() {
-    return this.productService.findAll()
+  products(@Args() findAllProductsArgs: FindAllProductsArgs) {
+    return this.productService.findAll(findAllProductsArgs)
   }
 
   @Query(() => Product, { name: 'product' })

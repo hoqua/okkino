@@ -7,6 +7,7 @@ import {
 } from '@okkino/api/generated-db-types'
 import { PrismaService } from '@okkino/api/data-access-db'
 import { Prisma } from '@prisma/client'
+import { FindAllProductsArgs } from './dto/find-all-products.args'
 
 const include: Prisma.ProductInclude = {
   images: { include: { rgbBackground: true } },
@@ -24,8 +25,17 @@ export class ProductService {
     })
   }
 
-  findAll() {
-    return this.prisma.product.findMany({ include })
+  findAll(findAllProductsArgs: FindAllProductsArgs) {
+    return this.prisma.product.findMany({
+      where: {
+        productCategories: {
+          some: {
+            name: findAllProductsArgs.productCategory
+          }
+        }
+      },
+      include
+    })
   }
 
   findOne(findUniqueProductArgs: FindUniqueProductArgs) {

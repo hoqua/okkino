@@ -9,8 +9,12 @@ const IMAGES_ON_SCREEN = 6
 
 const { storage } = webEnv
 
-export default async function Page() {
-  const { products } = await gql.GetProducts()
+interface IProductPageProps {
+  searchParams: { category: string }
+}
+
+export default async function Page({ searchParams }: IProductPageProps) {
+  const { products } = await gql.GetProducts({ productCategory: searchParams.category })
 
   return (
     <div className="object grid grid-cols-2 gap-y-5 gap-x-2 md:gap-x-4 md:gap-y-7 lg:grid-cols-3 ">

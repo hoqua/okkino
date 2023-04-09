@@ -9,9 +9,20 @@ import {
   PRODUCTS,
   USERS_SEED_DATA
 } from './seed-data'
+import { PRODUCT_CATEGORIES } from './seed-data.prod'
 const prisma = new PrismaClient()
 
 async function main() {
+  await Promise.all(
+    PRODUCT_CATEGORIES.map((category) => {
+      return prisma.productCategory.upsert({
+        where: { name: category.name },
+        update: category,
+        create: category
+      })
+    })
+  )
+
   await Promise.all(
     USERS_SEED_DATA.map((user) => {
       return prisma.user.upsert({

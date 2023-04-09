@@ -68,6 +68,7 @@ model Product {
   discountPrice Int?
   images          Image[]
   availableColors RgbColor[]
+  productCategories ProductCategory[]
 }
 
 model Image {
@@ -113,4 +114,12 @@ model RgbColor {
   /// @HideField()
   productId String?
   Image     Image[]
+}
+
+
+model ProductCategory {
+  id String @id @default(uuid())
+
+  name String @unique
+  products Product[]
 }

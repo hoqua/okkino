@@ -5,7 +5,9 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { i18n, Locale } from '../../i18n/i18n-config'
 import { getDictionary } from '../../i18n/get-dirctionary'
-import LocaleSwitcher from './component/locale-switcher'
+import { gql } from '../../data-access/graphq-client'
+import { LocaleSwitcher } from './components/menu/common/locale-switcher'
+import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -25,7 +27,8 @@ export default async function RootLayout({
   children: ReactNode
   params: { lang: Locale }
 }) {
-  const { navBar } = await getDictionary(params.lang)
+  const t = await getDictionary(params.lang)
+  const { productCategories } = await gql.GetProductCategories()
 
   return (
     <html lang={params.lang} className={lato.className}>
@@ -43,14 +46,14 @@ export default async function RootLayout({
             </Link>
 
             <div className="flex items-center gap-10">
-              <Link href={'/menu'} className="text-xs uppercase text-black">
-                {navBar.menu}
-              </Link>
-              <Link href={'/cart'} className="text-xs uppercase text-black">
-                {navBar.cart}
-              </Link>
+              <MobileMenu
+                navigationTranslation={t.navigation}
+                productCategoriesTranslation={t.product_categories}
+                productCategories={productCategories}
+                locale={params.lang}
+              />
 
-              <LocaleSwitcher />
+              <LocaleSwitcher locale={params.lang} />
             </div>
           </nav>
           {children}

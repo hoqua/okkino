@@ -13,10 +13,17 @@ export type GetHomeImagesVariables = Types.Exact<{ [key: string]: never; }>;
 
 export type GetHomeImages = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, navigationPath: string, image: { __typename?: 'Image', title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } } }> };
 
-export type GetProductsVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetProductsVariables = Types.Exact<{
+  productCategory?: Types.InputMaybe<Types.Scalars['String']>;
+}>;
 
 
 export type GetProducts = { __typename?: 'Query', products: Array<{ __typename?: 'Product', name: string, price: number, discountPrice?: number | null, images?: Array<{ __typename?: 'Image', title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', r: number, g: number, b: number }> | null }> };
+
+export type GetProductCategoriesVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetProductCategories = { __typename?: 'Query', productCategories: Array<{ __typename?: 'ProductCategory', name: string }> };
 
 
 export const GetUsersDocument = /*#__PURE__*/ gql`
@@ -46,8 +53,8 @@ export const GetHomeImagesDocument = /*#__PURE__*/ gql`
 }
     `;
 export const GetProductsDocument = /*#__PURE__*/ gql`
-    query GetProducts {
-  products {
+    query GetProducts($productCategory: String) {
+  products(productCategory: $productCategory) {
     name
     price
     discountPrice
@@ -68,6 +75,13 @@ export const GetProductsDocument = /*#__PURE__*/ gql`
   }
 }
     `;
+export const GetProductCategoriesDocument = /*#__PURE__*/ gql`
+    query GetProductCategories {
+  productCategories {
+    name
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -84,6 +98,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetProducts(variables?: GetProductsVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProducts> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProducts>(GetProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProducts', 'query');
+    },
+    GetProductCategories(variables?: GetProductCategoriesVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProductCategories> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductCategories>(GetProductCategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductCategories', 'query');
     }
   };
 }
