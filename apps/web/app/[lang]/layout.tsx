@@ -8,6 +8,7 @@ import { getDictionary } from '../../i18n/get-dirctionary'
 import { gql } from '../../data-access/graphq-client'
 import { LocaleSwitcher } from './components/menu/common/locale-switcher'
 import MobileMenu from './components/menu/mobile-menu/mobile-menu'
+import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -46,6 +47,13 @@ export default async function RootLayout({
             </Link>
 
             <div className="flex items-center gap-10">
+              <DesktopMenu
+                navigationTranslation={t.navigation}
+                productCategoriesTranslation={t.product_categories}
+                productCategories={productCategories}
+                locale={params.lang}
+              />
+
               <MobileMenu
                 navigationTranslation={t.navigation}
                 productCategoriesTranslation={t.product_categories}
