@@ -53,6 +53,7 @@ export default async function RootLayout({
                 productCategories={productCategories}
                 locale={params.lang}
               />
+
               <MobileMenu
                 navigationTranslation={t.navigation}
                 productCategoriesTranslation={t.product_categories}
