@@ -1,18 +1,50 @@
 import { PrismaClient } from '@prisma/client'
 import {
-  COLORS,
   HOME_BLOCK_DATA,
   HOME_BLOCK_IMAGES,
-  HOME_BLOCKS_COLORS_DATA,
   PRODUCT_COVER_IMAGES,
   PRODUCT_DATA,
   PRODUCTS,
   USERS_SEED_DATA
 } from './seed-data'
-import { PRODUCT_CATEGORIES } from './seed-data.prod'
+import {
+  PRODUCT_CATEGORIES,
+  PRODUCT_COLORS,
+  PRODUCT_LENGTHS,
+  PRODUCT_SIZES
+} from './seed-data.prod'
 const prisma = new PrismaClient()
 
 async function main() {
+  await Promise.all(
+    PRODUCT_LENGTHS.map((length) => {
+      return prisma.productLength.upsert({
+        where: { name: length.name },
+        update: length,
+        create: length
+      })
+    })
+  )
+  await Promise.all(
+    PRODUCT_COLORS.map((color) => {
+      return prisma.rgbColor.upsert({
+        where: { name: color.name },
+        update: color,
+        create: color
+      })
+    })
+  )
+
+  await Promise.all(
+    PRODUCT_SIZES.map((size) => {
+      return prisma.productSize.upsert({
+        where: { name: size.name },
+        update: size,
+        create: size
+      })
+    })
+  )
+
   await Promise.all(
     PRODUCT_CATEGORIES.map((category) => {
       return prisma.productCategory.upsert({
@@ -29,16 +61,6 @@ async function main() {
         where: { id: user.id },
         update: user,
         create: user
-      })
-    })
-  )
-
-  await Promise.all(
-    HOME_BLOCKS_COLORS_DATA.map((color) => {
-      return prisma.rgbColor.upsert({
-        where: { id: color.id },
-        update: color,
-        create: color
       })
     })
   )
@@ -93,20 +115,6 @@ async function main() {
         }
       })
     }
-  }
-
-  for (const product of PRODUCTS) {
-    await prisma.rgbColor.upsert({
-      where: { id: product + 1 },
-      create: { ...COLORS[0].color, productId: product, id: product + 1 },
-      update: { ...COLORS[0].color, productId: product, id: product + 1 }
-    })
-
-    await prisma.rgbColor.upsert({
-      where: { id: product + 2 },
-      create: { ...COLORS[1].color, productId: product, id: product + 2 },
-      update: { ...COLORS[1].color, productId: product, id: product + 2 }
-    })
   }
 }
 

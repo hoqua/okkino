@@ -11,7 +11,7 @@ export const ProductColors: FC<IProps> = (props) => {
   const { colors } = props
 
   return (
-    <div className="absolute left-2 bottom-2 flex justify-between gap-x-2 md:bottom-[calc(-8px-24px)]">
+    <div className="absolute left-2 bottom-2 flex justify-between gap-x-2 md:bottom-[calc(-8px-24px)] md:left-0 md:gap-x-6">
       {colors.map(({ r, g, b }) => (
         <div
           key={r + g + b}

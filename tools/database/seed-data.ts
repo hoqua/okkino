@@ -1,10 +1,9 @@
 import {
   HomeBlockCreateInput,
   ProductCreateInput,
-  RgbColorCreateInput,
   User
 } from '../../libs/api/generated-db-types/src'
-import { PRODUCT_CATEGORIES } from './seed-data.prod'
+import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from './seed-data.prod'
 
 export const USERS_SEED_DATA: User[] = [
   {
@@ -15,26 +14,6 @@ export const USERS_SEED_DATA: User[] = [
   }
 ]
 
-export const COLORS = [
-  {
-    id: 'gray',
-    color: { r: 235, g: 235, b: 233 }
-  },
-  {
-    id: 'beige',
-    color: { r: 244, g: 235, b: 213 }
-  }
-]
-
-export const HOME_BLOCKS_COLORS_DATA: RgbColorCreateInput[] = COLORS.map((color) => {
-  return {
-    id: color.id,
-    r: color.color.r,
-    g: color.color.g,
-    b: color.color.b
-  }
-})
-
 const HOME_BLOCKS = ['left', 'right']
 
 export const HOME_BLOCK_IMAGES = HOME_BLOCKS.map((block) => {
@@ -42,14 +21,14 @@ export const HOME_BLOCK_IMAGES = HOME_BLOCKS.map((block) => {
     id: block,
     title: block,
     imagePath: `home-block/${block}.png`,
-    rgbBackground: { connect: { id: HOME_BLOCKS_COLORS_DATA[0].id } }
+    rgbBackground: { connect: { name: PRODUCT_COLORS[0].name } }
   }
 })
 
 export const HOME_BLOCK_DATA: HomeBlockCreateInput[] = HOME_BLOCKS.map((block) => {
   return {
     id: block,
-    navigationPath: '/shop',
+    navigationPath: '/shop/all',
     image: {
       connect: { id: block }
     }
@@ -70,10 +49,18 @@ export const PRODUCT_COVER_IMAGES = PRODUCTS.map((product) => {
     id: product,
     imagePath: `products/${product}.png`,
     title: product,
-    rgbBackground: { connect: { id: HOME_BLOCKS_COLORS_DATA[0].id } }
+    rgbBackground: { connect: { name: PRODUCT_COLORS[1].name } }
   }
 })
 
+const productDescription = `
+<p>OK KINO 'Ia' dress with a shaped belt. The geometry of the belt is impressed by the work of sculptor Constantin Brancusi 'Endless Column'. It's made from soft wool in a loose shape that can be cinched with the detachable belt. Dress has a viscose lining in the bust area, side slits and sleeve cuffs.</p>
+<p>100% wool, 100% viscose lining</p>
+<p></p>
+<p>Dry clean is recommended</p>
+<p></p>
+<p>Made in Moldova.</p>
+`
 export const PRODUCT_DATA: ProductCreateInput[] = PRODUCTS.map((product, index) => {
   return {
     id: product,
@@ -81,11 +68,37 @@ export const PRODUCT_DATA: ProductCreateInput[] = PRODUCTS.map((product, index) 
     price: 100 + index * 100,
     discountPrice: 100 * index,
     images: {},
-    availableColors: {},
+    description: productDescription,
     productCategories: {
       connect: [
         {
           name: PRODUCT_CATEGORIES[index % PRODUCT_CATEGORIES.length].name
+        }
+      ]
+    },
+    productSizes: {
+      connect: [
+        {
+          name: PRODUCT_SIZES[0].name
+        },
+        {
+          name: PRODUCT_SIZES[1].name
+        },
+        {
+          name: PRODUCT_SIZES[2].name
+        }
+      ]
+    },
+    availableColors: {
+      connect: [
+        {
+          name: PRODUCT_COLORS[0].name
+        },
+        {
+          name: PRODUCT_COLORS[1].name
+        },
+        {
+          name: PRODUCT_COLORS[2].name
         }
       ]
     }

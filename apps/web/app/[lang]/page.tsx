@@ -3,9 +3,16 @@ import { webEnv } from '../../environments/environment'
 import Image from 'next/image'
 import Link from 'next/link'
 import { rgbToDataUrl } from '@okkino/web/utils-shared'
+import { Locale } from '../../i18n/i18n-config'
+import { getI18nNavigationPath } from './components/common/utils'
 
 const { storage } = webEnv
-export default async function Page() {
+
+interface IPageParams {
+  params: { lang: Locale }
+}
+
+export default async function Page({ params }: IPageParams) {
   const { homeBlocks } = await gql.GetHomeImages()
 
   return (
@@ -14,7 +21,7 @@ export default async function Page() {
         const { r, g, b } = block.image.rgbBackground
         return (
           <Link
-            href={block.navigationPath}
+            href={getI18nNavigationPath(params.lang, block.navigationPath)}
             key={block.id}
             className="
              relative block flex

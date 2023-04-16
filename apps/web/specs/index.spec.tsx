@@ -8,7 +8,9 @@ gql.GetHomeImages = jest.fn().mockResolvedValue({ homeBlocks: [] })
 
 describe('Index', () => {
   it('should render successfully', async () => {
-    const { baseElement } = render((await Page()) as unknown as React.ReactElement)
+    const { baseElement } = render(
+      (await Page({ params: { lang: 'en' } })) as unknown as React.ReactElement
+    )
     expect(baseElement).toBeTruthy()
   })
 })
