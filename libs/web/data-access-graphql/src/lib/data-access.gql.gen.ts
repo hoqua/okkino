@@ -25,6 +25,18 @@ export type GetProductCategoriesVariables = Types.Exact<{ [key: string]: never; 
 
 export type GetProductCategories = { __typename?: 'Query', productCategories: Array<{ __typename?: 'ProductCategory', name: string }> };
 
+export type GetProductLengthsVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetProductLengths = { __typename?: 'Query', productLengths: Array<{ __typename?: 'ProductLength', name: string }> };
+
+export type GetProductVariables = Types.Exact<{
+  where: Types.ProductWhereUniqueInput;
+}>;
+
+
+export type GetProduct = { __typename?: 'Query', product: { __typename?: 'Product', name: string, description?: string | null, price: number, discountPrice?: number | null, productSizes?: Array<{ __typename?: 'ProductSize', name: string }> | null, images?: Array<{ __typename?: 'Image', id: string, title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', name?: string | null, r: number, g: number, b: number }> | null } };
+
 
 export const GetUsersDocument = /*#__PURE__*/ gql`
     query GetUsers {
@@ -82,6 +94,42 @@ export const GetProductCategoriesDocument = /*#__PURE__*/ gql`
   }
 }
     `;
+export const GetProductLengthsDocument = /*#__PURE__*/ gql`
+    query GetProductLengths {
+  productLengths {
+    name
+  }
+}
+    `;
+export const GetProductDocument = /*#__PURE__*/ gql`
+    query GetProduct($where: ProductWhereUniqueInput!) {
+  product(where: $where) {
+    name
+    description
+    price
+    discountPrice
+    productSizes {
+      name
+    }
+    images {
+      id
+      title
+      imagePath
+      rgbBackground {
+        r
+        g
+        b
+      }
+    }
+    availableColors {
+      name
+      r
+      g
+      b
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -101,6 +149,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetProductCategories(variables?: GetProductCategoriesVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProductCategories> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductCategories>(GetProductCategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductCategories', 'query');
+    },
+    GetProductLengths(variables?: GetProductLengthsVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProductLengths> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductLengths>(GetProductLengthsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductLengths', 'query');
+    },
+    GetProduct(variables: GetProductVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProduct> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProduct>(GetProductDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProduct', 'query');
     }
   };
 }

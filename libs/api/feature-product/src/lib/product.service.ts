@@ -11,6 +11,7 @@ import { FindAllProductsArgs } from './dto/find-all-products.args'
 
 const include: Prisma.ProductInclude = {
   images: { include: { rgbBackground: true } },
+  productSizes: true,
   availableColors: true
 }
 

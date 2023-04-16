@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { FC, useState } from 'react'
-import { getTranslationSafe } from '../common/utils'
+import { getTranslationSafe } from '../../common/utils'
 
 interface IProps {
   menuName: string
@@ -29,16 +29,18 @@ export const DesktopSubmenu: FC<IProps> = (props) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {menuName}
+      <span className="okkino-text-hover text-xs uppercase text-black">{menuName}</span>
 
       <div
-        className={'transition-{opacity} absolute  h-0 w-full duration-300' + ' ' + activeClasses}
+        className={
+          'transition-{opacity} absolute  h-0 w-full duration-300 ease-in-out' + ' ' + activeClasses
+        }
       >
         <ul>
           {itemsList.map((itemKeyName) => (
             <li
               key={itemKeyName}
-              className="relative mb-4 mt-4  cursor-pointer  text-xs uppercase tracking-wide"
+              className="transition-color okkino-text-hover relative  mb-4 mt-4 text-xs uppercase tracking-wide"
             >
               <Link href={getNavigationPath(itemKeyName)}>
                 {getTranslationSafe(translations, itemKeyName)}

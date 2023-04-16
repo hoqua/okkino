@@ -59,3 +59,41 @@ const GET_PRODUCT_CATEGORIES = gql`
     }
   }
 `
+
+const GET_PRODUCT_LENGTHS = gql`
+  query GetProductLengths {
+    productLengths {
+      name
+    }
+  }
+`
+
+const GET_PRODUCT = gql`
+  query GetProduct($where: ProductWhereUniqueInput!) {
+    product(where: $where) {
+      name
+      description
+      price
+      discountPrice
+      productSizes {
+        name
+      }
+      images {
+        id
+        title
+        imagePath
+        rgbBackground {
+          r
+          g
+          b
+        }
+      }
+      availableColors {
+        name
+        r
+        g
+        b
+      }
+    }
+  }
+`

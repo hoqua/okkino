@@ -2,9 +2,9 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { i18n, Locale } from '../../../../../i18n/i18n-config'
+import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { FC, useState } from 'react'
-import { redirectedPathName } from './utils'
+import { redirectedPathName } from '../common/utils'
 
 interface IProps {
   locale: Locale
@@ -32,12 +32,16 @@ export const LocaleSwitcher: FC<IProps> = (props) => {
     >
       {currentLocale}
 
-      <div className={'transition-{opacity} absolute w-full duration-300' + ' ' + activeClasses}>
+      <div
+        className={
+          'transition-{opacity} absolute w-full duration-300 ease-in-out' + ' ' + activeClasses
+        }
+      >
         <ul>
           {otherLocales.map((locale) => (
             <li
               key={locale}
-              className="relative mb-4 mt-4  cursor-pointer  text-xs uppercase tracking-wide"
+              className="okkino-text-hover relative mb-4 mt-4 text-xs uppercase tracking-wide"
             >
               <Link href={redirectedPathName(pathName, locale)}>{locale}</Link>
             </li>

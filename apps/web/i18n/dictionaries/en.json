@@ -1,15 +1,49 @@
 {
-  "navigation": {
-    "menu": "Menu",
-    "cart": "Cart",
-    "shop": "Shop",
-    "language": "Language"
-  },
+  "navigation": { "menu": "Menu", "cart": "Cart", "shop": "Shop", "language": "Language" },
   "product_categories": {
     "all": "All",
     "coats_and_jackets": "Coats and jackets",
     "dresses": "Dresses",
     "new_arrivals": "New Arrivals",
     "pants_and_skirts": "Pants and skirts"
+  },
+  "product": {
+    "size_guide": "Size guide",
+    "size": "Size",
+    "color": "Color",
+    "length": "Length",
+    "add_to_cart": "Add to cart",
+    "buy_now": "Buy now",
+    "note": "Note: Each item is carefully handcrafted and it will take up to 5 working days to produce."
+  },
+  "size_guide": {
+    "close": "close",
+    "size_and_fit": {
+      "title": "Size and Fit",
+      "fit": "Fits true to size, take your normal size",
+      "materials": "Mid-weight, non-stretchy fabric",
+      "model_size": "Model is 180 cm / 70,8 inch and is wearing a size S and 'Tall' length"
+    },
+    "length": {
+      "title": "Length",
+      "select_height": "In order to ensure that OK KINO clothes fit perfectly, we have provided an option to select your height",
+      "petit": "If your height is up to 164 cm, then select 'Petite'",
+      "regular": "If your height is between 165-175 cm, then select 'Regular'",
+      "tall": "If your height is from 176 cm, then select 'Tall'"
+    },
+    "size_guide": {
+      "title": "Size Guide",
+      "size": "Size",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hips": "Hips"
+    },
+    "how_to_measure": {
+      "title": "How to measure:",
+      "guide": "To choose the correct size for you, measure your body as follows.",
+      "bust": "Bust — Measure around fullest part",
+      "waist": "Waist — Measure around natural waistline",
+      "hips": "Hips — Measure 20cm down from the natural waistline"
+    }
   }
 }

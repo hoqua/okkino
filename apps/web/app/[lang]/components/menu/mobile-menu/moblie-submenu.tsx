@@ -25,7 +25,7 @@ export const MobileSubmenu: FC<ISubmenuProps> = (props) => {
         {itemsList.map((itemKeyName, index) => (
           <li
             key={itemKeyName}
-            className="relative mb-8 mt-8 flex cursor-pointer items-center whitespace-nowrap text-xs uppercase tracking-wide"
+            className="okkino-text-hover relative mb-8 mt-8 flex items-center whitespace-nowrap text-xs uppercase tracking-wide"
           >
             {index === 0 && (
               <svg

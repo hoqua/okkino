@@ -1,3 +1,7 @@
 @tailwind components;
 @tailwind base;
 @tailwind utilities;
+
+.okkino-text-hover {
+  @apply cursor-pointer duration-300 ease-in-out hover:text-gray-600;
+}

@@ -7,7 +7,7 @@ import { GetProductCategories } from '@okkino/web/data-access-graphql'
 import { i18n, Locale } from '../../../../../i18n/i18n-config'
 import { MobileSubmenu } from './moblie-submenu'
 import { usePathname } from 'next/navigation'
-import { redirectedPathName } from '../common/utils'
+import { redirectedPathName } from '../../common/utils'
 
 enum Submenu {
   Shop = 'shop',
@@ -60,7 +60,7 @@ export default function MobileMenu(props: IProps) {
                     itemsList={productCategories.map((category) => category.name)}
                     translations={productCategoriesTranslation}
                     onSubmenuClick={handleSubmenuClick}
-                    getNavigationPath={(itemKeyName) => `/${locale}/shop?category=${itemKeyName}`}
+                    getNavigationPath={(itemKeyName) => `/${locale}/shop/${itemKeyName}`}
                   />
                 )}
               </li>
@@ -90,7 +90,11 @@ export default function MobileMenu(props: IProps) {
               &#10005;
             </button>
 
-            <Link href={'/'} className="absolute bottom-6 left-6" onClick={() => setIsOpen(false)}>
+            <Link
+              href={`/${locale}`}
+              className="absolute bottom-6 left-6"
+              onClick={() => setIsOpen(false)}
+            >
               <Image
                 src={'/logo.svg'}
                 width={85}
