@@ -29,8 +29,8 @@ const GET_HOME_BLOCKS = gql`
 `
 
 const GET_PRODUCTS = gql`
-  query GetProducts {
-    products {
+  query GetProducts($productCategory: String) {
+    products(productCategory: $productCategory) {
       name
       price
       discountPrice
@@ -44,6 +44,52 @@ const GET_PRODUCTS = gql`
         }
       }
       availableColors {
+        r
+        g
+        b
+      }
+    }
+  }
+`
+
+const GET_PRODUCT_CATEGORIES = gql`
+  query GetProductCategories {
+    productCategories {
+      name
+    }
+  }
+`
+
+const GET_PRODUCT_LENGTHS = gql`
+  query GetProductLengths {
+    productLengths {
+      name
+    }
+  }
+`
+
+const GET_PRODUCT = gql`
+  query GetProduct($where: ProductWhereUniqueInput!) {
+    product(where: $where) {
+      name
+      description
+      price
+      discountPrice
+      productSizes {
+        name
+      }
+      images {
+        id
+        title
+        imagePath
+        rgbBackground {
+          r
+          g
+          b
+        }
+      }
+      availableColors {
+        name
         r
         g
         b

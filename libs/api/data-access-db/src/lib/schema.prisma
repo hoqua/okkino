@@ -28,13 +28,13 @@ generator nestgraphql {
 }
 
 model User {
-  id String @id @default(uuid())
+  id       String  @id @default(uuid())
   /// @Validator.IsEmail()
-  email String @unique
+  email    String  @unique
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
-  name String?
+  name     String?
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(8)
@@ -43,74 +43,109 @@ model User {
 }
 
 model HomeBlock {
-  id String @id @default(uuid())
+  id             String @id @default(uuid())
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
   navigationPath String
-  image   Image  @relation(fields: [imageId], references: [id])
-  imageId String @unique
+  image          Image  @relation(fields: [imageId], references: [id])
+  imageId        String @unique
 }
 
 model Product {
-  id String @id @default(uuid())
+  id            String @id @default(uuid())
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
-  name String @unique
+  name          String @unique
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(1000)
+  /// @Validator.MinLength(0)
+  description   String?
   /// @Validator.@IsInt()
   /// @Validator.@Min(1)
   /// @Validator.@Max(100_000)
-  price Int
+  price         Int
   /// @Validator.@IsInt()
   /// @Validator.@Min(1)
   /// @Validator.@Max(100_000)
   discountPrice Int?
-  images          Image[]
-  availableColors RgbColor[]
+
+  images            Image[]
+  availableColors   RgbColor[]
+  productCategories ProductCategory[]
+  productSizes      ProductSize[]
+  productLengths    ProductLength[]
 }
 
 model Image {
-  id String @id @default(uuid())
+  id              String     @id @default(uuid())
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
-  title String?
+  title           String?
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
-  imagePath String
-  rgbBackground   RgbColor @relation(fields: [rgbBackgroundId], references: [id])
+  imagePath       String
+  rgbBackground   RgbColor   @relation(fields: [rgbBackgroundId], references: [id])
   rgbBackgroundId String
   //----Relations----//
   /// @HideField()
-  homeBlock HomeBlock?
+  homeBlock       HomeBlock?
   /// @HideField()
-  product   Product? @relation(fields: [productId], references: [id])
+  product         Product?   @relation(fields: [productId], references: [id])
   /// @HideField()
-  productId String?
+  productId       String?
 }
 
 model RgbColor {
-  id String @id @default(uuid())
+  id       String    @id @default(uuid())
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  name     String?   @unique
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)
-  r Int
+  r        Int
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)
-  g Int
+  g        Int
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)
-  b Int
+  b        Int
   /// @HideField()
-  a Float?
+  a        Float?
   //----Relations----//
   /// @HideField()
-  product   Product? @relation(fields: [productId], references: [id])
+  products Product[]
   /// @HideField()
-  productId String?
-  Image     Image[]
+  Image    Image[]
+}
+
+model ProductCategory {
+  id String @id @default(uuid())
+
+  name     String    @unique
+  /// @HideField()
+  products Product[]
+}
+
+model ProductSize {
+  id String @id @default(uuid())
+
+  name     String    @unique
+  /// @HideField()
+  products Product[]
+}
+
+model ProductLength {
+  id String @id @default(uuid())
+
+  name     String    @unique
+  /// @HideField()
+  products Product[]
 }

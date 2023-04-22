@@ -1,0 +1,49 @@
+{
+  "navigation": { "menu": "Meniu", "cart": "Coș", "shop": "Magazin", "language": "Limbă" },
+  "product_categories": {
+    "all": "Toate",
+    "coats_and_jackets": "Paltoane și jachete",
+    "dresses": "Rochii",
+    "new_arrivals": "Noutăți",
+    "pants_and_skirts": "Pantaloni și fuste"
+  },
+  "product": {
+    "size_guide": "Ghid de mărimi",
+    "size": "Mărime",
+    "color": "Culoare",
+    "length": "Lungime",
+    "add_to_cart": "Adaugă în coș",
+    "buy_now": "Cumpără acum",
+    "note": "Notă: Fiecare articol este făcut manual cu grijă și va dura până la 5 zile lucrătoare pentru a fi produs."
+  },
+  "size_guide": {
+    "close": "închide",
+    "size_and_fit": {
+      "title": "Mărime și potrivire",
+      "fit": "Se potrivește adevărat la mărime, alegeți mărimea dvs. normală",
+      "materials": "Material de greutate medie, non-elastic",
+      "model_size": "Modelul are 180 cm / 70,8 inch și poartă mărimea S și lungimea 'Tall'"
+    },
+    "length": {
+      "title": "Lungime",
+      "select_height": "Pentru a vă asigura că hainele OK KINO se potrivesc perfect, am furnizat o opțiune pentru a vă selecta înălțimea",
+      "petit": "Dacă înălțimea dvs. este până la 164 cm, atunci selectați „Petit”",
+      "regular": "Dacă înălțimea dvs. este între 165-175 cm, atunci selectați „Regular”",
+      "tall": "Dacă înălțimea dvs. este de la 176 cm, atunci selectați „Tall”"
+    },
+    "size_guide": {
+      "title": "Ghid de mărimi",
+      "size": "Mărime",
+      "bust": "Bust",
+      "waist": "Talie",
+      "hips": "Șolduri"
+    },
+    "how_to_measure": {
+      "title": "Cum să măsurați:",
+      "guide": "Pentru a alege mărimea corectă pentru dvs., măsurați corpul după cum urmează.",
+      "bust": "Bust — Măsurați în jurul celei mai pline părți",
+      "waist": "Talie — Măsurați în jurul taliei naturale",
+      "hips": "Șolduri — Măsurați la 20 cm în jos de la talia naturală"
+    }
+  }
+}
