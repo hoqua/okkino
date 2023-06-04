@@ -6,7 +6,7 @@ interface IProps {
   flat?: boolean
 }
 
-export const ProductButton = (props: IProps) => {
+export const Button = (props: IProps) => {
   const { label, onClick, flat = false } = props
 
   return (
