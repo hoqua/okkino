@@ -1,5 +1,4 @@
-import '../../styles/global.css'
-import { Lato } from '@next/font/google'
+import { Lato } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ReactNode } from 'react'

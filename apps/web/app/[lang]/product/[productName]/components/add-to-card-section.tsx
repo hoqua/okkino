@@ -4,7 +4,7 @@ import { FC, useState } from 'react'
 import { Price } from '../../../../shared-components/price'
 import { GetProduct, GetProductLengths } from '@okkino/web/data-access-graphql'
 import { ProductPropsSelector } from './product-props-selector'
-import { ProductButton } from './product-button'
+import { Button } from '../../../../shared-components/button'
 import Link from 'next/link'
 import { getI18nNavigationPath } from '../../../components/common/utils'
 import { Locale } from '../../../../../i18n/i18n-config'
@@ -105,9 +105,9 @@ export const AddToCartSection: FC<IProps> = (props) => {
         <Price price={price} discountPrice={discountPrice} />
 
         <div className="flex xl:flex-row-reverse">
-          <ProductButton label={translations.addToCart} onClick={handleAddToCard} />
+          <Button label={translations.addToCart} onClick={handleAddToCard} />
 
-          <ProductButton label={translations.buyNow} flat onClick={() => ({})} />
+          <Button label={translations.buyNow} flat onClick={() => ({})} />
         </div>
       </div>
     </section>
