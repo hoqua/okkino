@@ -8,11 +8,14 @@ import {
   UpdateOneProductArgs
 } from '@okkino/api/generated-db-types'
 import { FindAllProductsArgs } from './dto/find-all-products.args'
+import { UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@okkino/api/feature-auth'
 
 @Resolver(() => Product)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
+  @UseGuards(AuthGuard)
   @Mutation(() => Product)
   createProduct(@Args() createOneProductArgs: CreateOneProductArgs) {
     return this.productService.create(createOneProductArgs)
@@ -28,11 +31,13 @@ export class ProductResolver {
     return this.productService.findOne(findUniqueProductArgs)
   }
 
+  @UseGuards(AuthGuard)
   @Mutation(() => Product)
   updateProduct(@Args() updateOneProductArgs: UpdateOneProductArgs) {
     return this.productService.update(updateOneProductArgs)
   }
 
+  @UseGuards(AuthGuard)
   @Mutation(() => Product)
   removeProduct(@Args() deleteOneProductArgs: DeleteOneProductArgs) {
     return this.productService.remove(deleteOneProductArgs)
