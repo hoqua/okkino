@@ -16,7 +16,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.OKKINO_WEB_STORAGE_ENDPOINT
+        hostname: String(process.env.OKKINO_WEB_STORAGE_ENDPOINT)
       }
     ]
   }
