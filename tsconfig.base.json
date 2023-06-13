@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@okkino/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
+      "@okkino/api/feature-auth": ["libs/api/feature-auth/src/index.ts"],
       "@okkino/api/feature-home-block": ["libs/api/feature-home-block/src/index.ts"],
       "@okkino/api/feature-product": ["libs/api/feature-product/src/index.ts"],
       "@okkino/api/feature-product-category": ["libs/api/feature-product-category/src/index.ts"],
