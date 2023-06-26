@@ -13,7 +13,7 @@ export default async function Page(props: IProductPageProps) {
   const { size_guide } = await getDictionary(params.lang)
 
   return (
-    <div className="top-16 left-0 h-max bg-white p-6 text-8xl max-sm:absolute max-w-full">
+    <div className="top-16 left-0 h-max max-w-full bg-white p-6 text-8xl max-sm:absolute">
       <div className="flex w-full items-end ">
         <Link
           href={getI18nNavigationPath(params.lang, RouteName.product + '/' + params.productName)}
