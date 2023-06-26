@@ -13,8 +13,8 @@ export default async function Page(props: IProductPageProps) {
   const { size_guide } = await getDictionary(params.lang)
 
   return (
-    <div>
-      <div className="flex w-full items-end">
+    <div className="top-16 left-0 h-max max-w-full bg-white p-6 text-8xl max-sm:absolute">
+      <div className="flex w-full items-end ">
         <Link
           href={getI18nNavigationPath(params.lang, RouteName.product + '/' + params.productName)}
           className="okkino-text-hover w-full text-right text-xs uppercase"
@@ -41,8 +41,8 @@ export default async function Page(props: IProductPageProps) {
 
         <h3 className="mb-1 text-xs uppercase text-gray-700">{size_guide.size_guide.title}</h3>
 
-        <div className="overflow-x-auto">
-          <table className="-ml-10 table-fixed border-separate border-spacing-x-10 border-spacing-y-1  whitespace-nowrap text-left  text-sm text-black">
+        <div className="overflow-x-auto ">
+          <table className="-ml-10 table-fixed border-separate border-spacing-x-10 border-spacing-y-1 whitespace-nowrap text-left  text-sm text-black ">
             <thead>
               <tr>
                 <th className="sticky left-0 bg-white pb-2 text-xs font-normal uppercase">
