@@ -7,8 +7,14 @@ export default async function About({ params }: { params: { lang: Locale } }) {
 
   return (
     <div className="max-md flex justify-between max-lg:flex-wrap">
-      <div>
-        <Image src="/static-images/about.webp" width={744} height={744} alt="about" />
+      <div className="relative aspect-square w-full max-w-3xl">
+        <Image
+          className={'absolute left-0 top-0 z-[-1] lg:block'}
+          src="/static-images/about.webp"
+          alt="about"
+          fill
+          priority
+        />
       </div>
       <div className=" ml-32 mt-10 flex max-w-sm flex-col justify-end max-lg:ml-0 max-lg:max-w-full">
         <h1 className="mb-3 font-bold uppercase">{t.about.title}</h1>

@@ -32,7 +32,7 @@ export function middleware(request: NextRequest) {
       '/manifest.json',
       '/favicon.ico',
       '/logo.svg',
-      '/static-images/about.webp'
+      '/static-images/'
       // Your other files in `public`
     ].includes(pathname)
   )
