@@ -8,6 +8,7 @@ import { gql } from '../../data-access/graphq-client'
 import { LocaleSwitcher } from './components/menu/locale-switcher'
 import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
+import { AboutLink } from './components/menu/about-link'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -59,6 +60,8 @@ export default async function RootLayout({
                 productCategories={productCategories}
                 locale={params.lang}
               />
+
+              <AboutLink navigationTranslation={t.navigation} locale={params.lang} />
 
               <LocaleSwitcher locale={params.lang} />
             </div>

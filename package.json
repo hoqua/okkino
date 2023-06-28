@@ -55,7 +55,7 @@
     "jsonwebtoken": "^9.0.0",
     "mercurius": "^10.5.1",
     "negotiator": "^0.6.3",
-    "next": "^13.4.4",
+    "next": "^13.4.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "reflect-metadata": "^0.1.13",

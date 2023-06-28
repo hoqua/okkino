@@ -1,5 +1,11 @@
 {
-  "navigation": { "menu": "Menu", "cart": "Cart", "shop": "Shop", "language": "Language" },
+  "navigation": {
+    "menu": "Menu",
+    "cart": "Cart",
+    "shop": "Shop",
+    "language": "Language",
+    "about": "About"
+  },
   "product_categories": {
     "all": "All",
     "coats_and_jackets": "Coats and jackets",
@@ -45,5 +51,9 @@
       "waist": "Waist — Measure around natural waistline",
       "hips": "Hips — Measure 20cm down from the natural waistline"
     }
+  },
+  "about": {
+    "title": "OK KINO IS A MOLDOVA-BASED WOMENSWEAR BRAND FOUNDED IN 2020.",
+    "text": "Through collections OK KINO try to combine the authenticity of native country with the contemporary fashion. Clean silhouettes, precise tailoring and delicate color palette is the base of each collection. Immersing into traditional Moldovan details is another important part of the brand. Exploring the national heritage, creative directors Darya Golneva and Denis Caunov carefully work with ethnic and cultural symbols and codes, reinterpreting them from a new minimalism perspective. At OK KINO we care about ethical attitude towards environment and production. Therefore, we create high quality garments made to last, using carefully selected fabrics."
   }
 }
