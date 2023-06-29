@@ -31,10 +31,10 @@ export function middleware(request: NextRequest) {
     [
       '/manifest.json',
       '/favicon.ico',
-      '/logo.svg',
-      '/static-images/'
+      '/logo.svg'
       // Your other files in `public`
-    ].includes(pathname)
+    ].includes(pathname) ||
+    pathname.startsWith('/static-images/')
   )
     return
 

@@ -6,15 +6,14 @@ export default async function About({ params }: { params: { lang: Locale } }) {
   const t = await getDictionary(params.lang)
 
   return (
-    // max-lg:grid-cols-1
-    // <div className="max-md flex justify-between max-lg:flex-wrap">
-    <div className="grid gap-10 lg:grid-cols-[2.1fr_2fr]">
-      <div className=" relative aspect-[1/1] lg:max-w-xl 2xl:max-w-3xl ">
+    <div className="3xl:grid-cols-[5fr_4fr] grid justify-items-center gap-10 xl:grid-cols-[4fr_5fr]">
+      <div className="relative aspect-square w-full">
         <Image src="/static-images/about.webp" alt="about" fill priority />
       </div>
-      <div className="flex items-end justify-end">
-        <div className="w-[430px] max-xl:w-full">
+      <div className="flex w-full items-end justify-end">
+        <div className="xl:max-w-[430px]">
           <h1 className="font-semibold uppercase">{t.about.title}</h1>
+          <div className="h-3" />
           <p className="text-xs leading-5 text-gray-600">{t.about.text}</p>
         </div>
       </div>
