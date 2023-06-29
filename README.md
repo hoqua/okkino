@@ -1,5 +1,3 @@
-
-
 # Okkino
 
 This project was generated using [Nx](https://nx.dev).
@@ -7,17 +5,19 @@ This project was generated using [Nx](https://nx.dev).
 ## Run
 
 Prerequisites: Docker, Node
+
 1. clone git repo
-2. npm i 
+2. npm i
 3. npm run dockers:dev
 4. npm run db:migrate:dev
 5. npm run start
 
 ## Useful commands
+
 ### NX generators
 
 - GeneratorName: @nrwl/nest:resource, @nrwl/js:library, @nrwl/next:app
-- LibraryName: library name prefixed utils, shared, feature, ui, etc 
+- LibraryName: library name prefixed utils, shared, feature, ui, etc
 - RootLibraryDirectory : root directory of the library (e.g. api, web, shared, etc)
 - ScopeName : scope:api, scope:web, scope:shared, etc
 
@@ -35,4 +35,3 @@ Run `nx graph` to see a diagram of the dependencies of your projects.
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
-
