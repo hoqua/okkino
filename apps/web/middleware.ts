@@ -33,7 +33,8 @@ export function middleware(request: NextRequest) {
       '/favicon.ico',
       '/logo.svg'
       // Your other files in `public`
-    ].includes(pathname)
+    ].includes(pathname) ||
+    pathname.startsWith('/static-images/')
   )
     return
 

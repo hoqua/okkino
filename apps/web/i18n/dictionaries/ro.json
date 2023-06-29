@@ -1,5 +1,11 @@
 {
-  "navigation": { "menu": "Meniu", "cart": "Coș", "shop": "Magazin", "language": "Limbă" },
+  "navigation": {
+    "menu": "Meniu",
+    "cart": "Coș",
+    "shop": "Magazin",
+    "language": "Limbă",
+    "about": "Despre"
+  },
   "product_categories": {
     "all": "Toate",
     "coats_and_jackets": "Paltoane și jachete",
@@ -45,5 +51,9 @@
       "waist": "Talie — Măsurați în jurul taliei naturale",
       "hips": "Șolduri — Măsurați la 20 cm în jos de la talia naturală"
     }
+  },
+  "about": {
+    "title": "OK KINO ESTE O BRANDĂ DE FEMEI ÎN MOLDOVA FATĂ ÎN 2020.",
+    "text": "Prin colecțiile OK KINO încearcă să îmbine autenticitatea țării natale cu moda contemporană. Siluetele curate, croiala precisă și paleta de culori delicată sunt baza fiecărei colecții. Cufundarea în detaliile tradiționale moldovenești este o altă parte importantă a mărcii. Explorând moștenirea națională, directorii de creație Darya Golneva și Denis Caunov lucrează cu atenție cu simboluri și coduri etnice și culturale, reinterpretându-le dintr-o nouă perspectivă a minimalismului. La OK KINO ne pasă de atitudinea etică față de mediu și producție. Prin urmare, creăm articole de îmbrăcăminte de înaltă calitate, făcute să reziste, folosind țesături atent selectate."
   }
 }

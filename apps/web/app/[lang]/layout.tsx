@@ -60,6 +60,13 @@ export default async function RootLayout({
                 locale={params.lang}
               />
 
+              <Link
+                className="okkino-text-hover text-xs uppercase text-black"
+                href={`/${params.lang}/about`}
+              >
+                {t.navigation.about}
+              </Link>
+
               <LocaleSwitcher locale={params.lang} />
             </div>
           </nav>
