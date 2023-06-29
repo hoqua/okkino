@@ -67,8 +67,6 @@ export default async function RootLayout({
                 {t.navigation.about}
               </Link>
 
-              {/* <AboutLink navigationTranslation={t.navigation} locale={params.lang} /> */}
-
               <LocaleSwitcher locale={params.lang} />
             </div>
           </nav>
