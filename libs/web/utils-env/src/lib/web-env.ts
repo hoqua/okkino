@@ -14,7 +14,9 @@ const webEnvSchema = z.object({
 
 type TWebEnv = z.infer<typeof webEnvSchema>
 
-export const webEnv = webEnvSchema.parse({
+const getEnv = process.env['OKKINO_ENV'] === 'build' ? (env: TWebEnv) => env : webEnvSchema.parse
+
+export const webEnv = getEnv({
   isProd: process.env['OKKINO_ENV'] === 'production',
   api: {
     gqlUrl: process.env['OKKINO_WEB_GQL_URL']

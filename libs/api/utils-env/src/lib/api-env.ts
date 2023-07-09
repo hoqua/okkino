@@ -16,7 +16,9 @@ const apiEnvSchema = z.object({
 
 export type TApiEnv = z.infer<typeof apiEnvSchema>
 
-export const apiEnv = apiEnvSchema.parse({
+const getEnv = process.env['OKKINO_ENV'] === 'build' ? (env: TApiEnv) => env : apiEnvSchema.parse
+
+export const apiEnv = getEnv({
   isProd: process.env['OKKINO_ENV'] === 'production',
   api: {
     port: Number(process.env['OKKINO_API_PORT'])

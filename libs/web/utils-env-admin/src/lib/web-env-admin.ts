@@ -16,7 +16,11 @@ const webAdminEnvSchema = z.object({
   })
 })
 
-export const webAdminEnv = webAdminEnvSchema.parse({
+type TWebAdminEnv = z.infer<typeof webAdminEnvSchema>
+
+const getEnv = process.env['OKKINO_ENV'] === 'build' ? (env: TWebAdminEnv) => env : webAdminEnvSchema.parse
+
+export const webAdminEnv = getEnv({
   isProd: process.env['OKKINO_ENV'] === 'production',
   api: {
     gqlUrl: process.env['OKKINO_WEB_ADMIN_GQL_URL']
