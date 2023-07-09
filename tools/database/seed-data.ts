@@ -1,6 +1,5 @@
-import { HomeBlockCreateInput, ProductCreateInput } from "../../libs/api/generated-db-types/src";
-import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from "./seed-data.prod";
-
+import { HomeBlockCreateInput, ProductCreateInput } from '../../libs/api/generated-db-types/src'
+import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from './seed-data.prod'
 
 const HOME_BLOCKS = ['left', 'right']
 

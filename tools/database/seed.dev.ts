@@ -4,7 +4,7 @@ import {
   HOME_BLOCK_IMAGES,
   PRODUCT_COVER_IMAGES,
   PRODUCT_DATA,
-  PRODUCTS,
+  PRODUCTS
 } from './seed-data'
 import {
   PRODUCT_CATEGORIES,
