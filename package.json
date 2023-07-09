@@ -11,7 +11,7 @@
     "start:api": "nx serve api",
     "start:web": "nx serve web",
     "start:web-admin": "nx serve web-admin --port 3000",
-    "----NX SECTION----": "-------------------------",
+    "----NX SECTION----": "------------------------",
     "build": "nx build",
     "test": "nx test",
     "----DB SECTION----": "-------------------------",
