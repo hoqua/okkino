@@ -28,6 +28,7 @@
     "----DEPLOY SECTION----": "-----------------------",
     "cd:api": "npm run validate:api-env && npm run cd:db-push && npm run cd:db-seed  && npx nx build api --prod",
     "cd:web": "npm run validate:web-env && npx nx build web --prod",
+    "cd:web-admin": "npm run validate:web-admin-env && npx nx build web-admin --prod",
     "cd:db-push": "npx prisma db push --accept-data-loss",
     "cd:db-seed": "npx ts-node --project tools/tsconfig.tools.json tools/database/seed.dev.ts"
   },

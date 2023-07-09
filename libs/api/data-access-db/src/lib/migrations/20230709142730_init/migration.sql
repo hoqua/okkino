@@ -1,14 +1,4 @@
 -- CreateTable
-CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "name" TEXT,
-    "password" TEXT NOT NULL,
-
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "HomeBlock" (
     "id" TEXT NOT NULL,
     "navigationPath" TEXT NOT NULL,
@@ -21,7 +11,7 @@ CREATE TABLE "HomeBlock" (
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT,
+    "description" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "discountPrice" INTEGER,
 
@@ -31,7 +21,7 @@ CREATE TABLE "Product" (
 -- CreateTable
 CREATE TABLE "Image" (
     "id" TEXT NOT NULL,
-    "title" TEXT,
+    "title" TEXT NOT NULL,
     "imagePath" TEXT NOT NULL,
     "rgbBackgroundId" TEXT NOT NULL,
     "productId" TEXT,
@@ -42,7 +32,7 @@ CREATE TABLE "Image" (
 -- CreateTable
 CREATE TABLE "RgbColor" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
     "r" INTEGER NOT NULL,
     "g" INTEGER NOT NULL,
     "b" INTEGER NOT NULL,
@@ -98,9 +88,6 @@ CREATE TABLE "_ProductToProductLength" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "HomeBlock_imageId_key" ON "HomeBlock"("imageId");
