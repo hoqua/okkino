@@ -1,39 +1,39 @@
 import * as Types from './types';
 
 import { GraphQLClient } from 'graphql-request';
-import * as Dom from 'graphql-request/dist/types.dom';
-import { gql } from 'graphql-request';
-export type GetHomeImagesVariables = Types.Exact<{ [key: string]: never; }>;
+import { GraphQLClientRequestHeaders } from 'graphql-request/build/cjs/types';
+import gql from 'graphql-tag';
+export type GetHomeImagesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetHomeImages = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, navigationPath: string, image: { __typename?: 'Image', title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } } }> };
+export type GetHomeImagesQuery = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, navigationPath: string, image: { __typename?: 'Image', title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } } }> };
 
-export type GetProductsVariables = Types.Exact<{
-  productCategory?: Types.InputMaybe<Types.Scalars['String']>;
+export type GetProductsQueryVariables = Types.Exact<{
+  productCategory?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type GetProducts = { __typename?: 'Query', products: Array<{ __typename?: 'Product', name: string, price: number, discountPrice?: number | null, images?: Array<{ __typename?: 'Image', title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', r: number, g: number, b: number }> | null }> };
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', name: string, price: number, discountPrice?: number | null, images?: Array<{ __typename?: 'Image', title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', r: number, g: number, b: number }> | null }> };
 
-export type GetProductCategoriesVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type GetProductCategories = { __typename?: 'Query', productCategories: Array<{ __typename?: 'ProductCategory', name: string }> };
-
-export type GetProductLengthsVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetProductCategoriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetProductLengths = { __typename?: 'Query', productLengths: Array<{ __typename?: 'ProductLength', name: string }> };
+export type GetProductCategoriesQuery = { __typename?: 'Query', productCategories: Array<{ __typename?: 'ProductCategory', name: string }> };
 
-export type GetProductVariables = Types.Exact<{
+export type GetProductLengthsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetProductLengthsQuery = { __typename?: 'Query', productLengths: Array<{ __typename?: 'ProductLength', name: string }> };
+
+export type GetProductQueryVariables = Types.Exact<{
   where: Types.ProductWhereUniqueInput;
 }>;
 
 
-export type GetProduct = { __typename?: 'Query', product: { __typename?: 'Product', name: string, description: string, price: number, discountPrice?: number | null, productSizes?: Array<{ __typename?: 'ProductSize', name: string }> | null, images?: Array<{ __typename?: 'Image', id: string, title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', name: string, r: number, g: number, b: number }> | null } };
+export type GetProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', name: string, description: string, price: number, discountPrice?: number | null, productSizes?: Array<{ __typename?: 'ProductSize', name: string }> | null, images?: Array<{ __typename?: 'Image', id: string, title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', name: string, r: number, g: number, b: number }> | null } };
 
 
-export const GetHomeImagesDocument = /*#__PURE__*/ gql`
+export const GetHomeImagesDocument = gql`
     query GetHomeImages {
   homeBlocks {
     id
@@ -50,7 +50,7 @@ export const GetHomeImagesDocument = /*#__PURE__*/ gql`
   }
 }
     `;
-export const GetProductsDocument = /*#__PURE__*/ gql`
+export const GetProductsDocument = gql`
     query GetProducts($productCategory: String) {
   products(productCategory: $productCategory) {
     name
@@ -73,21 +73,21 @@ export const GetProductsDocument = /*#__PURE__*/ gql`
   }
 }
     `;
-export const GetProductCategoriesDocument = /*#__PURE__*/ gql`
+export const GetProductCategoriesDocument = gql`
     query GetProductCategories {
   productCategories {
     name
   }
 }
     `;
-export const GetProductLengthsDocument = /*#__PURE__*/ gql`
+export const GetProductLengthsDocument = gql`
     query GetProductLengths {
   productLengths {
     name
   }
 }
     `;
-export const GetProductDocument = /*#__PURE__*/ gql`
+export const GetProductDocument = gql`
     query GetProduct($where: ProductWhereUniqueInput!) {
   product(where: $where) {
     name
@@ -124,20 +124,20 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    GetHomeImages(variables?: GetHomeImagesVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetHomeImages> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetHomeImages>(GetHomeImagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHomeImages', 'query');
+    GetHomeImages(variables?: GetHomeImagesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHomeImagesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetHomeImagesQuery>(GetHomeImagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHomeImages', 'query');
     },
-    GetProducts(variables?: GetProductsVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProducts> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProducts>(GetProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProducts', 'query');
+    GetProducts(variables?: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>(GetProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProducts', 'query');
     },
-    GetProductCategories(variables?: GetProductCategoriesVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProductCategories> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProductCategories>(GetProductCategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductCategories', 'query');
+    GetProductCategories(variables?: GetProductCategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductCategoriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductCategoriesQuery>(GetProductCategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductCategories', 'query');
     },
-    GetProductLengths(variables?: GetProductLengthsVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProductLengths> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProductLengths>(GetProductLengthsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductLengths', 'query');
+    GetProductLengths(variables?: GetProductLengthsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductLengthsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductLengthsQuery>(GetProductLengthsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductLengths', 'query');
     },
-    GetProduct(variables: GetProductVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProduct> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProduct>(GetProductDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProduct', 'query');
+    GetProduct(variables: GetProductQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductQuery>(GetProductDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProduct', 'query');
     }
   };
 }

@@ -19,7 +19,9 @@ const runHost = isProd ? '0.0.0.0' : 'localhost'
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())
 
+  // @ts-ignore
   await app.register(cookie)
+  // @ts-ignore
   await app.register(helmet, { contentSecurityPolicy: isProd })
   app.enableCors()
 

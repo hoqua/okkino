@@ -38,6 +38,7 @@
     "@fastify/cookie": "^8.3.0",
     "@fastify/helmet": "^11.0.0",
     "@formatjs/intl-localematcher": "^0.4.0",
+    "@mercuriusjs/gateway": "^1.2.0",
     "@nestjs/common": "^10.0.5",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "10.0.5",
@@ -69,12 +70,12 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.5",
-    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/cli": "4.0.1",
     "@graphql-codegen/near-operation-file-preset": "^2.5.0",
     "@graphql-codegen/typed-document-node": "^5.0.1",
-    "@graphql-codegen/typescript": "^4.0.1",
-    "@graphql-codegen/typescript-graphql-request": "^5.0.0",
-    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript": "4.0.0",
+    "@graphql-codegen/typescript-graphql-request": "5.0.0",
+    "@graphql-codegen/typescript-operations": "4.0.0",
     "@nestjs/schematics": "10.0.1",
     "@nestjs/testing": "10.0.5",
     "@nrwl/cli": "15.9.3",
@@ -100,6 +101,7 @@
     "@testing-library/react": "14.0.0",
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "29.5.2",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
@@ -140,4 +142,3 @@
     "schema": "libs/api/data-access-db/src/lib/schema.prisma"
   }
 }
-
