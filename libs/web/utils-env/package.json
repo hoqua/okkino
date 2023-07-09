@@ -1,5 +1,5 @@
 {
-  "name": "@okkino/api/feature-user",
+  "name": "@okkino/web/utils-env",
   "version": "0.0.1",
   "type": "commonjs"
 }

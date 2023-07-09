@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { rgbToDataUrl } from '@okkino/web/utils-shared'
-import { webEnv } from '../../../../environments/environment'
 import { gql } from '../../../../data-access/graphq-client'
 import { ProductColors } from './components/product-colors'
 import { Price } from '../../../shared-components/price'
@@ -9,6 +8,7 @@ import { getI18nNavigationPath } from '../../components/common/utils'
 import { RouteName } from '../../components/common/constants'
 import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { ALL_CATEGORY } from './constants'
+import { webEnv } from '@okkino/web/utils-env'
 
 const IMAGES_ON_SCREEN = 6
 
@@ -25,7 +25,7 @@ export default async function Page(props: IProductPageProps) {
   })
 
   return (
-    <div className="object grid grid-cols-2 gap-y-5 gap-x-2 md:gap-x-4 md:gap-y-7 lg:grid-cols-3 ">
+    <div className="object grid grid-cols-2 gap-x-2 gap-y-5 md:gap-x-4 md:gap-y-7 lg:grid-cols-3 ">
       {products.map((product, index) => {
         const { availableColors, images, discountPrice, price } = product
         const [mainImage, hoverImage] = images

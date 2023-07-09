@@ -11,13 +11,6 @@ import { ID } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { Float } from '@nestjs/graphql';
 
-export enum UserScalarFieldEnum {
-    id = "id",
-    email = "email",
-    name = "name",
-    password = "password"
-}
-
 export enum RgbColorScalarFieldEnum {
     id = "id",
     name = "name",
@@ -67,6 +60,11 @@ export enum QueryMode {
     insensitive = "insensitive"
 }
 
+export enum NullsOrder {
+    first = "first",
+    last = "last"
+}
+
 export enum ImageScalarFieldEnum {
     id = "id",
     title = "title",
@@ -83,6 +81,7 @@ export enum HomeBlockScalarFieldEnum {
 
 registerEnumType(HomeBlockScalarFieldEnum, { name: 'HomeBlockScalarFieldEnum', description: undefined })
 registerEnumType(ImageScalarFieldEnum, { name: 'ImageScalarFieldEnum', description: undefined })
+registerEnumType(NullsOrder, { name: 'NullsOrder', description: undefined })
 registerEnumType(QueryMode, { name: 'QueryMode', description: undefined })
 registerEnumType(SortOrder, { name: 'SortOrder', description: undefined })
 registerEnumType(TransactionIsolationLevel, { name: 'TransactionIsolationLevel', description: undefined })
@@ -91,7 +90,6 @@ registerEnumType(ProductCategoryScalarFieldEnum, { name: 'ProductCategoryScalarF
 registerEnumType(ProductLengthScalarFieldEnum, { name: 'ProductLengthScalarFieldEnum', description: undefined })
 registerEnumType(ProductSizeScalarFieldEnum, { name: 'ProductSizeScalarFieldEnum', description: undefined })
 registerEnumType(RgbColorScalarFieldEnum, { name: 'RgbColorScalarFieldEnum', description: undefined })
-registerEnumType(UserScalarFieldEnum, { name: 'UserScalarFieldEnum', description: undefined })
 
 @ObjectType()
 export class AggregateHomeBlock {
@@ -454,10 +452,10 @@ export class HomeBlockOrderByWithRelationInput {
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
-    @Field(() => ImageOrderByWithRelationInput, {nullable:true})
-    image?: InstanceType<typeof ImageOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
     imageId?: keyof typeof SortOrder;
+    @Field(() => ImageOrderByWithRelationInput, {nullable:true})
+    image?: InstanceType<typeof ImageOrderByWithRelationInput>;
 }
 
 @InputType()
@@ -669,10 +667,10 @@ export class HomeBlockWhereInput {
     id?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     navigationPath?: InstanceType<typeof StringFilter>;
-    @Field(() => ImageRelationFilter, {nullable:true})
-    image?: InstanceType<typeof ImageRelationFilter>;
     @Field(() => StringFilter, {nullable:true})
     imageId?: InstanceType<typeof StringFilter>;
+    @Field(() => ImageRelationFilter, {nullable:true})
+    image?: InstanceType<typeof ImageRelationFilter>;
 }
 
 @ObjectType()
@@ -681,10 +679,10 @@ export class HomeBlock {
     id!: string;
     @Field(() => String, {nullable:false})
     navigationPath!: string;
-    @Field(() => Image, {nullable:false})
-    image?: InstanceType<typeof Image>;
     @Field(() => String, {nullable:false})
     imageId!: string;
+    @Field(() => Image, {nullable:false})
+    image?: InstanceType<typeof Image>;
 }
 
 @ArgsType()
@@ -920,11 +918,11 @@ export class ImageCreateManyProductInputEnvelope {
 export class ImageCreateManyProductInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -947,11 +945,11 @@ export class ImageCreateManyRgbBackgroundInputEnvelope {
 export class ImageCreateManyRgbBackgroundInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -965,11 +963,11 @@ export class ImageCreateManyRgbBackgroundInput {
 export class ImageCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1060,11 +1058,11 @@ export class ImageCreateOrConnectWithoutRgbBackgroundInput {
 export class ImageCreateWithoutHomeBlockInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1080,11 +1078,11 @@ export class ImageCreateWithoutHomeBlockInput {
 export class ImageCreateWithoutProductInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1100,11 +1098,11 @@ export class ImageCreateWithoutProductInput {
 export class ImageCreateWithoutRgbBackgroundInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1120,11 +1118,11 @@ export class ImageCreateWithoutRgbBackgroundInput {
 export class ImageCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1166,11 +1164,11 @@ export class ImageGroupByArgs {
 export class ImageGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1310,8 +1308,8 @@ export class ImageOrderByWithAggregationInput {
     imagePath?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     rgbBackgroundId?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    productId?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    productId?: InstanceType<typeof SortOrderInput>;
     @Field(() => ImageCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof ImageCountOrderByAggregateInput>;
     @Field(() => ImageMaxOrderByAggregateInput, {nullable:true})
@@ -1328,16 +1326,16 @@ export class ImageOrderByWithRelationInput {
     title?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     imagePath?: keyof typeof SortOrder;
-    @Field(() => RgbColorOrderByWithRelationInput, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbColorOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
     rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    productId?: InstanceType<typeof SortOrderInput>;
+    @Field(() => RgbColorOrderByWithRelationInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorOrderByWithRelationInput>;
     @Field(() => HomeBlockOrderByWithRelationInput, {nullable:true})
     homeBlock?: InstanceType<typeof HomeBlockOrderByWithRelationInput>;
     @Field(() => ProductOrderByWithRelationInput, {nullable:true})
     product?: InstanceType<typeof ProductOrderByWithRelationInput>;
-    @Field(() => SortOrder, {nullable:true})
-    productId?: keyof typeof SortOrder;
 }
 
 @InputType()
@@ -1424,11 +1422,11 @@ export class ImageUncheckedCreateNestedManyWithoutRgbBackgroundInput {
 export class ImageUncheckedCreateWithoutHomeBlockInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1444,11 +1442,11 @@ export class ImageUncheckedCreateWithoutHomeBlockInput {
 export class ImageUncheckedCreateWithoutProductInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1464,31 +1462,31 @@ export class ImageUncheckedCreateWithoutProductInput {
 export class ImageUncheckedCreateWithoutRgbBackgroundInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     imagePath!: string;
-    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
 }
 
 @InputType()
 export class ImageUncheckedCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    title?: string;
+    title!: string;
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
@@ -1496,10 +1494,10 @@ export class ImageUncheckedCreateInput {
     imagePath!: string;
     @Field(() => String, {nullable:false})
     rgbBackgroundId!: string;
-    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
 }
 
 @InputType()
@@ -1686,10 +1684,10 @@ export class ImageUncheckedUpdateWithoutRgbBackgroundInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     imagePath?: string;
-    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
 }
 
 @InputType()
@@ -1708,10 +1706,10 @@ export class ImageUncheckedUpdateInput {
     imagePath?: string;
     @Field(() => String, {nullable:true})
     rgbBackgroundId?: string;
-    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
 }
 
 @InputType()
@@ -2001,36 +1999,36 @@ export class ImageWhereInput {
     title?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     imagePath?: InstanceType<typeof StringFilter>;
-    @Field(() => RgbColorRelationFilter, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbColorRelationFilter>;
     @Field(() => StringFilter, {nullable:true})
     rgbBackgroundId?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    productId?: InstanceType<typeof StringFilter>;
+    @Field(() => RgbColorRelationFilter, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorRelationFilter>;
     @Field(() => HomeBlockRelationFilter, {nullable:true})
     homeBlock?: InstanceType<typeof HomeBlockRelationFilter>;
     @Field(() => ProductRelationFilter, {nullable:true})
     product?: InstanceType<typeof ProductRelationFilter>;
-    @Field(() => StringFilter, {nullable:true})
-    productId?: InstanceType<typeof StringFilter>;
 }
 
 @ObjectType()
 export class Image {
     @Field(() => ID, {nullable:false})
     id!: string;
-    @Field(() => String, {nullable:true})
-    title!: string | null;
+    @Field(() => String, {nullable:false})
+    title!: string;
     @Field(() => String, {nullable:false})
     imagePath!: string;
-    @Field(() => RgbColor, {nullable:false})
-    rgbBackground?: InstanceType<typeof RgbColor>;
     @Field(() => String, {nullable:false})
     rgbBackgroundId!: string;
+    @HideField()
+    productId!: string | null;
+    @Field(() => RgbColor, {nullable:false})
+    rgbBackground?: InstanceType<typeof RgbColor>;
     @HideField()
     homeBlock?: InstanceType<typeof HomeBlock> | null;
     @HideField()
     product?: InstanceType<typeof Product> | null;
-    @HideField()
-    productId!: string | null;
 }
 
 @ArgsType()
@@ -2175,6 +2173,14 @@ export class IntWithAggregatesFilter {
     _min?: InstanceType<typeof IntFilter>;
     @Field(() => IntFilter, {nullable:true})
     _max?: InstanceType<typeof IntFilter>;
+}
+
+@InputType()
+export class SortOrderInput {
+    @Field(() => SortOrder, {nullable:false})
+    sort!: keyof typeof SortOrder;
+    @Field(() => NullsOrder, {nullable:true})
+    nulls?: keyof typeof NullsOrder;
 }
 
 @InputType()
@@ -2504,11 +2510,11 @@ export class ProductCreateManyInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2639,11 +2645,11 @@ export class ProductCreateWithoutAvailableColorsInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2667,11 +2673,11 @@ export class ProductCreateWithoutImagesInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2695,11 +2701,11 @@ export class ProductCreateWithoutProductCategoriesInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2723,11 +2729,11 @@ export class ProductCreateWithoutProductLengthsInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2751,11 +2757,11 @@ export class ProductCreateWithoutProductSizesInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2779,11 +2785,11 @@ export class ProductCreateInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2837,11 +2843,11 @@ export class ProductGroupBy {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -2986,8 +2992,8 @@ export class ProductOrderByWithAggregationInput {
     description?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     price?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    discountPrice?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    discountPrice?: InstanceType<typeof SortOrderInput>;
     @Field(() => ProductCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof ProductCountOrderByAggregateInput>;
     @Field(() => ProductAvgOrderByAggregateInput, {nullable:true})
@@ -3010,8 +3016,8 @@ export class ProductOrderByWithRelationInput {
     description?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     price?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    discountPrice?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    discountPrice?: InstanceType<typeof SortOrderInput>;
     @Field(() => ImageOrderByRelationAggregateInput, {nullable:true})
     images?: InstanceType<typeof ImageOrderByRelationAggregateInput>;
     @Field(() => RgbColorOrderByRelationAggregateInput, {nullable:true})
@@ -3157,11 +3163,11 @@ export class ProductUncheckedCreateWithoutAvailableColorsInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -3185,11 +3191,11 @@ export class ProductUncheckedCreateWithoutImagesInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -3213,11 +3219,11 @@ export class ProductUncheckedCreateWithoutProductCategoriesInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -3241,11 +3247,11 @@ export class ProductUncheckedCreateWithoutProductLengthsInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -3269,11 +3275,11 @@ export class ProductUncheckedCreateWithoutProductSizesInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -3297,11 +3303,11 @@ export class ProductUncheckedCreateInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     name!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(1000)
     @Validator.MinLength(0)
-    description?: string;
+    description!: string;
     @Field(() => Int, {nullable:false})
     price!: number;
     @Field(() => Int, {nullable:true})
@@ -4202,8 +4208,8 @@ export class Product {
     id!: string;
     @Field(() => String, {nullable:false})
     name!: string;
-    @Field(() => String, {nullable:true})
-    description!: string | null;
+    @Field(() => String, {nullable:false})
+    description!: string;
     /**
      * @Validator .@IsInt()
      * @Validator .@Min(1)
@@ -6406,11 +6412,11 @@ export class RgbColorCount {
 export class RgbColorCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6480,11 +6486,11 @@ export class RgbColorCreateOrConnectWithoutProductsInput {
 export class RgbColorCreateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6510,11 +6516,11 @@ export class RgbColorCreateWithoutImageInput {
 export class RgbColorCreateWithoutProductsInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6540,11 +6546,11 @@ export class RgbColorCreateWithoutProductsInput {
 export class RgbColorCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6600,11 +6606,11 @@ export class RgbColorGroupByArgs {
 export class RgbColorGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6782,8 +6788,8 @@ export class RgbColorOrderByWithAggregationInput {
     g?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     b?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    a?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    a?: InstanceType<typeof SortOrderInput>;
     @Field(() => RgbColorCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof RgbColorCountOrderByAggregateInput>;
     @Field(() => RgbColorAvgOrderByAggregateInput, {nullable:true})
@@ -6808,8 +6814,8 @@ export class RgbColorOrderByWithRelationInput {
     g?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     b?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    a?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    a?: InstanceType<typeof SortOrderInput>;
     @Field(() => ProductOrderByRelationAggregateInput, {nullable:true})
     products?: InstanceType<typeof ProductOrderByRelationAggregateInput>;
     @Field(() => ImageOrderByRelationAggregateInput, {nullable:true})
@@ -6930,11 +6936,11 @@ export class RgbColorUncheckedCreateNestedManyWithoutProductsInput {
 export class RgbColorUncheckedCreateWithoutImageInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6960,11 +6966,11 @@ export class RgbColorUncheckedCreateWithoutImageInput {
 export class RgbColorUncheckedCreateWithoutProductsInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -6990,11 +6996,11 @@ export class RgbColorUncheckedCreateWithoutProductsInput {
 export class RgbColorUncheckedCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsString()
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
-    name?: string;
+    name!: string;
     @Field(() => Int, {nullable:false})
     @Validator.IsInt()
     @Validator.Min(0)
@@ -7457,8 +7463,8 @@ export class RgbColorWhereInput {
 export class RgbColor {
     @Field(() => ID, {nullable:false})
     id!: string;
-    @Field(() => String, {nullable:true})
-    name!: string | null;
+    @Field(() => String, {nullable:false})
+    name!: string;
     @Field(() => Int, {nullable:false})
     r!: number;
     @Field(() => Int, {nullable:false})
@@ -7511,564 +7517,4 @@ export class UpsertOneRgbColorArgs {
     @Field(() => RgbColorUpdateInput, {nullable:false})
     @Type(() => RgbColorUpdateInput)
     update!: InstanceType<typeof RgbColorUpdateInput>;
-}
-
-@ObjectType()
-export class AggregateUser {
-    @Field(() => UserCountAggregate, {nullable:true})
-    _count?: InstanceType<typeof UserCountAggregate>;
-    @Field(() => UserMinAggregate, {nullable:true})
-    _min?: InstanceType<typeof UserMinAggregate>;
-    @Field(() => UserMaxAggregate, {nullable:true})
-    _max?: InstanceType<typeof UserMaxAggregate>;
-}
-
-@ArgsType()
-export class CreateManyUserArgs {
-    @Field(() => [UserCreateManyInput], {nullable:false})
-    @Type(() => UserCreateManyInput)
-    @ValidateNested()
-    data!: Array<UserCreateManyInput>;
-    @Field(() => Boolean, {nullable:true})
-    skipDuplicates?: boolean;
-}
-
-@ArgsType()
-export class CreateOneUserArgs {
-    @Field(() => UserCreateInput, {nullable:false})
-    @Type(() => UserCreateInput)
-    @ValidateNested()
-    data!: InstanceType<typeof UserCreateInput>;
-}
-
-@ArgsType()
-export class DeleteManyUserArgs {
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-}
-
-@ArgsType()
-export class DeleteOneUserArgs {
-    @Field(() => UserWhereUniqueInput, {nullable:false})
-    @Type(() => UserWhereUniqueInput)
-    @ValidateNested()
-    where!: InstanceType<typeof UserWhereUniqueInput>;
-}
-
-@ArgsType()
-export class FindFirstUserOrThrowArgs {
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-    @Field(() => [UserOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<UserOrderByWithRelationInput>;
-    @Field(() => UserWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof UserWhereUniqueInput>;
-    @Field(() => Int, {nullable:true})
-    take?: number;
-    @Field(() => Int, {nullable:true})
-    skip?: number;
-    @Field(() => [UserScalarFieldEnum], {nullable:true})
-    distinct?: Array<keyof typeof UserScalarFieldEnum>;
-}
-
-@ArgsType()
-export class FindFirstUserArgs {
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-    @Field(() => [UserOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<UserOrderByWithRelationInput>;
-    @Field(() => UserWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof UserWhereUniqueInput>;
-    @Field(() => Int, {nullable:true})
-    take?: number;
-    @Field(() => Int, {nullable:true})
-    skip?: number;
-    @Field(() => [UserScalarFieldEnum], {nullable:true})
-    distinct?: Array<keyof typeof UserScalarFieldEnum>;
-}
-
-@ArgsType()
-export class FindManyUserArgs {
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-    @Field(() => [UserOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<UserOrderByWithRelationInput>;
-    @Field(() => UserWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof UserWhereUniqueInput>;
-    @Field(() => Int, {nullable:true})
-    take?: number;
-    @Field(() => Int, {nullable:true})
-    skip?: number;
-    @Field(() => [UserScalarFieldEnum], {nullable:true})
-    distinct?: Array<keyof typeof UserScalarFieldEnum>;
-}
-
-@ArgsType()
-export class FindUniqueUserOrThrowArgs {
-    @Field(() => UserWhereUniqueInput, {nullable:false})
-    @Type(() => UserWhereUniqueInput)
-    @ValidateNested()
-    where!: InstanceType<typeof UserWhereUniqueInput>;
-}
-
-@ArgsType()
-export class FindUniqueUserArgs {
-    @Field(() => UserWhereUniqueInput, {nullable:false})
-    @Type(() => UserWhereUniqueInput)
-    @ValidateNested()
-    where!: InstanceType<typeof UserWhereUniqueInput>;
-}
-
-@ArgsType()
-export class UpdateManyUserArgs {
-    @Field(() => UserUpdateManyMutationInput, {nullable:false})
-    @Type(() => UserUpdateManyMutationInput)
-    @ValidateNested()
-    data!: InstanceType<typeof UserUpdateManyMutationInput>;
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-}
-
-@ArgsType()
-export class UpdateOneUserArgs {
-    @Field(() => UserUpdateInput, {nullable:false})
-    @Type(() => UserUpdateInput)
-    @ValidateNested()
-    data!: InstanceType<typeof UserUpdateInput>;
-    @Field(() => UserWhereUniqueInput, {nullable:false})
-    @Type(() => UserWhereUniqueInput)
-    @ValidateNested()
-    where!: InstanceType<typeof UserWhereUniqueInput>;
-}
-
-@ArgsType()
-export class UpsertOneUserArgs {
-    @Field(() => UserWhereUniqueInput, {nullable:false})
-    @Type(() => UserWhereUniqueInput)
-    @ValidateNested()
-    where!: InstanceType<typeof UserWhereUniqueInput>;
-    @Field(() => UserCreateInput, {nullable:false})
-    @Type(() => UserCreateInput)
-    create!: InstanceType<typeof UserCreateInput>;
-    @Field(() => UserUpdateInput, {nullable:false})
-    @Type(() => UserUpdateInput)
-    update!: InstanceType<typeof UserUpdateInput>;
-}
-
-@ArgsType()
-export class UserAggregateArgs {
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-    @Field(() => [UserOrderByWithRelationInput], {nullable:true})
-    orderBy?: Array<UserOrderByWithRelationInput>;
-    @Field(() => UserWhereUniqueInput, {nullable:true})
-    cursor?: InstanceType<typeof UserWhereUniqueInput>;
-    @Field(() => Int, {nullable:true})
-    take?: number;
-    @Field(() => Int, {nullable:true})
-    skip?: number;
-    @Field(() => UserCountAggregateInput, {nullable:true})
-    _count?: InstanceType<typeof UserCountAggregateInput>;
-    @Field(() => UserMinAggregateInput, {nullable:true})
-    _min?: InstanceType<typeof UserMinAggregateInput>;
-    @Field(() => UserMaxAggregateInput, {nullable:true})
-    _max?: InstanceType<typeof UserMaxAggregateInput>;
-}
-
-@InputType()
-export class UserCountAggregateInput {
-    @Field(() => Boolean, {nullable:true})
-    id?: true;
-    @Field(() => Boolean, {nullable:true})
-    email?: true;
-    @Field(() => Boolean, {nullable:true})
-    name?: true;
-    @Field(() => Boolean, {nullable:true})
-    password?: true;
-    @Field(() => Boolean, {nullable:true})
-    _all?: true;
-}
-
-@ObjectType()
-export class UserCountAggregate {
-    @Field(() => Int, {nullable:false})
-    id!: number;
-    @Field(() => Int, {nullable:false})
-    email!: number;
-    @Field(() => Int, {nullable:false})
-    name!: number;
-    @HideField()
-    password!: number;
-    @Field(() => Int, {nullable:false})
-    _all!: number;
-}
-
-@InputType()
-export class UserCountOrderByAggregateInput {
-    @Field(() => SortOrder, {nullable:true})
-    id?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    email?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    name?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    password?: keyof typeof SortOrder;
-}
-
-@InputType()
-export class UserCreateManyInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsEmail()
-    email!: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password!: string;
-}
-
-@InputType()
-export class UserCreateInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsEmail()
-    email!: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password!: string;
-}
-
-@ArgsType()
-export class UserGroupByArgs {
-    @Field(() => UserWhereInput, {nullable:true})
-    @Type(() => UserWhereInput)
-    @ValidateNested()
-    where?: InstanceType<typeof UserWhereInput>;
-    @Field(() => [UserOrderByWithAggregationInput], {nullable:true})
-    orderBy?: Array<UserOrderByWithAggregationInput>;
-    @Field(() => [UserScalarFieldEnum], {nullable:false})
-    by!: Array<keyof typeof UserScalarFieldEnum>;
-    @Field(() => UserScalarWhereWithAggregatesInput, {nullable:true})
-    having?: InstanceType<typeof UserScalarWhereWithAggregatesInput>;
-    @Field(() => Int, {nullable:true})
-    take?: number;
-    @Field(() => Int, {nullable:true})
-    skip?: number;
-    @Field(() => UserCountAggregateInput, {nullable:true})
-    _count?: InstanceType<typeof UserCountAggregateInput>;
-    @Field(() => UserMinAggregateInput, {nullable:true})
-    _min?: InstanceType<typeof UserMinAggregateInput>;
-    @Field(() => UserMaxAggregateInput, {nullable:true})
-    _max?: InstanceType<typeof UserMaxAggregateInput>;
-}
-
-@ObjectType()
-export class UserGroupBy {
-    @Field(() => String, {nullable:false})
-    id!: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsEmail()
-    email!: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @HideField()
-    password!: string;
-    @Field(() => UserCountAggregate, {nullable:true})
-    _count?: InstanceType<typeof UserCountAggregate>;
-    @Field(() => UserMinAggregate, {nullable:true})
-    _min?: InstanceType<typeof UserMinAggregate>;
-    @Field(() => UserMaxAggregate, {nullable:true})
-    _max?: InstanceType<typeof UserMaxAggregate>;
-}
-
-@InputType()
-export class UserMaxAggregateInput {
-    @Field(() => Boolean, {nullable:true})
-    id?: true;
-    @Field(() => Boolean, {nullable:true})
-    email?: true;
-    @Field(() => Boolean, {nullable:true})
-    name?: true;
-    @Field(() => Boolean, {nullable:true})
-    password?: true;
-}
-
-@ObjectType()
-export class UserMaxAggregate {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @HideField()
-    password?: string;
-}
-
-@InputType()
-export class UserMaxOrderByAggregateInput {
-    @Field(() => SortOrder, {nullable:true})
-    id?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    email?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    name?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    password?: keyof typeof SortOrder;
-}
-
-@InputType()
-export class UserMinAggregateInput {
-    @Field(() => Boolean, {nullable:true})
-    id?: true;
-    @Field(() => Boolean, {nullable:true})
-    email?: true;
-    @Field(() => Boolean, {nullable:true})
-    name?: true;
-    @Field(() => Boolean, {nullable:true})
-    password?: true;
-}
-
-@ObjectType()
-export class UserMinAggregate {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @HideField()
-    password?: string;
-}
-
-@InputType()
-export class UserMinOrderByAggregateInput {
-    @Field(() => SortOrder, {nullable:true})
-    id?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    email?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    name?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    password?: keyof typeof SortOrder;
-}
-
-@InputType()
-export class UserOrderByWithAggregationInput {
-    @Field(() => SortOrder, {nullable:true})
-    id?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    email?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    name?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    password?: keyof typeof SortOrder;
-    @Field(() => UserCountOrderByAggregateInput, {nullable:true})
-    _count?: InstanceType<typeof UserCountOrderByAggregateInput>;
-    @Field(() => UserMaxOrderByAggregateInput, {nullable:true})
-    _max?: InstanceType<typeof UserMaxOrderByAggregateInput>;
-    @Field(() => UserMinOrderByAggregateInput, {nullable:true})
-    _min?: InstanceType<typeof UserMinOrderByAggregateInput>;
-}
-
-@InputType()
-export class UserOrderByWithRelationInput {
-    @Field(() => SortOrder, {nullable:true})
-    id?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    email?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    name?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    password?: keyof typeof SortOrder;
-}
-
-@InputType()
-export class UserScalarWhereWithAggregatesInput {
-    @Field(() => [UserScalarWhereWithAggregatesInput], {nullable:true})
-    AND?: Array<UserScalarWhereWithAggregatesInput>;
-    @Field(() => [UserScalarWhereWithAggregatesInput], {nullable:true})
-    OR?: Array<UserScalarWhereWithAggregatesInput>;
-    @Field(() => [UserScalarWhereWithAggregatesInput], {nullable:true})
-    NOT?: Array<UserScalarWhereWithAggregatesInput>;
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    id?: InstanceType<typeof StringWithAggregatesFilter>;
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    email?: InstanceType<typeof StringWithAggregatesFilter>;
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    name?: InstanceType<typeof StringWithAggregatesFilter>;
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    password?: InstanceType<typeof StringWithAggregatesFilter>;
-}
-
-@InputType()
-export class UserUncheckedCreateInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsEmail()
-    email!: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:false})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password!: string;
-}
-
-@InputType()
-export class UserUncheckedUpdateManyInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password?: string;
-}
-
-@InputType()
-export class UserUncheckedUpdateInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password?: string;
-}
-
-@InputType()
-export class UserUpdateManyMutationInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password?: string;
-}
-
-@InputType()
-export class UserUpdateInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
-    name?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(8)
-    password?: string;
-}
-
-@InputType()
-export class UserWhereUniqueInput {
-    @Field(() => String, {nullable:true})
-    id?: string;
-    @Field(() => String, {nullable:true})
-    @Validator.IsEmail()
-    email?: string;
-}
-
-@InputType()
-export class UserWhereInput {
-    @Field(() => [UserWhereInput], {nullable:true})
-    AND?: Array<UserWhereInput>;
-    @Field(() => [UserWhereInput], {nullable:true})
-    OR?: Array<UserWhereInput>;
-    @Field(() => [UserWhereInput], {nullable:true})
-    NOT?: Array<UserWhereInput>;
-    @Field(() => StringFilter, {nullable:true})
-    id?: InstanceType<typeof StringFilter>;
-    @Field(() => StringFilter, {nullable:true})
-    email?: InstanceType<typeof StringFilter>;
-    @Field(() => StringFilter, {nullable:true})
-    name?: InstanceType<typeof StringFilter>;
-    @Field(() => StringFilter, {nullable:true})
-    password?: InstanceType<typeof StringFilter>;
-}
-
-@ObjectType()
-export class User {
-    @Field(() => ID, {nullable:false})
-    id!: string;
-    @Field(() => String, {nullable:false})
-    email!: string;
-    @Field(() => String, {nullable:true})
-    name!: string | null;
-    @HideField()
-    password!: string;
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { DesktopSubmenu } from './desktop-submenu'
-import { GetProductCategories } from '@okkino/web/data-access-graphql'
+import { GetProductCategoriesQuery } from '@okkino/web/data-access-graphql'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { FC } from 'react'
 import { ALL_CATEGORY } from '../../../shop/[category]/constants'
@@ -9,7 +9,7 @@ import { ALL_CATEGORY } from '../../../shop/[category]/constants'
 interface IProps {
   navigationTranslation: Record<string, string>
   productCategoriesTranslation: Record<string, string>
-  productCategories: GetProductCategories['productCategories']
+  productCategories: GetProductCategoriesQuery['productCategories']
   locale: Locale
 }
 

@@ -3,46 +3,48 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string | number; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type FloatFilter = {
-  equals?: InputMaybe<Scalars['Float']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<Scalars['Float']>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<Scalars['Float']['input']>>;
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
   not?: InputMaybe<FloatFilter>;
-  notIn?: InputMaybe<Array<Scalars['Float']>>;
+  notIn?: InputMaybe<Array<Scalars['Float']['input']>>;
 };
 
 export type HomeBlock = {
   __typename?: 'HomeBlock';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   image: Image;
-  imageId: Scalars['String'];
-  navigationPath: Scalars['String'];
+  imageId: Scalars['String']['output'];
+  navigationPath: Scalars['String']['output'];
 };
 
 export type HomeBlockCountAggregate = {
   __typename?: 'HomeBlockCountAggregate';
-  _all: Scalars['Int'];
-  id: Scalars['Int'];
-  imageId: Scalars['Int'];
-  navigationPath: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  imageId: Scalars['Int']['output'];
+  navigationPath: Scalars['Int']['output'];
 };
 
 export type HomeBlockCreateInput = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
   image: ImageCreateNestedOneWithoutHomeBlockInput;
-  navigationPath: Scalars['String'];
+  navigationPath: Scalars['String']['input'];
 };
 
 export type HomeBlockCreateNestedOneWithoutImageInput = {
@@ -57,43 +59,43 @@ export type HomeBlockCreateOrConnectWithoutImageInput = {
 };
 
 export type HomeBlockCreateWithoutImageInput = {
-  id?: InputMaybe<Scalars['String']>;
-  navigationPath: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  navigationPath: Scalars['String']['input'];
 };
 
 export type HomeBlockMaxAggregate = {
   __typename?: 'HomeBlockMaxAggregate';
-  id?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
-  navigationPath?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  imageId?: Maybe<Scalars['String']['output']>;
+  navigationPath?: Maybe<Scalars['String']['output']>;
 };
 
 export type HomeBlockMinAggregate = {
   __typename?: 'HomeBlockMinAggregate';
-  id?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
-  navigationPath?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  imageId?: Maybe<Scalars['String']['output']>;
+  navigationPath?: Maybe<Scalars['String']['output']>;
 };
 
 export type HomeBlockUpdateInput = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<ImageUpdateOneRequiredWithoutHomeBlockNestedInput>;
-  navigationPath?: InputMaybe<Scalars['String']>;
+  navigationPath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type HomeBlockUpdateOneWithoutImageNestedInput = {
   connect?: InputMaybe<HomeBlockWhereUniqueInput>;
   connectOrCreate?: InputMaybe<HomeBlockCreateOrConnectWithoutImageInput>;
   create?: InputMaybe<HomeBlockCreateWithoutImageInput>;
-  delete?: InputMaybe<Scalars['Boolean']>;
-  disconnect?: InputMaybe<Scalars['Boolean']>;
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
   update?: InputMaybe<HomeBlockUpdateWithoutImageInput>;
   upsert?: InputMaybe<HomeBlockUpsertWithoutImageInput>;
 };
 
 export type HomeBlockUpdateWithoutImageInput = {
-  id?: InputMaybe<Scalars['String']>;
-  navigationPath?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  navigationPath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type HomeBlockUpsertWithoutImageInput = {
@@ -102,50 +104,50 @@ export type HomeBlockUpsertWithoutImageInput = {
 };
 
 export type HomeBlockWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
-  imageId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imageId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Image = {
   __typename?: 'Image';
-  id: Scalars['ID'];
-  imagePath: Scalars['String'];
+  id: Scalars['ID']['output'];
+  imagePath: Scalars['String']['output'];
   rgbBackground: RgbColor;
-  rgbBackgroundId: Scalars['String'];
-  title?: Maybe<Scalars['String']>;
+  rgbBackgroundId: Scalars['String']['output'];
+  title: Scalars['String']['output'];
 };
 
 export type ImageCountAggregate = {
   __typename?: 'ImageCountAggregate';
-  _all: Scalars['Int'];
-  id: Scalars['Int'];
-  imagePath: Scalars['Int'];
-  rgbBackgroundId: Scalars['Int'];
-  title: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  imagePath: Scalars['Int']['output'];
+  rgbBackgroundId: Scalars['Int']['output'];
+  title: Scalars['Int']['output'];
 };
 
 export type ImageCreateManyProductInput = {
-  id?: InputMaybe<Scalars['String']>;
-  imagePath: Scalars['String'];
-  rgbBackgroundId: Scalars['String'];
-  title?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath: Scalars['String']['input'];
+  rgbBackgroundId: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type ImageCreateManyProductInputEnvelope = {
   data: Array<ImageCreateManyProductInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ImageCreateManyRgbBackgroundInput = {
-  id?: InputMaybe<Scalars['String']>;
-  imagePath: Scalars['String'];
-  productId?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath: Scalars['String']['input'];
+  productId?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
 };
 
 export type ImageCreateManyRgbBackgroundInputEnvelope = {
   data: Array<ImageCreateManyRgbBackgroundInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ImageCreateNestedManyWithoutProductInput = {
@@ -184,43 +186,43 @@ export type ImageCreateOrConnectWithoutRgbBackgroundInput = {
 };
 
 export type ImageCreateWithoutHomeBlockInput = {
-  id?: InputMaybe<Scalars['String']>;
-  imagePath: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath: Scalars['String']['input'];
   product?: InputMaybe<ProductCreateNestedOneWithoutImagesInput>;
   rgbBackground: RgbColorCreateNestedOneWithoutImageInput;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String']['input'];
 };
 
 export type ImageCreateWithoutProductInput = {
   homeBlock?: InputMaybe<HomeBlockCreateNestedOneWithoutImageInput>;
-  id?: InputMaybe<Scalars['String']>;
-  imagePath: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath: Scalars['String']['input'];
   rgbBackground: RgbColorCreateNestedOneWithoutImageInput;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String']['input'];
 };
 
 export type ImageCreateWithoutRgbBackgroundInput = {
   homeBlock?: InputMaybe<HomeBlockCreateNestedOneWithoutImageInput>;
-  id?: InputMaybe<Scalars['String']>;
-  imagePath: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath: Scalars['String']['input'];
   product?: InputMaybe<ProductCreateNestedOneWithoutImagesInput>;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String']['input'];
 };
 
 export type ImageMaxAggregate = {
   __typename?: 'ImageMaxAggregate';
-  id?: Maybe<Scalars['String']>;
-  imagePath?: Maybe<Scalars['String']>;
-  rgbBackgroundId?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  imagePath?: Maybe<Scalars['String']['output']>;
+  rgbBackgroundId?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 export type ImageMinAggregate = {
   __typename?: 'ImageMinAggregate';
-  id?: Maybe<Scalars['String']>;
-  imagePath?: Maybe<Scalars['String']>;
-  rgbBackgroundId?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  imagePath?: Maybe<Scalars['String']['output']>;
+  rgbBackgroundId?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 export type ImageScalarWhereInput = {
@@ -235,9 +237,9 @@ export type ImageScalarWhereInput = {
 };
 
 export type ImageUpdateManyMutationInput = {
-  id?: InputMaybe<Scalars['String']>;
-  imagePath?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ImageUpdateManyWithWhereWithoutProductInput = {
@@ -297,27 +299,27 @@ export type ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput = {
 };
 
 export type ImageUpdateWithoutHomeBlockInput = {
-  id?: InputMaybe<Scalars['String']>;
-  imagePath?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath?: InputMaybe<Scalars['String']['input']>;
   product?: InputMaybe<ProductUpdateOneWithoutImagesNestedInput>;
   rgbBackground?: InputMaybe<RgbColorUpdateOneRequiredWithoutImageNestedInput>;
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ImageUpdateWithoutProductInput = {
   homeBlock?: InputMaybe<HomeBlockUpdateOneWithoutImageNestedInput>;
-  id?: InputMaybe<Scalars['String']>;
-  imagePath?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath?: InputMaybe<Scalars['String']['input']>;
   rgbBackground?: InputMaybe<RgbColorUpdateOneRequiredWithoutImageNestedInput>;
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ImageUpdateWithoutRgbBackgroundInput = {
   homeBlock?: InputMaybe<HomeBlockUpdateOneWithoutImageNestedInput>;
-  id?: InputMaybe<Scalars['String']>;
-  imagePath?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  imagePath?: InputMaybe<Scalars['String']['input']>;
   product?: InputMaybe<ProductUpdateOneWithoutImagesNestedInput>;
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ImageUpsertWithWhereUniqueWithoutProductInput = {
@@ -338,31 +340,28 @@ export type ImageUpsertWithoutHomeBlockInput = {
 };
 
 export type ImageWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type IntFilter = {
-  equals?: InputMaybe<Scalars['Int']>;
-  gt?: InputMaybe<Scalars['Int']>;
-  gte?: InputMaybe<Scalars['Int']>;
-  in?: InputMaybe<Array<Scalars['Int']>>;
-  lt?: InputMaybe<Scalars['Int']>;
-  lte?: InputMaybe<Scalars['Int']>;
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
   not?: InputMaybe<IntFilter>;
-  notIn?: InputMaybe<Array<Scalars['Int']>>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   createHomeBlock: HomeBlock;
   createProduct: Product;
-  createUser: User;
   removeHomeBlock: HomeBlock;
   removeProduct: Product;
-  removeUser: User;
   updateHomeBlock: HomeBlock;
   updateProduct: Product;
-  updateUser: User;
 };
 
 
@@ -376,11 +375,6 @@ export type MutationCreateProductArgs = {
 };
 
 
-export type MutationCreateUserArgs = {
-  data: UserCreateInput;
-};
-
-
 export type MutationRemoveHomeBlockArgs = {
   where: HomeBlockWhereUniqueInput;
 };
@@ -388,11 +382,6 @@ export type MutationRemoveHomeBlockArgs = {
 
 export type MutationRemoveProductArgs = {
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationRemoveUserArgs = {
-  where: UserWhereUniqueInput;
 };
 
 
@@ -407,32 +396,26 @@ export type MutationUpdateProductArgs = {
   where: ProductWhereUniqueInput;
 };
 
-
-export type MutationUpdateUserArgs = {
-  data: UserUpdateInput;
-  where: UserWhereUniqueInput;
-};
-
 export type Product = {
   __typename?: 'Product';
   _count: ProductCount;
   availableColors?: Maybe<Array<RgbColor>>;
-  description?: Maybe<Scalars['String']>;
+  description: Scalars['String']['output'];
   /**
    * @Validator.@IsInt()
    * @Validator.@Min(1)
    * @Validator.@Max(100_000)
    */
-  discountPrice?: Maybe<Scalars['Int']>;
-  id: Scalars['ID'];
+  discountPrice?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
   images?: Maybe<Array<Image>>;
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   /**
    * @Validator.@IsInt()
    * @Validator.@Min(1)
    * @Validator.@Max(100_000)
    */
-  price: Scalars['Int'];
+  price: Scalars['Int']['output'];
   productCategories?: Maybe<Array<ProductCategory>>;
   productLengths?: Maybe<Array<ProductLength>>;
   productSizes?: Maybe<Array<ProductSize>>;
@@ -440,27 +423,27 @@ export type Product = {
 
 export type ProductAvgAggregate = {
   __typename?: 'ProductAvgAggregate';
-  discountPrice?: Maybe<Scalars['Float']>;
-  price?: Maybe<Scalars['Float']>;
+  discountPrice?: Maybe<Scalars['Float']['output']>;
+  price?: Maybe<Scalars['Float']['output']>;
 };
 
 export type ProductCategory = {
   __typename?: 'ProductCategory';
   _count: ProductCategoryCount;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type ProductCategoryCount = {
   __typename?: 'ProductCategoryCount';
-  products: Scalars['Int'];
+  products: Scalars['Int']['output'];
 };
 
 export type ProductCategoryCountAggregate = {
   __typename?: 'ProductCategoryCountAggregate';
-  _all: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['Int']['output'];
 };
 
 export type ProductCategoryCreateNestedManyWithoutProductsInput = {
@@ -475,20 +458,20 @@ export type ProductCategoryCreateOrConnectWithoutProductsInput = {
 };
 
 export type ProductCategoryCreateWithoutProductsInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 };
 
 export type ProductCategoryMaxAggregate = {
   __typename?: 'ProductCategoryMaxAggregate';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProductCategoryMinAggregate = {
   __typename?: 'ProductCategoryMinAggregate';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProductCategoryScalarWhereInput = {
@@ -500,8 +483,8 @@ export type ProductCategoryScalarWhereInput = {
 };
 
 export type ProductCategoryUpdateManyMutationInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductCategoryUpdateManyWithWhereWithoutProductsInput = {
@@ -528,8 +511,8 @@ export type ProductCategoryUpdateWithWhereUniqueWithoutProductsInput = {
 };
 
 export type ProductCategoryUpdateWithoutProductsInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductCategoryUpsertWithWhereUniqueWithoutProductsInput = {
@@ -539,37 +522,37 @@ export type ProductCategoryUpsertWithWhereUniqueWithoutProductsInput = {
 };
 
 export type ProductCategoryWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductCount = {
   __typename?: 'ProductCount';
-  availableColors: Scalars['Int'];
-  images: Scalars['Int'];
-  productCategories: Scalars['Int'];
-  productLengths: Scalars['Int'];
-  productSizes: Scalars['Int'];
+  availableColors: Scalars['Int']['output'];
+  images: Scalars['Int']['output'];
+  productCategories: Scalars['Int']['output'];
+  productLengths: Scalars['Int']['output'];
+  productSizes: Scalars['Int']['output'];
 };
 
 export type ProductCountAggregate = {
   __typename?: 'ProductCountAggregate';
-  _all: Scalars['Int'];
-  description: Scalars['Int'];
-  discountPrice: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
-  price: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  description: Scalars['Int']['output'];
+  discountPrice: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['Int']['output'];
+  price: Scalars['Int']['output'];
 };
 
 export type ProductCreateInput = {
   availableColors?: InputMaybe<RgbColorCreateNestedManyWithoutProductsInput>;
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
+  description: Scalars['String']['input'];
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<ImageCreateNestedManyWithoutProductInput>;
-  name: Scalars['String'];
-  price: Scalars['Int'];
+  name: Scalars['String']['input'];
+  price: Scalars['Int']['input'];
   productCategories?: InputMaybe<ProductCategoryCreateNestedManyWithoutProductsInput>;
   productLengths?: InputMaybe<ProductLengthCreateNestedManyWithoutProductsInput>;
   productSizes?: InputMaybe<ProductSizeCreateNestedManyWithoutProductsInput>;
@@ -598,12 +581,12 @@ export type ProductCreateOrConnectWithoutImagesInput = {
 };
 
 export type ProductCreateWithoutAvailableColorsInput = {
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
+  description: Scalars['String']['input'];
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<ImageCreateNestedManyWithoutProductInput>;
-  name: Scalars['String'];
-  price: Scalars['Int'];
+  name: Scalars['String']['input'];
+  price: Scalars['Int']['input'];
   productCategories?: InputMaybe<ProductCategoryCreateNestedManyWithoutProductsInput>;
   productLengths?: InputMaybe<ProductLengthCreateNestedManyWithoutProductsInput>;
   productSizes?: InputMaybe<ProductSizeCreateNestedManyWithoutProductsInput>;
@@ -611,11 +594,11 @@ export type ProductCreateWithoutAvailableColorsInput = {
 
 export type ProductCreateWithoutImagesInput = {
   availableColors?: InputMaybe<RgbColorCreateNestedManyWithoutProductsInput>;
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  price: Scalars['Int'];
+  description: Scalars['String']['input'];
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  price: Scalars['Int']['input'];
   productCategories?: InputMaybe<ProductCategoryCreateNestedManyWithoutProductsInput>;
   productLengths?: InputMaybe<ProductLengthCreateNestedManyWithoutProductsInput>;
   productSizes?: InputMaybe<ProductSizeCreateNestedManyWithoutProductsInput>;
@@ -624,20 +607,20 @@ export type ProductCreateWithoutImagesInput = {
 export type ProductLength = {
   __typename?: 'ProductLength';
   _count: ProductLengthCount;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type ProductLengthCount = {
   __typename?: 'ProductLengthCount';
-  products: Scalars['Int'];
+  products: Scalars['Int']['output'];
 };
 
 export type ProductLengthCountAggregate = {
   __typename?: 'ProductLengthCountAggregate';
-  _all: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['Int']['output'];
 };
 
 export type ProductLengthCreateNestedManyWithoutProductsInput = {
@@ -652,20 +635,20 @@ export type ProductLengthCreateOrConnectWithoutProductsInput = {
 };
 
 export type ProductLengthCreateWithoutProductsInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 };
 
 export type ProductLengthMaxAggregate = {
   __typename?: 'ProductLengthMaxAggregate';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProductLengthMinAggregate = {
   __typename?: 'ProductLengthMinAggregate';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProductLengthScalarWhereInput = {
@@ -677,8 +660,8 @@ export type ProductLengthScalarWhereInput = {
 };
 
 export type ProductLengthUpdateManyMutationInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductLengthUpdateManyWithWhereWithoutProductsInput = {
@@ -705,8 +688,8 @@ export type ProductLengthUpdateWithWhereUniqueWithoutProductsInput = {
 };
 
 export type ProductLengthUpdateWithoutProductsInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductLengthUpsertWithWhereUniqueWithoutProductsInput = {
@@ -716,26 +699,26 @@ export type ProductLengthUpsertWithWhereUniqueWithoutProductsInput = {
 };
 
 export type ProductLengthWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductMaxAggregate = {
   __typename?: 'ProductMaxAggregate';
-  description?: Maybe<Scalars['String']>;
-  discountPrice?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']['output']>;
+  discountPrice?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ProductMinAggregate = {
   __typename?: 'ProductMinAggregate';
-  description?: Maybe<Scalars['String']>;
-  discountPrice?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']['output']>;
+  discountPrice?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ProductScalarWhereInput = {
@@ -752,20 +735,20 @@ export type ProductScalarWhereInput = {
 export type ProductSize = {
   __typename?: 'ProductSize';
   _count: ProductSizeCount;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type ProductSizeCount = {
   __typename?: 'ProductSizeCount';
-  products: Scalars['Int'];
+  products: Scalars['Int']['output'];
 };
 
 export type ProductSizeCountAggregate = {
   __typename?: 'ProductSizeCountAggregate';
-  _all: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['Int']['output'];
 };
 
 export type ProductSizeCreateNestedManyWithoutProductsInput = {
@@ -780,20 +763,20 @@ export type ProductSizeCreateOrConnectWithoutProductsInput = {
 };
 
 export type ProductSizeCreateWithoutProductsInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 };
 
 export type ProductSizeMaxAggregate = {
   __typename?: 'ProductSizeMaxAggregate';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProductSizeMinAggregate = {
   __typename?: 'ProductSizeMinAggregate';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProductSizeScalarWhereInput = {
@@ -805,8 +788,8 @@ export type ProductSizeScalarWhereInput = {
 };
 
 export type ProductSizeUpdateManyMutationInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSizeUpdateManyWithWhereWithoutProductsInput = {
@@ -833,8 +816,8 @@ export type ProductSizeUpdateWithWhereUniqueWithoutProductsInput = {
 };
 
 export type ProductSizeUpdateWithoutProductsInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSizeUpsertWithWhereUniqueWithoutProductsInput = {
@@ -844,35 +827,35 @@ export type ProductSizeUpsertWithWhereUniqueWithoutProductsInput = {
 };
 
 export type ProductSizeWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductSumAggregate = {
   __typename?: 'ProductSumAggregate';
-  discountPrice?: Maybe<Scalars['Int']>;
-  price?: Maybe<Scalars['Int']>;
+  discountPrice?: Maybe<Scalars['Int']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ProductUpdateInput = {
   availableColors?: InputMaybe<RgbColorUpdateManyWithoutProductsNestedInput>;
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<ImageUpdateManyWithoutProductNestedInput>;
-  name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
   productCategories?: InputMaybe<ProductCategoryUpdateManyWithoutProductsNestedInput>;
   productLengths?: InputMaybe<ProductLengthUpdateManyWithoutProductsNestedInput>;
   productSizes?: InputMaybe<ProductSizeUpdateManyWithoutProductsNestedInput>;
 };
 
 export type ProductUpdateManyMutationInput = {
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ProductUpdateManyWithWhereWithoutAvailableColorsInput = {
@@ -897,8 +880,8 @@ export type ProductUpdateOneWithoutImagesNestedInput = {
   connect?: InputMaybe<ProductWhereUniqueInput>;
   connectOrCreate?: InputMaybe<ProductCreateOrConnectWithoutImagesInput>;
   create?: InputMaybe<ProductCreateWithoutImagesInput>;
-  delete?: InputMaybe<Scalars['Boolean']>;
-  disconnect?: InputMaybe<Scalars['Boolean']>;
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
   update?: InputMaybe<ProductUpdateWithoutImagesInput>;
   upsert?: InputMaybe<ProductUpsertWithoutImagesInput>;
 };
@@ -909,12 +892,12 @@ export type ProductUpdateWithWhereUniqueWithoutAvailableColorsInput = {
 };
 
 export type ProductUpdateWithoutAvailableColorsInput = {
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
   images?: InputMaybe<ImageUpdateManyWithoutProductNestedInput>;
-  name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
   productCategories?: InputMaybe<ProductCategoryUpdateManyWithoutProductsNestedInput>;
   productLengths?: InputMaybe<ProductLengthUpdateManyWithoutProductsNestedInput>;
   productSizes?: InputMaybe<ProductSizeUpdateManyWithoutProductsNestedInput>;
@@ -922,11 +905,11 @@ export type ProductUpdateWithoutAvailableColorsInput = {
 
 export type ProductUpdateWithoutImagesInput = {
   availableColors?: InputMaybe<RgbColorUpdateManyWithoutProductsNestedInput>;
-  description?: InputMaybe<Scalars['String']>;
-  discountPrice?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  discountPrice?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
   productCategories?: InputMaybe<ProductCategoryUpdateManyWithoutProductsNestedInput>;
   productLengths?: InputMaybe<ProductLengthUpdateManyWithoutProductsNestedInput>;
   productSizes?: InputMaybe<ProductSizeUpdateManyWithoutProductsNestedInput>;
@@ -944,8 +927,8 @@ export type ProductUpsertWithoutImagesInput = {
 };
 
 export type ProductWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -956,8 +939,6 @@ export type Query = {
   productCategories: Array<ProductCategory>;
   productLengths: Array<ProductLength>;
   products: Array<Product>;
-  user: User;
-  users: Array<User>;
 };
 
 
@@ -972,12 +953,7 @@ export type QueryProductArgs = {
 
 
 export type QueryProductsArgs = {
-  productCategory?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryUserArgs = {
-  where: UserWhereUniqueInput;
+  productCategory?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum QueryMode {
@@ -988,34 +964,34 @@ export enum QueryMode {
 export type RgbColor = {
   __typename?: 'RgbColor';
   _count: RgbColorCount;
-  b: Scalars['Int'];
-  g: Scalars['Int'];
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  r: Scalars['Int'];
+  b: Scalars['Int']['output'];
+  g: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  r: Scalars['Int']['output'];
 };
 
 export type RgbColorAvgAggregate = {
   __typename?: 'RgbColorAvgAggregate';
-  b?: Maybe<Scalars['Float']>;
-  g?: Maybe<Scalars['Float']>;
-  r?: Maybe<Scalars['Float']>;
+  b?: Maybe<Scalars['Float']['output']>;
+  g?: Maybe<Scalars['Float']['output']>;
+  r?: Maybe<Scalars['Float']['output']>;
 };
 
 export type RgbColorCount = {
   __typename?: 'RgbColorCount';
-  Image: Scalars['Int'];
-  products: Scalars['Int'];
+  Image: Scalars['Int']['output'];
+  products: Scalars['Int']['output'];
 };
 
 export type RgbColorCountAggregate = {
   __typename?: 'RgbColorCountAggregate';
-  _all: Scalars['Int'];
-  b: Scalars['Int'];
-  g: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
-  r: Scalars['Int'];
+  _all: Scalars['Int']['output'];
+  b: Scalars['Int']['output'];
+  g: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['Int']['output'];
+  r: Scalars['Int']['output'];
 };
 
 export type RgbColorCreateNestedManyWithoutProductsInput = {
@@ -1041,41 +1017,41 @@ export type RgbColorCreateOrConnectWithoutProductsInput = {
 };
 
 export type RgbColorCreateWithoutImageInput = {
-  a?: InputMaybe<Scalars['Float']>;
-  b: Scalars['Int'];
-  g: Scalars['Int'];
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  a?: InputMaybe<Scalars['Float']['input']>;
+  b: Scalars['Int']['input'];
+  g: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
   products?: InputMaybe<ProductCreateNestedManyWithoutAvailableColorsInput>;
-  r: Scalars['Int'];
+  r: Scalars['Int']['input'];
 };
 
 export type RgbColorCreateWithoutProductsInput = {
   Image?: InputMaybe<ImageCreateNestedManyWithoutRgbBackgroundInput>;
-  a?: InputMaybe<Scalars['Float']>;
-  b: Scalars['Int'];
-  g: Scalars['Int'];
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  r: Scalars['Int'];
+  a?: InputMaybe<Scalars['Float']['input']>;
+  b: Scalars['Int']['input'];
+  g: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  r: Scalars['Int']['input'];
 };
 
 export type RgbColorMaxAggregate = {
   __typename?: 'RgbColorMaxAggregate';
-  b?: Maybe<Scalars['Int']>;
-  g?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  r?: Maybe<Scalars['Int']>;
+  b?: Maybe<Scalars['Int']['output']>;
+  g?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  r?: Maybe<Scalars['Int']['output']>;
 };
 
 export type RgbColorMinAggregate = {
   __typename?: 'RgbColorMinAggregate';
-  b?: Maybe<Scalars['Int']>;
-  g?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  r?: Maybe<Scalars['Int']>;
+  b?: Maybe<Scalars['Int']['output']>;
+  g?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  r?: Maybe<Scalars['Int']['output']>;
 };
 
 export type RgbColorScalarWhereInput = {
@@ -1092,18 +1068,18 @@ export type RgbColorScalarWhereInput = {
 
 export type RgbColorSumAggregate = {
   __typename?: 'RgbColorSumAggregate';
-  b?: Maybe<Scalars['Int']>;
-  g?: Maybe<Scalars['Int']>;
-  r?: Maybe<Scalars['Int']>;
+  b?: Maybe<Scalars['Int']['output']>;
+  g?: Maybe<Scalars['Int']['output']>;
+  r?: Maybe<Scalars['Int']['output']>;
 };
 
 export type RgbColorUpdateManyMutationInput = {
-  a?: InputMaybe<Scalars['Float']>;
-  b?: InputMaybe<Scalars['Int']>;
-  g?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  r?: InputMaybe<Scalars['Int']>;
+  a?: InputMaybe<Scalars['Float']['input']>;
+  b?: InputMaybe<Scalars['Int']['input']>;
+  g?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  r?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type RgbColorUpdateManyWithWhereWithoutProductsInput = {
@@ -1138,23 +1114,23 @@ export type RgbColorUpdateWithWhereUniqueWithoutProductsInput = {
 };
 
 export type RgbColorUpdateWithoutImageInput = {
-  a?: InputMaybe<Scalars['Float']>;
-  b?: InputMaybe<Scalars['Int']>;
-  g?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  a?: InputMaybe<Scalars['Float']['input']>;
+  b?: InputMaybe<Scalars['Int']['input']>;
+  g?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   products?: InputMaybe<ProductUpdateManyWithoutAvailableColorsNestedInput>;
-  r?: InputMaybe<Scalars['Int']>;
+  r?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type RgbColorUpdateWithoutProductsInput = {
   Image?: InputMaybe<ImageUpdateManyWithoutRgbBackgroundNestedInput>;
-  a?: InputMaybe<Scalars['Float']>;
-  b?: InputMaybe<Scalars['Int']>;
-  g?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  r?: InputMaybe<Scalars['Int']>;
+  a?: InputMaybe<Scalars['Float']['input']>;
+  b?: InputMaybe<Scalars['Int']['input']>;
+  g?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  r?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type RgbColorUpsertWithWhereUniqueWithoutProductsInput = {
@@ -1169,69 +1145,21 @@ export type RgbColorUpsertWithoutImageInput = {
 };
 
 export type RgbColorWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StringFilter = {
-  contains?: InputMaybe<Scalars['String']>;
-  endsWith?: InputMaybe<Scalars['String']>;
-  equals?: InputMaybe<Scalars['String']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<Scalars['String']>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
   mode?: InputMaybe<QueryMode>;
   not?: InputMaybe<StringFilter>;
-  notIn?: InputMaybe<Array<Scalars['String']>>;
-  startsWith?: InputMaybe<Scalars['String']>;
-};
-
-export type User = {
-  __typename?: 'User';
-  email: Scalars['String'];
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-};
-
-export type UserCountAggregate = {
-  __typename?: 'UserCountAggregate';
-  _all: Scalars['Int'];
-  email: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
-};
-
-export type UserCreateInput = {
-  email: Scalars['String'];
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  password: Scalars['String'];
-};
-
-export type UserMaxAggregate = {
-  __typename?: 'UserMaxAggregate';
-  email?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type UserMinAggregate = {
-  __typename?: 'UserMinAggregate';
-  email?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type UserUpdateInput = {
-  email?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-};
-
-export type UserWhereUniqueInput = {
-  email?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
 };

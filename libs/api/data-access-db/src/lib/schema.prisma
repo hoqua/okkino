@@ -27,21 +27,6 @@ generator nestgraphql {
   decorate_1_arguments    = "[]"
 }
 
-model User {
-  id       String  @id @default(uuid())
-  /// @Validator.IsEmail()
-  email    String  @unique
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  name     String?
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(8)
-  /// @HideField()
-  password String
-}
-
 model HomeBlock {
   id             String @id @default(uuid())
   /// @Validator.IsString()
@@ -61,7 +46,7 @@ model Product {
   /// @Validator.IsString()
   /// @Validator.MaxLength(1000)
   /// @Validator.MinLength(0)
-  description   String?
+  description   String
   /// @Validator.@IsInt()
   /// @Validator.@Min(1)
   /// @Validator.@Max(100_000)
@@ -83,7 +68,7 @@ model Image {
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
-  title           String?
+  title           String
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
@@ -104,7 +89,7 @@ model RgbColor {
   /// @Validator.IsString()
   /// @Validator.MaxLength(100)
   /// @Validator.MinLength(3)
-  name     String?   @unique
+  name     String   @unique
   /// @Validator.IsInt()
   /// @Validator.Min(0)
   /// @Validator.Max(255)

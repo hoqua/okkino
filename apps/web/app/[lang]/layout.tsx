@@ -33,7 +33,7 @@ export default async function RootLayout({
   return (
     <html lang={params.lang} className={lato.className}>
       <body className="flex flex-col items-center">
-        <div className="w-full max-w-screen-2xl pr-6 pl-6 md:pl-14 md:pr-14">
+        <div className="w-full max-w-screen-2xl pl-6 pr-6 md:pl-14 md:pr-14">
           <nav className="flex h-20 items-center justify-between md:h-28 lg:h-36">
             <Link href={`/${params.lang}`}>
               <Image

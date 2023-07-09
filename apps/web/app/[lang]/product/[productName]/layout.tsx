@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
 import { rgbToDataUrl } from '@okkino/web/utils-shared'
-import { webEnv } from '../../../../environments/environment'
 import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { gql } from '../../../../data-access/graphq-client'
+import { webEnv } from '@okkino/web/utils-env'
 
 const IMAGES_ON_SCREEN = 2
 

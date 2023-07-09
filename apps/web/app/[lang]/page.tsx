@@ -1,10 +1,10 @@
 import { gql } from '../../data-access/graphq-client'
-import { webEnv } from '../../environments/environment'
 import Image from 'next/image'
 import Link from 'next/link'
 import { rgbToDataUrl } from '@okkino/web/utils-shared'
 import { Locale } from '../../i18n/i18n-config'
 import { getI18nNavigationPath } from './components/common/utils'
+import { webEnv } from '@okkino/web/utils-env'
 
 const { storage } = webEnv
 
