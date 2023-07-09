@@ -16,7 +16,7 @@ export const Button = (props: IProps) => {
         (flat
           ? 'border-transparent hover:border-transparent '
           : 'border-black hover:border-gray-600 ') +
-        'okkino-text-hover border pl-9 pr-9 pt-3 pb-3  text-sm uppercase'
+        'okkino-text-hover border pb-3 pl-9 pr-9 pt-3  text-sm uppercase'
       }
     >
       {label}

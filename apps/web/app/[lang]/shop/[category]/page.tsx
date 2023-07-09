@@ -25,7 +25,7 @@ export default async function Page(props: IProductPageProps) {
   })
 
   return (
-    <div className="object grid grid-cols-2 gap-y-5 gap-x-2 md:gap-x-4 md:gap-y-7 lg:grid-cols-3 ">
+    <div className="object grid grid-cols-2 gap-x-2 gap-y-5 md:gap-x-4 md:gap-y-7 lg:grid-cols-3 ">
       {products.map((product, index) => {
         const { availableColors, images, discountPrice, price } = product
         const [mainImage, hoverImage] = images

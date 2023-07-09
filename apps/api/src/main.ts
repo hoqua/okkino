@@ -5,7 +5,6 @@
 
 import { Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-
 import { AppModule } from './app/app.module'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import helmet from '@fastify/helmet'
@@ -19,8 +18,10 @@ const runHost = isProd ? '0.0.0.0' : 'localhost'
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   await app.register(cookie)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   await app.register(helmet, { contentSecurityPolicy: isProd })
   app.enableCors()

@@ -8,7 +8,7 @@ documents:
 generates:
   libs/web/data-access-graphql/src/lib/types.ts:
     plugins:
-     - typescript
+      - typescript
   libs/:
     preset: near-operation-file
     presetConfig:
@@ -17,4 +17,3 @@ generates:
     plugins:
       - typescript-operations
       - typescript-graphql-request
-

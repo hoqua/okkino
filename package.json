@@ -128,7 +128,7 @@
     "jest-environment-jsdom": "29.6.1",
     "nx": "16.5.0",
     "postcss": "^8.4.25",
-    "prettier": "^3.0.0",
+    "prettier": "^2.6.2",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "prisma": "^4.16.2",
     "prisma-nestjs-graphql": "^18.0.2",

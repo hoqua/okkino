@@ -46,7 +46,7 @@ export default function MobileMenu(props: IProps) {
       </span>
 
       {isOpen && (
-        <div className="fixed left-0 top-0 bottom-0 right-0 z-10  bg-white">
+        <div className="fixed bottom-0 left-0 right-0 top-0 z-10  bg-white">
           <div className="relative flex h-full w-full items-center p-6">
             <ul>
               <li
@@ -84,7 +84,7 @@ export default function MobileMenu(props: IProps) {
 
             <button
               aria-label="Close Menu"
-              className="absolute top-6 right-6"
+              className="absolute right-6 top-6"
               onClick={() => setIsOpen(false)}
             >
               &#10005;

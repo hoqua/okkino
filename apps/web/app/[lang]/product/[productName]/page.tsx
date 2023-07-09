@@ -47,7 +47,7 @@ export default async function Page({ params }: IProductPageProps) {
 
         <section>
           <div
-            className="[&>p]:text-sm [&>p]:text-gray-600 [&>p:empty]:h-6"
+            className="[&>p:empty]:h-6 [&>p]:text-sm [&>p]:text-gray-600"
             dangerouslySetInnerHTML={{ __html: description }}
           />
 
