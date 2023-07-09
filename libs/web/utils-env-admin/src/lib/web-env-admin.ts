@@ -18,7 +18,8 @@ const webAdminEnvSchema = z.object({
 
 type TWebAdminEnv = z.infer<typeof webAdminEnvSchema>
 
-const getEnv = process.env['OKKINO_ENV'] === 'build' ? (env: TWebAdminEnv) => env : webAdminEnvSchema.parse
+const getEnv =
+  process.env['OKKINO_ENV'] === 'build' ? (env: TWebAdminEnv) => env : webAdminEnvSchema.parse
 
 export const webAdminEnv = getEnv({
   isProd: process.env['OKKINO_ENV'] === 'production',

@@ -1,7 +1,7 @@
 'use client'
 
 import { DesktopSubmenu } from './desktop-submenu'
-import { GetProductCategoriesQuery} from '@okkino/web/data-access-graphql'
+import { GetProductCategoriesQuery } from '@okkino/web/data-access-graphql'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { FC } from 'react'
 import { ALL_CATEGORY } from '../../../shop/[category]/constants'
