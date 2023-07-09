@@ -1,7 +1,7 @@
 import { gql } from '../../data-access/graphq-client'
 import Image from 'next/image'
-import { webAdminEnv } from '../../environments/environment'
 import { cookies } from 'next/headers'
+import { webAdminEnv } from '@okkino/web/utils-env-admin'
 
 const { storage } = webAdminEnv
 

@@ -9,8 +9,8 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app/app.module'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import helmet from '@fastify/helmet'
-import { apiEnv } from './environments/environment'
 import cookie from '@fastify/cookie'
+import { apiEnv } from '@okkino/api/utils-env'
 
 const { isProd, api } = apiEnv
 

@@ -8,6 +8,8 @@ import { HomeBlockModule } from '@okkino/api/feature-home-block'
 import { ProductModule } from '@okkino/api/feature-product'
 import { ProductCategoryModule } from '@okkino/api/feature-product-category'
 import { ProductLengthModule } from '@okkino/api/feature-product-length'
+import { ConfigModule } from '@nestjs/config'
+import { apiEnv } from '@okkino/api/utils-env'
 
 const validationProvider = {
   provide: APP_PIPE,
@@ -16,6 +18,7 @@ const validationProvider = {
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ load: [() => apiEnv], isGlobal: true }),
     GraphQLModule.forRoot<MercuriusDriverConfig>({
       driver: MercuriusDriver,
       graphiql: true,
