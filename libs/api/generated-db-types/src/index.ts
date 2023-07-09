@@ -60,6 +60,11 @@ export enum QueryMode {
     insensitive = "insensitive"
 }
 
+export enum NullsOrder {
+    first = "first",
+    last = "last"
+}
+
 export enum ImageScalarFieldEnum {
     id = "id",
     title = "title",
@@ -76,6 +81,7 @@ export enum HomeBlockScalarFieldEnum {
 
 registerEnumType(HomeBlockScalarFieldEnum, { name: 'HomeBlockScalarFieldEnum', description: undefined })
 registerEnumType(ImageScalarFieldEnum, { name: 'ImageScalarFieldEnum', description: undefined })
+registerEnumType(NullsOrder, { name: 'NullsOrder', description: undefined })
 registerEnumType(QueryMode, { name: 'QueryMode', description: undefined })
 registerEnumType(SortOrder, { name: 'SortOrder', description: undefined })
 registerEnumType(TransactionIsolationLevel, { name: 'TransactionIsolationLevel', description: undefined })
@@ -446,10 +452,10 @@ export class HomeBlockOrderByWithRelationInput {
     id?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     navigationPath?: keyof typeof SortOrder;
-    @Field(() => ImageOrderByWithRelationInput, {nullable:true})
-    image?: InstanceType<typeof ImageOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
     imageId?: keyof typeof SortOrder;
+    @Field(() => ImageOrderByWithRelationInput, {nullable:true})
+    image?: InstanceType<typeof ImageOrderByWithRelationInput>;
 }
 
 @InputType()
@@ -661,10 +667,10 @@ export class HomeBlockWhereInput {
     id?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     navigationPath?: InstanceType<typeof StringFilter>;
-    @Field(() => ImageRelationFilter, {nullable:true})
-    image?: InstanceType<typeof ImageRelationFilter>;
     @Field(() => StringFilter, {nullable:true})
     imageId?: InstanceType<typeof StringFilter>;
+    @Field(() => ImageRelationFilter, {nullable:true})
+    image?: InstanceType<typeof ImageRelationFilter>;
 }
 
 @ObjectType()
@@ -673,10 +679,10 @@ export class HomeBlock {
     id!: string;
     @Field(() => String, {nullable:false})
     navigationPath!: string;
-    @Field(() => Image, {nullable:false})
-    image?: InstanceType<typeof Image>;
     @Field(() => String, {nullable:false})
     imageId!: string;
+    @Field(() => Image, {nullable:false})
+    image?: InstanceType<typeof Image>;
 }
 
 @ArgsType()
@@ -1302,8 +1308,8 @@ export class ImageOrderByWithAggregationInput {
     imagePath?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     rgbBackgroundId?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    productId?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    productId?: InstanceType<typeof SortOrderInput>;
     @Field(() => ImageCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof ImageCountOrderByAggregateInput>;
     @Field(() => ImageMaxOrderByAggregateInput, {nullable:true})
@@ -1320,16 +1326,16 @@ export class ImageOrderByWithRelationInput {
     title?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     imagePath?: keyof typeof SortOrder;
-    @Field(() => RgbColorOrderByWithRelationInput, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbColorOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
     rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    productId?: InstanceType<typeof SortOrderInput>;
+    @Field(() => RgbColorOrderByWithRelationInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorOrderByWithRelationInput>;
     @Field(() => HomeBlockOrderByWithRelationInput, {nullable:true})
     homeBlock?: InstanceType<typeof HomeBlockOrderByWithRelationInput>;
     @Field(() => ProductOrderByWithRelationInput, {nullable:true})
     product?: InstanceType<typeof ProductOrderByWithRelationInput>;
-    @Field(() => SortOrder, {nullable:true})
-    productId?: keyof typeof SortOrder;
 }
 
 @InputType()
@@ -1466,10 +1472,10 @@ export class ImageUncheckedCreateWithoutRgbBackgroundInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     imagePath!: string;
-    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
 }
 
 @InputType()
@@ -1488,10 +1494,10 @@ export class ImageUncheckedCreateInput {
     imagePath!: string;
     @Field(() => String, {nullable:false})
     rgbBackgroundId!: string;
-    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutImageInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutImageInput>;
 }
 
 @InputType()
@@ -1678,10 +1684,10 @@ export class ImageUncheckedUpdateWithoutRgbBackgroundInput {
     @Validator.MaxLength(100)
     @Validator.MinLength(3)
     imagePath?: string;
-    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
 }
 
 @InputType()
@@ -1700,10 +1706,10 @@ export class ImageUncheckedUpdateInput {
     imagePath?: string;
     @Field(() => String, {nullable:true})
     rgbBackgroundId?: string;
-    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
-    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
     @Field(() => String, {nullable:true})
     productId?: string;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutImageNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutImageNestedInput>;
 }
 
 @InputType()
@@ -1993,16 +1999,16 @@ export class ImageWhereInput {
     title?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     imagePath?: InstanceType<typeof StringFilter>;
-    @Field(() => RgbColorRelationFilter, {nullable:true})
-    rgbBackground?: InstanceType<typeof RgbColorRelationFilter>;
     @Field(() => StringFilter, {nullable:true})
     rgbBackgroundId?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    productId?: InstanceType<typeof StringFilter>;
+    @Field(() => RgbColorRelationFilter, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbColorRelationFilter>;
     @Field(() => HomeBlockRelationFilter, {nullable:true})
     homeBlock?: InstanceType<typeof HomeBlockRelationFilter>;
     @Field(() => ProductRelationFilter, {nullable:true})
     product?: InstanceType<typeof ProductRelationFilter>;
-    @Field(() => StringFilter, {nullable:true})
-    productId?: InstanceType<typeof StringFilter>;
 }
 
 @ObjectType()
@@ -2013,16 +2019,16 @@ export class Image {
     title!: string;
     @Field(() => String, {nullable:false})
     imagePath!: string;
-    @Field(() => RgbColor, {nullable:false})
-    rgbBackground?: InstanceType<typeof RgbColor>;
     @Field(() => String, {nullable:false})
     rgbBackgroundId!: string;
+    @HideField()
+    productId!: string | null;
+    @Field(() => RgbColor, {nullable:false})
+    rgbBackground?: InstanceType<typeof RgbColor>;
     @HideField()
     homeBlock?: InstanceType<typeof HomeBlock> | null;
     @HideField()
     product?: InstanceType<typeof Product> | null;
-    @HideField()
-    productId!: string | null;
 }
 
 @ArgsType()
@@ -2167,6 +2173,14 @@ export class IntWithAggregatesFilter {
     _min?: InstanceType<typeof IntFilter>;
     @Field(() => IntFilter, {nullable:true})
     _max?: InstanceType<typeof IntFilter>;
+}
+
+@InputType()
+export class SortOrderInput {
+    @Field(() => SortOrder, {nullable:false})
+    sort!: keyof typeof SortOrder;
+    @Field(() => NullsOrder, {nullable:true})
+    nulls?: keyof typeof NullsOrder;
 }
 
 @InputType()
@@ -2978,8 +2992,8 @@ export class ProductOrderByWithAggregationInput {
     description?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     price?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    discountPrice?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    discountPrice?: InstanceType<typeof SortOrderInput>;
     @Field(() => ProductCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof ProductCountOrderByAggregateInput>;
     @Field(() => ProductAvgOrderByAggregateInput, {nullable:true})
@@ -3002,8 +3016,8 @@ export class ProductOrderByWithRelationInput {
     description?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     price?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    discountPrice?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    discountPrice?: InstanceType<typeof SortOrderInput>;
     @Field(() => ImageOrderByRelationAggregateInput, {nullable:true})
     images?: InstanceType<typeof ImageOrderByRelationAggregateInput>;
     @Field(() => RgbColorOrderByRelationAggregateInput, {nullable:true})
@@ -6774,8 +6788,8 @@ export class RgbColorOrderByWithAggregationInput {
     g?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     b?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    a?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    a?: InstanceType<typeof SortOrderInput>;
     @Field(() => RgbColorCountOrderByAggregateInput, {nullable:true})
     _count?: InstanceType<typeof RgbColorCountOrderByAggregateInput>;
     @Field(() => RgbColorAvgOrderByAggregateInput, {nullable:true})
@@ -6800,8 +6814,8 @@ export class RgbColorOrderByWithRelationInput {
     g?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     b?: keyof typeof SortOrder;
-    @Field(() => SortOrder, {nullable:true})
-    a?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    a?: InstanceType<typeof SortOrderInput>;
     @Field(() => ProductOrderByRelationAggregateInput, {nullable:true})
     products?: InstanceType<typeof ProductOrderByRelationAggregateInput>;
     @Field(() => ImageOrderByRelationAggregateInput, {nullable:true})
