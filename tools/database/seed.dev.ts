@@ -5,7 +5,6 @@ import {
   PRODUCT_COVER_IMAGES,
   PRODUCT_DATA,
   PRODUCTS,
-  USERS_SEED_DATA
 } from './seed-data'
 import {
   PRODUCT_CATEGORIES,
@@ -51,16 +50,6 @@ async function main() {
         where: { name: category.name },
         update: category,
         create: category
-      })
-    })
-  )
-
-  await Promise.all(
-    USERS_SEED_DATA.map((user) => {
-      return prisma.user.upsert({
-        where: { id: user.id },
-        update: user,
-        create: user
       })
     })
   )

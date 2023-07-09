@@ -112,7 +112,7 @@ export type Image = {
   imagePath: Scalars['String'];
   rgbBackground: RgbColor;
   rgbBackgroundId: Scalars['String'];
-  title?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type ImageCountAggregate = {
@@ -128,7 +128,7 @@ export type ImageCreateManyProductInput = {
   id?: InputMaybe<Scalars['String']>;
   imagePath: Scalars['String'];
   rgbBackgroundId: Scalars['String'];
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type ImageCreateManyProductInputEnvelope = {
@@ -140,7 +140,7 @@ export type ImageCreateManyRgbBackgroundInput = {
   id?: InputMaybe<Scalars['String']>;
   imagePath: Scalars['String'];
   productId?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type ImageCreateManyRgbBackgroundInputEnvelope = {
@@ -188,7 +188,7 @@ export type ImageCreateWithoutHomeBlockInput = {
   imagePath: Scalars['String'];
   product?: InputMaybe<ProductCreateNestedOneWithoutImagesInput>;
   rgbBackground: RgbColorCreateNestedOneWithoutImageInput;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type ImageCreateWithoutProductInput = {
@@ -196,7 +196,7 @@ export type ImageCreateWithoutProductInput = {
   id?: InputMaybe<Scalars['String']>;
   imagePath: Scalars['String'];
   rgbBackground: RgbColorCreateNestedOneWithoutImageInput;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type ImageCreateWithoutRgbBackgroundInput = {
@@ -204,7 +204,7 @@ export type ImageCreateWithoutRgbBackgroundInput = {
   id?: InputMaybe<Scalars['String']>;
   imagePath: Scalars['String'];
   product?: InputMaybe<ProductCreateNestedOneWithoutImagesInput>;
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type ImageMaxAggregate = {
@@ -356,13 +356,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   createHomeBlock: HomeBlock;
   createProduct: Product;
-  createUser: User;
   removeHomeBlock: HomeBlock;
   removeProduct: Product;
-  removeUser: User;
   updateHomeBlock: HomeBlock;
   updateProduct: Product;
-  updateUser: User;
 };
 
 
@@ -376,11 +373,6 @@ export type MutationCreateProductArgs = {
 };
 
 
-export type MutationCreateUserArgs = {
-  data: UserCreateInput;
-};
-
-
 export type MutationRemoveHomeBlockArgs = {
   where: HomeBlockWhereUniqueInput;
 };
@@ -388,11 +380,6 @@ export type MutationRemoveHomeBlockArgs = {
 
 export type MutationRemoveProductArgs = {
   where: ProductWhereUniqueInput;
-};
-
-
-export type MutationRemoveUserArgs = {
-  where: UserWhereUniqueInput;
 };
 
 
@@ -407,17 +394,11 @@ export type MutationUpdateProductArgs = {
   where: ProductWhereUniqueInput;
 };
 
-
-export type MutationUpdateUserArgs = {
-  data: UserUpdateInput;
-  where: UserWhereUniqueInput;
-};
-
 export type Product = {
   __typename?: 'Product';
   _count: ProductCount;
   availableColors?: Maybe<Array<RgbColor>>;
-  description?: Maybe<Scalars['String']>;
+  description: Scalars['String'];
   /**
    * @Validator.@IsInt()
    * @Validator.@Min(1)
@@ -564,7 +545,7 @@ export type ProductCountAggregate = {
 
 export type ProductCreateInput = {
   availableColors?: InputMaybe<RgbColorCreateNestedManyWithoutProductsInput>;
-  description?: InputMaybe<Scalars['String']>;
+  description: Scalars['String'];
   discountPrice?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   images?: InputMaybe<ImageCreateNestedManyWithoutProductInput>;
@@ -598,7 +579,7 @@ export type ProductCreateOrConnectWithoutImagesInput = {
 };
 
 export type ProductCreateWithoutAvailableColorsInput = {
-  description?: InputMaybe<Scalars['String']>;
+  description: Scalars['String'];
   discountPrice?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   images?: InputMaybe<ImageCreateNestedManyWithoutProductInput>;
@@ -611,7 +592,7 @@ export type ProductCreateWithoutAvailableColorsInput = {
 
 export type ProductCreateWithoutImagesInput = {
   availableColors?: InputMaybe<RgbColorCreateNestedManyWithoutProductsInput>;
-  description?: InputMaybe<Scalars['String']>;
+  description: Scalars['String'];
   discountPrice?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
@@ -956,8 +937,6 @@ export type Query = {
   productCategories: Array<ProductCategory>;
   productLengths: Array<ProductLength>;
   products: Array<Product>;
-  user: User;
-  users: Array<User>;
 };
 
 
@@ -975,11 +954,6 @@ export type QueryProductsArgs = {
   productCategory?: InputMaybe<Scalars['String']>;
 };
 
-
-export type QueryUserArgs = {
-  where: UserWhereUniqueInput;
-};
-
 export enum QueryMode {
   Default = 'default',
   Insensitive = 'insensitive'
@@ -991,7 +965,7 @@ export type RgbColor = {
   b: Scalars['Int'];
   g: Scalars['Int'];
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   r: Scalars['Int'];
 };
 
@@ -1045,7 +1019,7 @@ export type RgbColorCreateWithoutImageInput = {
   b: Scalars['Int'];
   g: Scalars['Int'];
   id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
   products?: InputMaybe<ProductCreateNestedManyWithoutAvailableColorsInput>;
   r: Scalars['Int'];
 };
@@ -1056,7 +1030,7 @@ export type RgbColorCreateWithoutProductsInput = {
   b: Scalars['Int'];
   g: Scalars['Int'];
   id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
   r: Scalars['Int'];
 };
 
@@ -1186,52 +1160,4 @@ export type StringFilter = {
   not?: InputMaybe<StringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
-};
-
-export type User = {
-  __typename?: 'User';
-  email: Scalars['String'];
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-};
-
-export type UserCountAggregate = {
-  __typename?: 'UserCountAggregate';
-  _all: Scalars['Int'];
-  email: Scalars['Int'];
-  id: Scalars['Int'];
-  name: Scalars['Int'];
-};
-
-export type UserCreateInput = {
-  email: Scalars['String'];
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  password: Scalars['String'];
-};
-
-export type UserMaxAggregate = {
-  __typename?: 'UserMaxAggregate';
-  email?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type UserMinAggregate = {
-  __typename?: 'UserMinAggregate';
-  email?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type UserUpdateInput = {
-  email?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-};
-
-export type UserWhereUniqueInput = {
-  email?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
 };

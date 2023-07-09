@@ -3,22 +3,17 @@ import * as Types from './types';
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
 import { gql } from 'graphql-request';
-export type GetUsersVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type GetUsers = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, email: string, name?: string | null }> };
-
 export type GetHomeImagesVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetHomeImages = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, navigationPath: string, image: { __typename?: 'Image', title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } } }> };
+export type GetHomeImages = { __typename?: 'Query', homeBlocks: Array<{ __typename?: 'HomeBlock', id: string, navigationPath: string, image: { __typename?: 'Image', title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } } }> };
 
 export type GetProductsVariables = Types.Exact<{
   productCategory?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
 
-export type GetProducts = { __typename?: 'Query', products: Array<{ __typename?: 'Product', name: string, price: number, discountPrice?: number | null, images?: Array<{ __typename?: 'Image', title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', r: number, g: number, b: number }> | null }> };
+export type GetProducts = { __typename?: 'Query', products: Array<{ __typename?: 'Product', name: string, price: number, discountPrice?: number | null, images?: Array<{ __typename?: 'Image', title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', r: number, g: number, b: number }> | null }> };
 
 export type GetProductCategoriesVariables = Types.Exact<{ [key: string]: never; }>;
 
@@ -35,18 +30,9 @@ export type GetProductVariables = Types.Exact<{
 }>;
 
 
-export type GetProduct = { __typename?: 'Query', product: { __typename?: 'Product', name: string, description?: string | null, price: number, discountPrice?: number | null, productSizes?: Array<{ __typename?: 'ProductSize', name: string }> | null, images?: Array<{ __typename?: 'Image', id: string, title?: string | null, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', name?: string | null, r: number, g: number, b: number }> | null } };
+export type GetProduct = { __typename?: 'Query', product: { __typename?: 'Product', name: string, description: string, price: number, discountPrice?: number | null, productSizes?: Array<{ __typename?: 'ProductSize', name: string }> | null, images?: Array<{ __typename?: 'Image', id: string, title: string, imagePath: string, rgbBackground: { __typename?: 'RgbColor', r: number, g: number, b: number } }> | null, availableColors?: Array<{ __typename?: 'RgbColor', name: string, r: number, g: number, b: number }> | null } };
 
 
-export const GetUsersDocument = /*#__PURE__*/ gql`
-    query GetUsers {
-  users {
-    id
-    email
-    name
-  }
-}
-    `;
 export const GetHomeImagesDocument = /*#__PURE__*/ gql`
     query GetHomeImages {
   homeBlocks {
@@ -138,9 +124,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    GetUsers(variables?: GetUsersVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUsers> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetUsers>(GetUsersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUsers', 'query');
-    },
     GetHomeImages(variables?: GetHomeImagesVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetHomeImages> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHomeImages>(GetHomeImagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHomeImages', 'query');
     },

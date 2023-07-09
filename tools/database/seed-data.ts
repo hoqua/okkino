@@ -1,18 +1,6 @@
-import {
-  HomeBlockCreateInput,
-  ProductCreateInput,
-  User
-} from '../../libs/api/generated-db-types/src'
-import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from './seed-data.prod'
+import { HomeBlockCreateInput, ProductCreateInput } from "../../libs/api/generated-db-types/src";
+import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from "./seed-data.prod";
 
-export const USERS_SEED_DATA: User[] = [
-  {
-    id: '1',
-    email: 'admin@okkino.com',
-    name: 'Administrator Okkino',
-    password: '$2b$10$kRW9o24vrKjquuKVXLSeoOwOLjSfByooHwSp3BnIyjUBSVM2aJv8S'
-  }
-]
 
 const HOME_BLOCKS = ['left', 'right']
 

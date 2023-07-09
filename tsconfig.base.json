@@ -13,6 +13,7 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strict": true,
     "baseUrl": ".",
     "paths": {
       "@okkino/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
@@ -21,7 +22,6 @@
       "@okkino/api/feature-product": ["libs/api/feature-product/src/index.ts"],
       "@okkino/api/feature-product-category": ["libs/api/feature-product-category/src/index.ts"],
       "@okkino/api/feature-product-length": ["libs/api/feature-product-length/src/index.ts"],
-      "@okkino/api/feature-user": ["libs/api/feature-user/src/index.ts"],
       "@okkino/api/generated-db-types": ["libs/api/generated-db-types/src/index.ts"],
       "@okkino/api/utils-env": ["libs/api/utils-env/src/index.ts"],
       "@okkino/web/data-access-graphql": ["libs/web/data-access-graphql/src/index.ts"],
