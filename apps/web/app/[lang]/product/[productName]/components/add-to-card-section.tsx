@@ -2,7 +2,7 @@
 
 import { FC, useState } from 'react'
 import { Price } from '../../../../shared-components/price'
-import { GetProduct, GetProductLengths } from '@okkino/web/data-access-graphql'
+import { GetProductQuery, GetProductLengthsQuery } from '@okkino/web/data-access-graphql'
 import { ProductPropsSelector } from './product-props-selector'
 import { Button } from '../../../../shared-components/button'
 import Link from 'next/link'
@@ -10,9 +10,9 @@ import { getI18nNavigationPath } from '../../../components/common/utils'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { RouteName } from '../../../components/common/constants'
 
-type TProductSize = GetProduct['product']['productSizes'][number]
-type TProductLength = GetProductLengths['productLengths'][number]
-type TProductColor = GetProduct['product']['availableColors'][number]
+type TProductSize = GetProductQuery['product']['productSizes'][number]
+type TProductLength = GetProductLengthsQuery['productLengths'][number]
+type TProductColor = GetProductQuery['product']['availableColors'][number]
 
 interface IAddToCartSectionTranslations {
   size: string

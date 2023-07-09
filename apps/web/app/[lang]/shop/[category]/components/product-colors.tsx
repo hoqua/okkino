@@ -1,7 +1,7 @@
-import { GetProducts } from '@okkino/web/data-access-graphql'
+import { GetProductsQuery } from '@okkino/web/data-access-graphql'
 import { FC } from 'react'
 
-type RgbColors = GetProducts['products'][0]['availableColors']
+type RgbColors = GetProductsQuery['products'][0]['availableColors']
 
 interface IProps {
   colors: RgbColors

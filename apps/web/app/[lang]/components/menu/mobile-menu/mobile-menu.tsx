@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GetProductCategories } from '@okkino/web/data-access-graphql'
+import { GetProductCategoriesQuery } from '@okkino/web/data-access-graphql'
 import { i18n, Locale } from '../../../../../i18n/i18n-config'
 import { MobileSubmenu } from './moblie-submenu'
 import { usePathname } from 'next/navigation'
@@ -17,7 +17,7 @@ enum Submenu {
 interface IProps {
   navigationTranslation: Record<string, string>
   productCategoriesTranslation: Record<string, string>
-  productCategories: GetProductCategories['productCategories']
+  productCategories: GetProductCategoriesQuery['productCategories']
   locale: Locale
 }
 
