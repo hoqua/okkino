@@ -19,7 +19,7 @@
     "verify": "nx workspace-lint && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
     "----DEPLOY SECTION----": "-----------------------",
     "cd:web": "npm run validate:web-env && prisma generate && npx nx build web --prod",
-    "cd:web-admin": "npm run validate:web-admin-env && npx nx build web-admin --prod",
+    "cd:web-admin": "npm run validate:web-admin-env && prisma generate && npx nx build web-admin --prod",
     "cd:db-push": "npx prisma db push --accept-data-loss",
     "cd:db-seed": "npx ts-node --project tools/tsconfig.tools.json tools/database/seed.dev.ts"
   },
