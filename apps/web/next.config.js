@@ -12,14 +12,11 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false
   },
-  experimental: {
-    appDir: true
-  },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: String(process.env.OKKINO_WEB_STORAGE_ENDPOINT)
+        hostname: 'uploadthing.com'
       }
     ]
   }

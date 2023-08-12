@@ -5,14 +5,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center">
-        {/* Page content here */}
-
-        {children}
-
+      <div className="drawer-content flex flex-col justify-center p-12">
         <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
           Open drawer
         </label>
+        {/* Page content here */}
+
+        {children}
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>

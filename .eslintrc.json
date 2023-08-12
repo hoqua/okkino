@@ -57,7 +57,7 @@
               },
               {
                 "sourceTag": "scope:web",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:web"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:web", "scope:api"]
               }
             ]
           }

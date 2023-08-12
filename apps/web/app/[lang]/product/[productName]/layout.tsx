@@ -1,13 +1,10 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
-import { rgbToDataUrl } from '@okkino/web/utils-shared'
+import { hexToDataUrl } from '@okkino/web/utils-shared'
 import { i18n, Locale } from '../../../../i18n/i18n-config'
-import { gql } from '../../../../data-access/graphq-client'
-import { webEnv } from '@okkino/web/utils-env'
+import { getProduct, getProducts } from '@okkino/api/data-access-db'
 
 const IMAGES_ON_SCREEN = 2
-
-const { storage } = webEnv
 
 interface IRootLayoutProps {
   children: ReactNode
@@ -16,12 +13,10 @@ interface IRootLayoutProps {
 
 export default async function RootLayout(props: IRootLayoutProps) {
   const { params, children } = props
-  const { product } = await gql.GetProduct({
-    where: {
-      name: params.productName
-    }
-  })
+  const productName = decodeURI(params.productName)
+  const product = await getProduct(productName)
   const { images } = product
+  const sortedImages = images.sort((a, b) => a.order - b.order)
 
   return (
     <div className="3xl 3xl:grid-cols-2 xl:grid xl:h-[calc(100vh-9rem)] xl:grid-cols-[1fr_2fr] xl:gap-40">
@@ -37,19 +32,18 @@ export default async function RootLayout(props: IRootLayoutProps) {
           '-mr-6 flex snap-both snap-mandatory gap-4 overflow-x-scroll scroll-smooth md:-mr-14 md:gap-6 '
         }
       >
-        {images.map((image, index) => {
-          const { r, g, b } = image.rgbBackground
+        {sortedImages.map((image, index) => {
           return (
             <section
               key={image.id}
               className={'xl:min-w-full ' + 'relative aspect-[120/179] min-w-[80%] snap-center '}
             >
               <Image
-                src={`${storage.url}/${image.imagePath}`}
+                src={image.url}
                 alt={image.title}
                 className=""
                 placeholder="blur"
-                blurDataURL={rgbToDataUrl(r, g, b)}
+                blurDataURL={hexToDataUrl(image.bgColor)}
                 title={image.title}
                 priority={index < IMAGES_ON_SCREEN}
                 fill
@@ -70,7 +64,7 @@ export default async function RootLayout(props: IRootLayoutProps) {
 }
 
 export async function generateStaticParams() {
-  const { products } = await gql.GetProducts()
+  const products = await getProducts()
   const productNames = products.map((product) => product.name)
 
   const params = []

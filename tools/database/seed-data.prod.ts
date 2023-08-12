@@ -1,11 +1,4 @@
-import {
-  ProductCategoryCreateInput,
-  ProductLengthCreateInput,
-  ProductSizeCreateInput,
-  RgbColorCreateInput
-} from '../../libs/api/generated-db-types/src'
-
-export const PRODUCT_CATEGORIES: ProductCategoryCreateInput[] = [
+export const PRODUCT_CATEGORIES = [
   {
     name: 'new_arrivals'
   },
@@ -20,7 +13,7 @@ export const PRODUCT_CATEGORIES: ProductCategoryCreateInput[] = [
   }
 ]
 
-export const PRODUCT_SIZES: ProductSizeCreateInput[] = [
+export const PRODUCT_SIZES = [
   {
     name: 'XS'
   },
@@ -41,40 +34,30 @@ export const PRODUCT_SIZES: ProductSizeCreateInput[] = [
   }
 ]
 
-export const PRODUCT_COLORS: RgbColorCreateInput[] = [
+export const PRODUCT_COLORS = [
   {
     name: 'black',
-    r: 0,
-    g: 0,
-    b: 0
+    value: '#000000'
   },
   {
     name: 'gray',
-    r: 128,
-    g: 128,
-    b: 128
+    value: '#808080'
   },
   {
     name: 'beige',
-    r: 225,
-    g: 198,
-    b: 153
+    value: '#e1c699'
   },
   {
     name: 'white',
-    r: 255,
-    g: 255,
-    b: 255
+    value: '#ffffff'
   },
   {
     name: 'blue',
-    r: 0,
-    g: 0,
-    b: 0
+    value: '#243e9c'
   }
 ]
 
-export const PRODUCT_LENGTHS: ProductLengthCreateInput[] = [
+export const PRODUCT_LENGTHS = [
   {
     name: 'petit'
   },

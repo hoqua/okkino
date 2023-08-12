@@ -2,9 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import {
   HOME_BLOCK_DATA,
   HOME_BLOCK_IMAGES,
-  PRODUCT_COVER_IMAGES,
-  PRODUCT_DATA,
-  PRODUCTS
+
 } from './seed-data'
 import {
   PRODUCT_CATEGORIES,
@@ -26,7 +24,7 @@ async function main() {
   )
   await Promise.all(
     PRODUCT_COLORS.map((color) => {
-      return prisma.rgbColor.upsert({
+      return prisma.color.upsert({
         where: { name: color.name },
         update: color,
         create: color
@@ -73,38 +71,6 @@ async function main() {
       })
     })
   )
-
-  await Promise.all(
-    PRODUCT_DATA.map((product) => {
-      return prisma.product.upsert({
-        where: { id: product.id },
-        update: product,
-        create: product
-      })
-    })
-  )
-
-  for (const product of PRODUCTS) {
-    for (const image of PRODUCT_COVER_IMAGES) {
-      await prisma.image.upsert({
-        where: { id: product + image.id },
-        create: {
-          ...image,
-          id: product + image.id,
-          product: {
-            connect: { id: product }
-          }
-        },
-        update: {
-          ...image,
-          id: undefined,
-          product: {
-            connect: { id: product }
-          }
-        }
-      })
-    }
-  }
 }
 
 main()
