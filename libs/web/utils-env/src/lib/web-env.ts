@@ -10,7 +10,8 @@ const webEnvSchema = z.object({
 
 type TWebEnv = z.infer<typeof webEnvSchema>
 
-const getEnv = process.env['NODE_ENV'] === 'dev' ? (env: TWebEnv) => env : webEnvSchema.parse
+const getEnv =
+  process.env['NODE_ENV'] === 'development' ? (env: TWebEnv) => env : webEnvSchema.parse
 
 export const webEnv = getEnv({
   stripe: {

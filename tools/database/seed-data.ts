@@ -1,6 +1,6 @@
 const HOME_BLOCKS = ['left', 'right']
 
-export const  HOME_BLOCK_IMAGES = [
+export const HOME_BLOCK_IMAGES = [
   {
     id: HOME_BLOCKS[0],
     title: 'left',
@@ -16,7 +16,6 @@ export const  HOME_BLOCK_IMAGES = [
     bgColor: '#e2e0df',
     order: 1,
     key: 'right'
-
   }
 ]
 

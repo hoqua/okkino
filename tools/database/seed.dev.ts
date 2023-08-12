@@ -1,9 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import {
-  HOME_BLOCK_DATA,
-  HOME_BLOCK_IMAGES,
-
-} from './seed-data'
+import { HOME_BLOCK_DATA, HOME_BLOCK_IMAGES } from './seed-data'
 import {
   PRODUCT_CATEGORIES,
   PRODUCT_COLORS,

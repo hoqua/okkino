@@ -11,7 +11,7 @@ const webAdminEnvSchema = z.object({
 type TWebAdminEnv = z.infer<typeof webAdminEnvSchema>
 
 const getEnv =
-  process.env['NODE_ENV'] === 'dev' ? (env: TWebAdminEnv) => env : webAdminEnvSchema.parse
+  process.env['NODE_ENV'] === 'development' ? (env: TWebAdminEnv) => env : webAdminEnvSchema.parse
 
 export const webAdminEnv = getEnv({
   auth: {

@@ -69,10 +69,9 @@
       "quantity": "q_ty"
     },
     "overview": {
-      "title" : "Order overview",
+      "title": "Order overview",
       "item": "item",
       "items": "items"
-
     },
     "total": "total",
     "delivery": {
@@ -86,7 +85,6 @@
       "paymentTypes": "Visa, Paypal, Mastercard",
       "returnTitle": "Return & exchange in 7 days, covered by client"
     }
-
   },
   "payment": {
     "success": {

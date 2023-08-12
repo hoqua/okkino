@@ -69,10 +69,9 @@
       "quantity": "Cantitate"
     },
     "overview": {
-      "title" : "Prezentare generală a comenzii",
+      "title": "Prezentare generală a comenzii",
       "item": "articol",
       "items": "articole"
-
     },
     "total": "Total",
     "delivery": {
