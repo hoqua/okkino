@@ -1,8 +1,8 @@
 import Stripe from 'stripe'
 import { webEnv } from '@okkino/web/utils-env'
 import { NextResponse } from 'next/server'
-import { CheckoutProductSchema, DeliveryOptions } from '../../[lang]/cart/components/types'
 import * as Sentry from '@sentry/nextjs'
+import { CheckoutProductSchema, DeliveryOptions } from '../../_shared/product.schema'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
@@ -30,7 +30,8 @@ export async function POST(request: Request) {
         price_data: {
           product_data: {
             name: product.name,
-            images: [product.imageUrl]
+            images: [product.imageUrl],
+            description: `${product.quantity} x ${product.name}; Color: ${product.color.name}, Size: ${product.size}, Length: ${product.length}`
           },
           currency: 'usd',
           unit_amount: product.price * 100
@@ -48,7 +49,7 @@ export async function POST(request: Request) {
       ],
       mode: 'payment',
       success_url: `${checkout.host}/${checkout.language}/post-checkout?success=true`,
-      cancel_url: `${checkout.host}/${checkout.language}/post-checkout?success=false`
+      cancel_url: `${checkout.host}/${checkout.language}/cart`
     })
 
     return NextResponse.json({ id: session.id })
@@ -83,7 +84,7 @@ const internationalShipping = {
   shipping_rate_data: {
     type: 'fixed_amount',
     fixed_amount: {
-      amount: 1500,
+      amount: 5000,
       currency: 'usd'
     },
     display_name: 'Next day air',

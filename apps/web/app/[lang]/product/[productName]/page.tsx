@@ -15,6 +15,7 @@ export default async function Page({ params }: IProductPageProps) {
   const product = await getProduct(productName)
 
   const { price, discountPrice, availableColors, productSizes, description, id, images } = product
+  const sortedImages = images.sort((a, b) => a.order - b.order)
 
   return (
     <div>
@@ -32,7 +33,7 @@ export default async function Page({ params }: IProductPageProps) {
           productLengths={productLengths}
           locale={params.lang}
           productName={productName}
-          imageUrl={images[0].url}
+          imageUrl={sortedImages[0].url}
           translations={{
             sizeGuide: productTranslations.size_guide,
             size: productTranslations.size,

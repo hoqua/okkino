@@ -1,16 +1,17 @@
 'use client'
 
-import { useLocalStorageSafe } from 'use-local-storage-safe'
 import CartEmpty from './cart-empty'
 import { Translation } from '../../../../i18n/get-dirctionary'
-import { CartProduct, CartProductSchema, CheckoutProduct, DeliveryOptions } from './types'
 import Image from 'next/image'
-import { Price } from '../../../shared-components/price'
-import { Button } from '../../../shared-components/button'
+import { Price } from '../../../_shared/price'
+import { Button } from '../../../_shared/button'
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState, useTransition } from 'react'
 import getStripe from '../utils'
 import { usePathname } from 'next/navigation'
+import { useCart } from '../../../_shared/hooks'
+import { CartProduct, CheckoutProduct, DeliveryOptions } from '../../../_shared/product.schema'
+import { compareCartProducts } from '../../../_shared/utils'
 
 interface IProps {
   cartTranslations: Translation['cart']
@@ -23,18 +24,18 @@ export default function Cart({ cartTranslations: t }: IProps) {
   const [isPending, startTransition] = useTransition()
   const { ref, inView } = useInView({ threshold: 0.99 })
   const [delivery, setDelivery] = useState<DeliveryOptions>(DeliveryOptions.enum.other)
-  const [cart, setCart] = useLocalStorageSafe<CartProduct[]>('okkino-cart', [], {
-    validateInit: (value) => CartProductSchema.array().safeParse(value).success
-  })
+  const [cart, setCart] = useCart()
 
   useEffect(() => {
     getStripe().catch((error) => {
       console.error('Error loading Stripe', error)
+      throw error
     })
   }, [])
 
-  function removeProductFromCart(id: string) {
-    setCart(cart.filter((product) => product.id !== id))
+  function removeProductFromCart(removeProduct: CartProduct) {
+    // TODO remove not only by id
+    setCart(cart.filter((p) => !compareCartProducts(p, removeProduct)))
   }
 
   async function handleCheckout() {
@@ -43,17 +44,13 @@ export default function Cart({ cartTranslations: t }: IProps) {
         host: window.location.origin,
         language: pathname.split('/')[1],
         delivery,
-        products: cart.map((product) => ({
-          name: product.id,
-          imageUrl: product.imageUrl,
-          quantity: product.quantity,
-          price: product.discountPrice || product.price
-        }))
+        products: cart
       }
       const response = await fetch('/api/checkout', {
         method: 'POST',
         body: JSON.stringify(checkout)
       })
+
       if (response.status !== 200) throw new Error('Error creating checkout session')
 
       const data = await response.json()
@@ -63,6 +60,7 @@ export default function Cart({ cartTranslations: t }: IProps) {
       if (error) throw new Error(error.message)
     } catch (error) {
       console.log(error)
+      throw error
     }
   }
 
@@ -78,7 +76,7 @@ export default function Cart({ cartTranslations: t }: IProps) {
       <div className="grid gap-14 md:gap-24 lg:w-full lg:auto-rows-min">
         {/*PRODUCTS PAGE GRID*/}
         {cart.map((product) => (
-          <div key={product.id} className="grid grid-cols-[1fr_2fr] gap-10 md:gap-20">
+          <div key={JSON.stringify(product)} className="grid grid-cols-[1fr_2fr] gap-10 md:gap-20">
             {/* PRODUCT LEFT COL*/}
             <div className="flex flex-col gap-5">
               <h3 className="text-xs uppercase text-black md:hidden">{product.name}</h3>
@@ -98,7 +96,7 @@ export default function Cart({ cartTranslations: t }: IProps) {
                 <div className="flex w-full justify-end">
                   <button
                     className="okkino-text-hover text-xs uppercase text-black"
-                    onClick={() => removeProductFromCart(product.id)}
+                    onClick={() => removeProductFromCart(product)}
                   >
                     {t.product.remove}
                   </button>
@@ -108,12 +106,7 @@ export default function Cart({ cartTranslations: t }: IProps) {
               <div className="grid h-full auto-rows-max grid-cols-[1fr_2fr] items-center gap-y-2 last:align-bottom">
                 {/*col-2*/}
                 <span className="text-xs uppercase text-gray-600">{t.product.color}</span>
-                <div
-                  className="h-3 w-3"
-                  style={{
-                    backgroundColor: `rgb(${product.color.r},${product.color.g}, ${product.color.b})`
-                  }}
-                />
+                <div className="h-3 w-3" style={{ backgroundColor: product.color.value }} />
                 {/*col-2*/}
                 <span className="text-xs uppercase text-gray-600">{t.product.size}</span>
                 <span className="text-sm font-bold uppercase text-black">{product.size}</span>

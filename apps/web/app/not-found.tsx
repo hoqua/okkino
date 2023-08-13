@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { Button } from './shared-components/button'
+import { Button } from './_shared/button'
 import { usePathname, useRouter } from 'next/navigation'
 import { i18n, Locale } from '../i18n/i18n-config'
 

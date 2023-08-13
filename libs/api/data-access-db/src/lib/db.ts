@@ -55,6 +55,7 @@ export async function getProducts(productCategory?: string) {
 
   return products as ProductWithImages[]
 }
+
 export async function getProduct(productName: string) {
   const key = 'product_' + productName
   const fromCache = cache.get(key)

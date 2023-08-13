@@ -1,6 +1,6 @@
 'use client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { Button } from '../../shared-components/button'
+import { Button } from '../../_shared/button'
 import { i18n, Locale } from '../../../i18n/i18n-config'
 import { Translation } from '../../../i18n/get-dirctionary'
 

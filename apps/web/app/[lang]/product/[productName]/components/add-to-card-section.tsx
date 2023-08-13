@@ -1,39 +1,16 @@
 'use client'
 
 import { FC, useState } from 'react'
-import { Price } from '../../../../shared-components/price'
+import { Price } from '../../../../_shared/price'
 import { ProductPropsSelector } from './product-props-selector'
-import { Button } from '../../../../shared-components/button'
+import { Button } from '../../../../_shared/button'
 import Link from 'next/link'
 import { getI18nNavigationPath } from '../../../components/common/utils'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { RouteName } from '../../../components/common/constants'
-import { useLocalStorageSafe } from 'use-local-storage-safe'
-import { CartProduct, CartProductSchema } from '../../../cart/components/types'
-
-interface IAddToCartSectionTranslations {
-  size: string
-  length: string
-  color: string
-  addToCart: string
-  buyNow: string
-  sizeGuide: string
-}
-type Size = { name: string }
-type Length = { name: string }
-type Color = { value: string; name: string }
-interface IProps {
-  id: string
-  price: number
-  discountPrice?: number
-  productSizes: Size[]
-  availableColors: Color[]
-  productLengths: Length[]
-  locale: Locale
-  productName: string
-  translations: IAddToCartSectionTranslations
-  imageUrl: string
-}
+import { useCart } from '../../../../_shared/hooks'
+import { CartProduct } from '../../../../_shared/product.schema'
+import { compareCartProducts } from '../../../../_shared/utils'
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {
@@ -51,9 +28,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
   const [selectedSize, setSelectedSize] = useState({ value: '', hasError: false })
   const [selectedLength, setSelectedLength] = useState({ value: 'regular', hasError: false })
   const [selectedColor, setSelectedColor] = useState({ value: '', hasError: false })
-  const [, setCart] = useLocalStorageSafe<CartProduct[]>('okkino-cart', [], {
-    validateInit: (value) => CartProductSchema.array().safeParse(value).success
-  })
+  const [cart, setCart] = useCart()
 
   const handleAddToCard = () => {
     if (!selectedSize.value || !selectedColor.value) {
@@ -64,7 +39,19 @@ export const AddToCartSection: FC<IProps> = (props) => {
 
     setCart((prevState) => {
       const newCart = [...prevState]
-      const product = newCart.find((p) => p.id === id)
+      const newProduct = {
+        id: id,
+        name: productName,
+        price: price,
+        size: selectedSize.value,
+        length: selectedLength.value,
+        color: availableColors.find((c) => c.name === selectedColor.value),
+        discountPrice: discountPrice,
+        imageUrl: imageUrl,
+        quantity: 1
+      } satisfies CartProduct
+      // TODO: FIX quantity
+      const product = newCart.find((p) => compareCartProducts(p, newProduct))
 
       if (product) {
         product.quantity += 1
@@ -140,4 +127,30 @@ export const AddToCartSection: FC<IProps> = (props) => {
       </div>
     </section>
   )
+}
+
+interface IAddToCartSectionTranslations {
+  size: string
+  length: string
+  color: string
+  addToCart: string
+  buyNow: string
+  sizeGuide: string
+}
+
+type Size = { name: string }
+type Length = { name: string }
+type Color = { value: string; name: string }
+
+interface IProps {
+  id: string
+  price: number
+  discountPrice?: number
+  productSizes: Size[]
+  availableColors: Color[]
+  productLengths: Length[]
+  locale: Locale
+  productName: string
+  translations: IAddToCartSectionTranslations
+  imageUrl: string
 }

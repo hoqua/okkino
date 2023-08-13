@@ -1,11 +1,11 @@
 'use client'
 import Link from 'next/link'
 import { Locale } from '../../../../i18n/i18n-config'
-import { useLocalStorageSafe } from 'use-local-storage-safe'
-import { CartProduct } from '../../cart/components/types'
+import { useCart } from '../../../_shared/hooks'
 
 export function CartIcon({ locale }: { locale: Locale }) {
-  const [cart] = useLocalStorageSafe<CartProduct[]>('okkino-cart', [])
+  const [cart] = useCart()
+
   return (
     <Link className="okkino-text-hover text-xs uppercase text-black" href={`/${locale}/cart`}>
       <div className="relative">
