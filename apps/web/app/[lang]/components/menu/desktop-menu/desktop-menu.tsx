@@ -3,7 +3,7 @@
 import { DesktopSubmenu } from './desktop-submenu'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { FC } from 'react'
-import { ALL_CATEGORY } from '../../../shop/[category]/constants'
+import { ALL_CATEGORY } from '../../../shop/_components/constants'
 import Link from 'next/link'
 
 interface IProps {
@@ -22,7 +22,9 @@ export const DesktopMenu: FC<IProps> = (props) => {
         menuName={navigationTranslation.shop}
         itemsList={[ALL_CATEGORY, ...productCategories.map((category) => category.name)]}
         translations={productCategoriesTranslation}
-        getNavigationPath={(itemKeyName) => `/${locale}/shop/${itemKeyName}`}
+        getNavigationPath={(itemKeyName) =>
+          itemKeyName ? `/${locale}/shop/${itemKeyName}` : `/${locale}/shop`
+        }
       />
 
       <Link className="okkino-text-hover text-xs uppercase text-black" href={`/${locale}/about`}>

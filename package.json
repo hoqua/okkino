@@ -26,12 +26,11 @@
   "private": true,
   "dependencies": {
     "@clerk/nextjs": "^4.21.14",
-    "@fastify/cookie": "^8.3.0",
-    "@fastify/helmet": "^11.0.0",
     "@formatjs/intl-localematcher": "^0.4.0",
     "@hookform/resolvers": "^3.2.0",
     "@nx/next": "16.5.0",
     "@prisma/client": "^5.1.1",
+    "@sentry/nextjs": "^7.63.0",
     "@stripe/stripe-js": "^1.54.1",
     "@swc/helpers": "~0.5.1",
     "@tiptap/pm": "^2.0.4",
@@ -41,7 +40,7 @@
     "chroma-js": "^2.4.2",
     "core-js": "^3.31.1",
     "negotiator": "^0.6.3",
-    "next": "^13.4.10",
+    "next": "^13.4.13",
     "node-cache": "^5.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -53,7 +52,7 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "tslib": "^2.6.0",
     "uploadthing": "^5.3.2",
-    "use-local-storage-safe": "^0.2.2",
+    "use-local-storage-safe": "^0.2.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {

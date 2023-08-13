@@ -5,7 +5,8 @@ const webAdminEnvSchema = z.object({
   auth: z.object({
     publicKey: z.string(),
     secretKey: z.string()
-  })
+  }),
+  deployHook: z.string().url()
 })
 
 type TWebAdminEnv = z.infer<typeof webAdminEnvSchema>
@@ -17,5 +18,6 @@ export const webAdminEnv = getEnv({
   auth: {
     publicKey: process.env['NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY'],
     secretKey: process.env['CLERK_SECRET_KEY']
-  }
+  },
+  deployHook: process.env['DEPLOY_HOOK_URL']
 })

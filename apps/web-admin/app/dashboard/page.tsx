@@ -1,13 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getProducts } from '@okkino/api/data-access-db'
+import UpdateSiteBtn from './_components/update-site-btn'
 
 export default async function DashboardPage() {
   const products = await getProducts()
 
   return (
     <div className="overflow-x-auto">
-      <div className="flex w-full justify-end">
+      <div className="flex w-full justify-between">
+        <UpdateSiteBtn />
         <Link href="/dashboard/product" className="btn">
           <svg
             className=" h-6 w-6"
