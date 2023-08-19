@@ -8,12 +8,29 @@ CREATE TABLE "HomeBlock" (
 );
 
 -- CreateTable
+CREATE TABLE "Order" (
+    "id" TEXT NOT NULL,
+    "products" JSONB NOT NULL,
+    "address" JSONB NOT NULL,
+    "customerName" TEXT,
+    "customerEmail" TEXT,
+    "total" INTEGER,
+    "language" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "shipped" BOOLEAN NOT NULL DEFAULT false,
+    "fulfilled" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "discountPrice" INTEGER,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
