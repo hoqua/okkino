@@ -35,17 +35,19 @@ export async function POST(req: NextRequest) {
 
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
+      const { id, shipping, amount_total, customer_details } = event.data.object as any
       await fulfillOrder(
-        event.data.object.id,
-        event.data.object.shipping.address,
-        event.data.object.shipping.name,
-        event.data.object.amount_total / 100,
-        event.data.object.customer_details.email
+        id,
+        shipping.address,
+        shipping.name,
+        amount_total / 100,
+        customer_details.email
       )
     }
   } catch (error) {
+    const { customer_details } = event?.data.object as any
     Sentry.captureException(error, {
-      user: event?.data.object.customer_details.email
+      user: customer_details.email
     })
   }
 
