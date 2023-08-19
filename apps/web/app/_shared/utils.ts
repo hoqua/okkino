@@ -1,4 +1,4 @@
-import { CartProduct } from './product.schema'
+import { CartProduct } from '@okkino/web/utils-shared'
 
 export function compareCartProducts(p1: CartProduct, p2: CartProduct) {
   const { quantity: _, ...product1 } = p1
