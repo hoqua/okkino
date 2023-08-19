@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GetProductCategoriesQuery } from '@okkino/web/data-access-graphql'
 import { i18n, Locale } from '../../../../../i18n/i18n-config'
 import { MobileSubmenu } from './moblie-submenu'
 import { usePathname } from 'next/navigation'
@@ -17,7 +16,7 @@ enum Submenu {
 interface IProps {
   navigationTranslation: Record<string, string>
   productCategoriesTranslation: Record<string, string>
-  productCategories: GetProductCategoriesQuery['productCategories']
+  productCategories: { name: string }[]
   locale: Locale
 }
 
@@ -64,6 +63,14 @@ export default function MobileMenu(props: IProps) {
                   />
                 )}
               </li>
+
+              <Link
+                className="okkino-text-hover text-xs uppercase text-black"
+                href={`/${locale}/about`}
+                onClick={handleSubmenuClick}
+              >
+                {navigationTranslation.about}
+              </Link>
 
               <li
                 className={getActiveSubmenuClasses(Submenu.Language, activeSubmenu)}

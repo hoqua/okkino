@@ -8,7 +8,7 @@ interface IProps {
   menuName: string
   itemsList: string[]
   translations: Record<string, string>
-  getNavigationPath: (itemKeyName: string) => string
+  getNavigationPath: (itemKeyName?: string) => string
 }
 
 export const DesktopSubmenu: FC<IProps> = (props) => {
@@ -29,7 +29,9 @@ export const DesktopSubmenu: FC<IProps> = (props) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <span className="okkino-text-hover text-xs uppercase text-black">{menuName}</span>
+      <Link href={getNavigationPath()} className="okkino-text-hover text-xs uppercase text-black">
+        {menuName}
+      </Link>
 
       <div
         className={

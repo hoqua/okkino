@@ -1,41 +1,24 @@
 'use client'
 
 import { FC, useState } from 'react'
-import { Price } from '../../../../shared-components/price'
-import { GetProductQuery, GetProductLengthsQuery } from '@okkino/web/data-access-graphql'
+import { Price } from '../../../../_shared/price'
 import { ProductPropsSelector } from './product-props-selector'
-import { Button } from '../../../../shared-components/button'
+import { Button } from '../../../../_shared/button'
 import Link from 'next/link'
 import { getI18nNavigationPath } from '../../../components/common/utils'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { RouteName } from '../../../components/common/constants'
-
-type TProductSize = GetProductQuery['product']['productSizes'][number]
-type TProductLength = GetProductLengthsQuery['productLengths'][number]
-type TProductColor = GetProductQuery['product']['availableColors'][number]
-
-interface IAddToCartSectionTranslations {
-  size: string
-  length: string
-  color: string
-  addToCart: string
-  buyNow: string
-  sizeGuide: string
-}
-
-interface IProps {
-  price: number
-  discountPrice?: number
-  productSizes: TProductSize[]
-  availableColors: TProductColor[]
-  productLengths: TProductLength[]
-  locale: Locale
-  productName: string
-  translations: IAddToCartSectionTranslations
-}
+import { useCart } from '../../../../_shared/hooks'
+import { compareCartProducts } from '../../../../_shared/utils'
+import { useRouter } from 'next/navigation'
+import { CartProduct } from '@okkino/web/utils-shared'
+import './module.css'
+import { Simulate } from 'react-dom/test-utils'
+import error = Simulate.error
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {
+    id,
     price,
     discountPrice,
     productSizes,
@@ -43,23 +26,67 @@ export const AddToCartSection: FC<IProps> = (props) => {
     availableColors,
     locale,
     productName,
-    translations
+    translations,
+    imageUrl
   } = props
   const [selectedSize, setSelectedSize] = useState({ value: '', hasError: false })
   const [selectedLength, setSelectedLength] = useState({ value: 'regular', hasError: false })
   const [selectedColor, setSelectedColor] = useState({ value: '', hasError: false })
+  const [, setCart] = useCart()
+  const router = useRouter()
 
-  const handleAddToCard = () => {
+  const isError = selectedSize.hasError || selectedColor.hasError
+
+  const handleAddToCard = (isBuyNow?: boolean) => {
     if (!selectedSize.value || !selectedColor.value) {
       setSelectedSize({ value: selectedSize.value, hasError: !selectedSize.value })
       setSelectedColor({ value: selectedColor.value, hasError: !selectedColor.value })
       return
     }
+
+    setCart((prevState) => {
+      const newCart = [...prevState]
+      const newProduct = {
+        id: id,
+        name: productName,
+        price: price,
+        size: selectedSize.value,
+        length: selectedLength.value,
+        color: availableColors.find((c) => c.name === selectedColor.value),
+        discountPrice: discountPrice,
+        imageUrl: imageUrl,
+        quantity: 1
+      } satisfies CartProduct
+      // TODO: FIX quantity
+      const product = newCart.find((p) => compareCartProducts(p, newProduct))
+
+      if (product) {
+        product.quantity += 1
+      } else {
+        newCart.push({
+          id: id,
+          name: productName,
+          price: price,
+          size: selectedSize.value,
+          length: selectedLength.value,
+          color: availableColors.find((c) => c.name === selectedColor.value),
+          discountPrice: discountPrice,
+          imageUrl: imageUrl,
+          quantity: 1
+        } satisfies CartProduct)
+      }
+
+      return newCart
+    })
+
+    if (isBuyNow) {
+      router.push(getI18nNavigationPath(locale, RouteName.cart))
+    }
   }
 
   return (
-    <section className="flex flex-col gap-6">
-      <ProductPropsSelector<TProductSize>
+    <section className={'flex flex-col gap-6 ' + (isError ? 'shake' : '')}>
+      <ProductPropsSelector<Size>
         label={translations.size}
         items={productSizes}
         selected={selectedSize.value}
@@ -78,7 +105,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         }
       />
 
-      <ProductPropsSelector<TProductLength>
+      <ProductPropsSelector<Length>
         label={translations.length}
         items={productLengths}
         selected={selectedLength.value}
@@ -86,7 +113,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         onSelect={(length) => setSelectedLength({ value: length, hasError: false })}
       />
 
-      <ProductPropsSelector<TProductColor>
+      <ProductPropsSelector<Color>
         label={translations.color}
         items={availableColors}
         selected={selectedColor.value}
@@ -94,8 +121,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         onSelect={(colorName) => setSelectedColor({ value: colorName, hasError: false })}
         getSelectionComponent={(colorName) => {
           const color = availableColors.find((c) => c.name === colorName)
-          const { r, g, b } = color
-          return <div className=" h-4 w-4" style={{ backgroundColor: `rgb(${r},${g}, ${b})` }} />
+          return <div className=" h-4 w-4" style={{ backgroundColor: color.value }} />
         }}
       />
 
@@ -105,11 +131,37 @@ export const AddToCartSection: FC<IProps> = (props) => {
         <Price price={price} discountPrice={discountPrice} />
 
         <div className="flex xl:flex-row-reverse">
-          <Button label={translations.addToCart} onClick={handleAddToCard} />
+          <Button label={translations.addToCart} onClick={() => handleAddToCard()} />
 
-          <Button label={translations.buyNow} flat onClick={() => ({})} />
+          <Button label={translations.buyNow} flat onClick={() => handleAddToCard(true)} />
         </div>
       </div>
     </section>
   )
+}
+
+interface IAddToCartSectionTranslations {
+  size: string
+  length: string
+  color: string
+  addToCart: string
+  buyNow: string
+  sizeGuide: string
+}
+
+type Size = { name: string }
+type Length = { name: string }
+type Color = { value: string; name: string }
+
+interface IProps {
+  id: string
+  price: number
+  discountPrice?: number
+  productSizes: Size[]
+  availableColors: Color[]
+  productLengths: Length[]
+  locale: Locale
+  productName: string
+  translations: IAddToCartSectionTranslations
+  imageUrl: string
 }

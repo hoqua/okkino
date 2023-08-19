@@ -55,5 +55,47 @@
   "about": {
     "title": "OK KINO IS A MOLDOVA-BASED WOMENSWEAR BRAND FOUNDED IN 2020.",
     "text": "Through collections OK KINO try to combine the authenticity of native country with the contemporary fashion. Clean silhouettes, precise tailoring and delicate color palette is the base of each collection. Immersing into traditional Moldovan details is another important part of the brand. Exploring the national heritage, creative directors Darya Golneva and Denis Caunov carefully work with ethnic and cultural symbols and codes, reinterpreting them from a new minimalism perspective. At OK KINO we care about ethical attitude towards environment and production. Therefore, we create high quality garments made to last, using carefully selected fabrics."
+  },
+  "cart": {
+    "empty": {
+      "title": "Your shopping bag is empty",
+      "buttonText": "Continue shopping"
+    },
+    "product": {
+      "size": "Size",
+      "color": "Color",
+      "length": "Length",
+      "remove": "Remove",
+      "quantity": "q_ty"
+    },
+    "overview": {
+      "title": "Order overview",
+      "item": "item",
+      "items": "items"
+    },
+    "total": "total",
+    "delivery": {
+      "delivery": "delivery",
+      "moldova": "local-moldova",
+      "other": "other",
+      "free": "free"
+    },
+    "info": {
+      "paymentTitle": "ACCEPTED PAYMENT METHODS",
+      "paymentTypes": "Visa, Paypal, Mastercard",
+      "returnTitle": "Return & exchange in 7 days, covered by client"
+    }
+  },
+  "payment": {
+    "success": {
+      "title": "Payment successful",
+      "text": "Thank you for purchasing the OK KINO piece.",
+      "button": "homepage"
+    },
+    "error": {
+      "title": "Payment error",
+      "text": "Something went wrong. Please try again later.",
+      "button": "Try again"
+    }
   }
 }

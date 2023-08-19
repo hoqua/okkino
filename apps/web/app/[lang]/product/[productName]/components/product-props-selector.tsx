@@ -1,6 +1,3 @@
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
-
 type Selectable = { name?: string }
 
 interface IProps<T> {

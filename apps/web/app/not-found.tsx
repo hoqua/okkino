@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { Button } from './shared-components/button'
+import { Button } from './_shared/button'
 import { usePathname, useRouter } from 'next/navigation'
 import { i18n, Locale } from '../i18n/i18n-config'
 
@@ -10,13 +10,12 @@ export default function NotFound() {
   const locale = pathname.split('/')[1] as Locale
 
   const handleClick = () => {
-    i18n.locales.includes(locale)
     router.push(i18n.locales.includes(locale) ? `/${locale}` : '/')
   }
 
   return (
     <html lang="en">
-      <body className="flex h-screen flex-col items-center justify-center">
+      <body className="flex h-screen flex-col items-center justify-center bg-white">
         <Image
           src={'/logo.svg'}
           width={85}

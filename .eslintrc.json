@@ -53,11 +53,11 @@
               },
               {
                 "sourceTag": "scope:api",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:api"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:api", "scope:web"]
               },
               {
                 "sourceTag": "scope:web",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:web"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:web", "scope:api"]
               }
             ]
           }

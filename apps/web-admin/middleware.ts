@@ -2,7 +2,7 @@ import { authMiddleware } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
 export default authMiddleware({
-  publicRoutes: ['/sign-in'],
+  publicRoutes: ['/sign-in', '/api/uploadthing'],
   afterAuth(auth, req, evt) {
     // handle users who aren't authenticated
     if (!auth.userId && !auth.isPublicRoute) {
@@ -13,5 +13,5 @@ export default authMiddleware({
 })
 
 export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api)(.*)']
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(gql|trpc)(.*)']
 }

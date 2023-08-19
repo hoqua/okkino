@@ -7,108 +7,68 @@ datasource db {
   url      = env("OKKINO_DB_URL")
 }
 
-generator nestgraphql {
-  provider                = "node node_modules/prisma-nestjs-graphql"
-  output                  = "../../../generated-db-types/src"
-  purgeOutput             = false
-  combineScalarFilters    = true
-  emitSingle              = true
-  noAtomicOperations      = true
-  // field validator
-  fields_Validator_input  = true
-  fields_Validator_output = true
-  fields_Validator_model  = true
-  fields_Validator_from   = "class-validator"
-  // Args where|data nested validator
-  decorate_1_type         = "*Args"
-  decorate_1_field        = "@(data|where)"
-  decorate_1_name         = ValidateNested
-  decorate_1_from         = "class-validator"
-  decorate_1_arguments    = "[]"
-}
-
 model HomeBlock {
-  id             String @id @default(uuid())
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
+  id String @id @default(uuid())
+
   navigationPath String
   image          Image  @relation(fields: [imageId], references: [id])
   imageId        String @unique
 }
 
+model Order {
+  id String @id @default(uuid())
+
+  products      Json
+  address       Json
+  customerName  String?
+  customerEmail String?
+  total         Int?
+  language      String
+
+  createdAt DateTime @default(now())
+
+  shipped   Boolean @default(false)
+  fulfilled Boolean @default(false)
+}
+
 model Product {
-  id            String @id @default(uuid())
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  name          String @unique
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(1000)
-  /// @Validator.MinLength(0)
+  id            String  @id @default(uuid())
+  name          String  @unique
   description   String
-  /// @Validator.@IsInt()
-  /// @Validator.@Min(1)
-  /// @Validator.@Max(100_000)
   price         Int
-  /// @Validator.@IsInt()
-  /// @Validator.@Min(1)
-  /// @Validator.@Max(100_000)
   discountPrice Int?
+  deleted       Boolean @default(false)
 
   images            Image[]
-  availableColors   RgbColor[]
+  availableColors   Color[]
   productCategories ProductCategory[]
   productSizes      ProductSize[]
   productLengths    ProductLength[]
 }
 
 model Image {
-  id              String     @id @default(uuid())
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  title           String
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  imagePath       String
-  rgbBackground   RgbColor   @relation(fields: [rgbBackgroundId], references: [id])
-  rgbBackgroundId String
+  id        String     @id @default(uuid())
+  title     String
+  key       String     @unique
+  url       String     @unique
+  bgColor   String
+  order     Int
   //----Relations----//
   /// @HideField()
-  homeBlock       HomeBlock?
+  homeBlock HomeBlock?
   /// @HideField()
-  product         Product?   @relation(fields: [productId], references: [id])
+  product   Product?   @relation(fields: [productId], references: [id])
   /// @HideField()
-  productId       String?
+  productId String?
 }
 
-model RgbColor {
-  id       String    @id @default(uuid())
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
-  name     String   @unique
-  /// @Validator.IsInt()
-  /// @Validator.Min(0)
-  /// @Validator.Max(255)
-  r        Int
-  /// @Validator.IsInt()
-  /// @Validator.Min(0)
-  /// @Validator.Max(255)
-  g        Int
-  /// @Validator.IsInt()
-  /// @Validator.Min(0)
-  /// @Validator.Max(255)
-  b        Int
-  /// @HideField()
-  a        Float?
+model Color {
+  id String @id @default(uuid())
+
+  name     String    @unique
+  value    String
   //----Relations----//
-  /// @HideField()
   products Product[]
-  /// @HideField()
-  Image    Image[]
 }
 
 model ProductCategory {

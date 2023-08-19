@@ -7,6 +7,9 @@ const { composePlugins, withNx } = require('@nx/next')
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  experimental: {
+    serverActions: true
+  },
   nx: {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
@@ -16,7 +19,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: String(process.env.OKKINO_WEB_ADMIN_STORAGE_ENDPOINT)
+        hostname: 'uploadthing.com'
       }
     ]
   }
