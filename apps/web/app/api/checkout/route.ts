@@ -2,21 +2,12 @@ import Stripe from 'stripe'
 import { webEnv } from '@okkino/web/utils-env'
 import { NextResponse } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
-import { CheckoutProductSchema, DeliveryOptions } from '../../_shared/product.schema'
+import { createInitialOrder } from '@okkino/api/data-access-db'
+import { CheckoutProductSchema, DeliveryOptions } from '@okkino/web/utils-shared'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
   tracesSampleRate: 1
-
-  // ...
-
-  // Note: if you want to override the automatic release value, do not set a
-  // `release` value here - use the environment variable `SENTRY_RELEASE`, so
-  // that it will also get attached to your source maps
 })
 
 const stripe = new Stripe(webEnv.stripe.secretKey, { apiVersion: '2022-11-15' })
@@ -51,6 +42,8 @@ export async function POST(request: Request) {
       success_url: `${checkout.host}/${checkout.language}/post-checkout?success=true`,
       cancel_url: `${checkout.host}/${checkout.language}/cart`
     })
+
+    await createInitialOrder(session.id, checkout)
 
     return NextResponse.json({ id: session.id })
   } catch (error) {

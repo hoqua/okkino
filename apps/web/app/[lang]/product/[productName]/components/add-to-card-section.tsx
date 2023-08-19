@@ -9,8 +9,12 @@ import { getI18nNavigationPath } from '../../../components/common/utils'
 import { Locale } from '../../../../../i18n/i18n-config'
 import { RouteName } from '../../../components/common/constants'
 import { useCart } from '../../../../_shared/hooks'
-import { CartProduct } from '../../../../_shared/product.schema'
 import { compareCartProducts } from '../../../../_shared/utils'
+import { useRouter } from 'next/navigation'
+import { CartProduct } from '@okkino/web/utils-shared'
+import './module.css'
+import { Simulate } from 'react-dom/test-utils'
+import error = Simulate.error
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {
@@ -28,9 +32,12 @@ export const AddToCartSection: FC<IProps> = (props) => {
   const [selectedSize, setSelectedSize] = useState({ value: '', hasError: false })
   const [selectedLength, setSelectedLength] = useState({ value: 'regular', hasError: false })
   const [selectedColor, setSelectedColor] = useState({ value: '', hasError: false })
-  const [cart, setCart] = useCart()
+  const [, setCart] = useCart()
+  const router = useRouter()
 
-  const handleAddToCard = () => {
+  const isError = selectedSize.hasError || selectedColor.hasError
+
+  const handleAddToCard = (isBuyNow?: boolean) => {
     if (!selectedSize.value || !selectedColor.value) {
       setSelectedSize({ value: selectedSize.value, hasError: !selectedSize.value })
       setSelectedColor({ value: selectedColor.value, hasError: !selectedColor.value })
@@ -71,10 +78,14 @@ export const AddToCartSection: FC<IProps> = (props) => {
 
       return newCart
     })
+
+    if (isBuyNow) {
+      router.push(getI18nNavigationPath(locale, RouteName.cart))
+    }
   }
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className={'flex flex-col gap-6 ' + (isError ? 'shake' : '')}>
       <ProductPropsSelector<Size>
         label={translations.size}
         items={productSizes}
@@ -120,9 +131,9 @@ export const AddToCartSection: FC<IProps> = (props) => {
         <Price price={price} discountPrice={discountPrice} />
 
         <div className="flex xl:flex-row-reverse">
-          <Button label={translations.addToCart} onClick={handleAddToCard} />
+          <Button label={translations.addToCart} onClick={() => handleAddToCard()} />
 
-          <Button label={translations.buyNow} flat onClick={() => ({})} />
+          <Button label={translations.buyNow} flat onClick={() => handleAddToCard(true)} />
         </div>
       </div>
     </section>

@@ -37,6 +37,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
                 alt={mainImage.title}
                 className="hover:transition-{opacity} duration-300 ease-in-out hover:opacity-100 lg:hover:opacity-0"
                 placeholder="blur"
+                sizes="(min-width: 1620px) 464px, (min-width: 1040px) 29.46vw, (min-width: 780px) calc(50vw - 64px), calc(50vw - 28px)"
                 blurDataURL={hexToDataUrl(mainImage.bgColor)}
                 title={mainImage.title}
                 priority={index < IMAGES_ON_SCREEN}
@@ -47,6 +48,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
                 <Image
                   src={hoverImage.url}
                   alt={hoverImage.title}
+                  sizes="(min-width: 1620px) 464px, (min-width: 1040px) 29.46vw, (min-width: 780px) calc(50vw - 64px), calc(50vw - 28px)"
                   className={'index absolute left-0 top-0 z-[-1] hidden lg:inline '}
                   title={hoverImage.title}
                   fill

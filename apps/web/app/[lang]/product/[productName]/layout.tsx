@@ -46,6 +46,7 @@ export default async function RootLayout(props: IRootLayoutProps) {
                 blurDataURL={hexToDataUrl(image.bgColor)}
                 title={image.title}
                 priority={index < IMAGES_ON_SCREEN}
+                sizes="(min-width: 1600px) 540px, (min-width: 1280px) calc(28.33vw - 27px), 77.29vw"
                 fill
               />
             </section>

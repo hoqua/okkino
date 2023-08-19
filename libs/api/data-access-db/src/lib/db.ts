@@ -1,10 +1,11 @@
 import { Prisma, PrismaClient } from '@prisma/client'
+import { CheckoutProduct } from '@okkino/web/utils-shared'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const NodeCache = require('node-cache')
 
 export const db = new PrismaClient()
 
-const cache = new NodeCache({ stdTTL: 100, checkperiod: 120 })
+const cache = new NodeCache({ stdTTL: 1, checkperiod: 2 })
 
 const include: Prisma.ProductInclude = {
   images: true,
@@ -42,6 +43,7 @@ export async function getProducts(productCategory?: string) {
 
   const products = await db.product.findMany({
     where: {
+      deleted: false,
       productCategories: {
         some: {
           name: productCategory
@@ -66,6 +68,7 @@ export async function getProduct(productName: string) {
 
   const product = await db.product.findUnique({
     where: {
+      deleted: false,
       name: productName
     },
     include
@@ -120,4 +123,57 @@ export async function getProductLength() {
   cache.set(key, productLength)
 
   return productLength as { id: string; name: string }[]
+}
+
+export async function createInitialOrder(id: string, checkout: CheckoutProduct) {
+  await db.order.create({
+    data: {
+      id,
+      language: checkout.language,
+      products: checkout.products,
+      address: {}
+    }
+  })
+}
+
+export async function fulfillOrder(
+  id: string,
+  address: Prisma.InputJsonValue,
+  customerName: string,
+  total: number,
+  customerEmail: string
+) {
+  await db.order.update({
+    where: { id },
+    data: {
+      fulfilled: true,
+      address,
+      customerName,
+      total,
+      customerEmail
+    }
+  })
+}
+
+export async function shipOrder(id: string) {
+  await db.order.update({
+    where: { id },
+    data: {
+      shipped: true
+    }
+  })
+}
+
+export async function getOrders(fulfilled = true) {
+  return db.order.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+}
+
+export async function getOrder(id: string) {
+  return db.order.findUnique({
+    where: { id }
+  })
 }

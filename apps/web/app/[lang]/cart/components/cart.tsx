@@ -10,8 +10,8 @@ import { useEffect, useState, useTransition } from 'react'
 import getStripe from '../utils'
 import { usePathname } from 'next/navigation'
 import { useCart } from '../../../_shared/hooks'
-import { CartProduct, CheckoutProduct, DeliveryOptions } from '../../../_shared/product.schema'
 import { compareCartProducts } from '../../../_shared/utils'
+import { CartProduct, CheckoutProduct, DeliveryOptions } from '@okkino/web/utils-shared'
 
 interface IProps {
   cartTranslations: Translation['cart']

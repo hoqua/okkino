@@ -4,7 +4,8 @@ import { z } from 'zod'
 const webEnvSchema = z.object({
   stripe: z.object({
     publishableKey: z.string(),
-    secretKey: z.string()
+    secretKey: z.string(),
+    endpointSecret: z.string()
   }),
   sentry: z.object({
     auth: z.string()
@@ -22,7 +23,8 @@ const getEnv =
 export const webEnv = getEnv({
   stripe: {
     publishableKey: process.env['NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY'],
-    secretKey: process.env['STRIPE_SECRET_KEY']
+    secretKey: process.env['STRIPE_SECRET_KEY'],
+    endpointSecret: process.env['STRIPE_ENDPOINT_SECRET']
   },
   sentry: {
     auth: process.env['SENTRY_AUTH_TOKEN']

@@ -5,10 +5,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col justify-center p-12">
-        <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-          Open drawer
-        </label>
+      <div className="drawer-content flex flex-col  p-12">
         {/* Page content here */}
 
         {children}
@@ -19,6 +16,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Sidebar content here */}
           <li>
             <Link href={'/dashboard'}>Dashboard</Link>
+          </li>
+          <li>
+            <Link href={'/dashboard/order'}>Orders</Link>
           </li>
           <li>
             <SignOutButton />

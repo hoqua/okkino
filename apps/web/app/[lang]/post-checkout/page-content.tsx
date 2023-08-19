@@ -3,6 +3,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '../../_shared/button'
 import { i18n, Locale } from '../../../i18n/i18n-config'
 import { Translation } from '../../../i18n/get-dirctionary'
+import { useCart } from '../../_shared/hooks'
+import { useEffect } from 'react'
 
 interface IProps {
   paymentTranslations: Translation['payment']
@@ -11,9 +13,16 @@ interface IProps {
 export default function PostCheckoutPageContent({ paymentTranslations }: IProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
+  const [, setCart] = useCart()
   const router = useRouter()
   const locale = pathname.split('/')[1] as Locale
   const paymentSuccess = searchParams.get('success') === 'true'
+
+  useEffect(() => {
+    if (paymentSuccess) {
+      setCart([])
+    }
+  }, [paymentSuccess, setCart])
 
   const handleClick = () => {
     const destination = paymentSuccess ? '/' : '/cart'

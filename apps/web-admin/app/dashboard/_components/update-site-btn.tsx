@@ -1,6 +1,6 @@
 'use client'
 import { useTransition } from 'react'
-import { redeploy } from '../action'
+import { redeploy } from '../../action'
 
 export default function UpdateSiteBtn() {
   const [isPending, startTransition] = useTransition()

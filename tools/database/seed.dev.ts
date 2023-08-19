@@ -6,6 +6,7 @@ import {
   PRODUCT_LENGTHS,
   PRODUCT_SIZES
 } from './seed-data.prod'
+
 const prisma = new PrismaClient()
 
 async function main() {

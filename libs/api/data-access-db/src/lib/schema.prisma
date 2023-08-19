@@ -8,21 +8,36 @@ datasource db {
 }
 
 model HomeBlock {
-  id             String @id @default(uuid())
-  /// @Validator.IsString()
-  /// @Validator.MaxLength(100)
-  /// @Validator.MinLength(3)
+  id String @id @default(uuid())
+
   navigationPath String
   image          Image  @relation(fields: [imageId], references: [id])
   imageId        String @unique
 }
 
+model Order {
+  id String @id @default(uuid())
+
+  products      Json
+  address       Json
+  customerName  String?
+  customerEmail String?
+  total         Int?
+  language      String
+
+  createdAt DateTime @default(now())
+
+  shipped   Boolean @default(false)
+  fulfilled Boolean @default(false)
+}
+
 model Product {
-  id            String @id @default(uuid())
-  name          String @unique
+  id            String  @id @default(uuid())
+  name          String  @unique
   description   String
   price         Int
   discountPrice Int?
+  deleted       Boolean @default(false)
 
   images            Image[]
   availableColors   Color[]

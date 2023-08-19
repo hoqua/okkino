@@ -12,17 +12,17 @@ import Editor from '../_components/editor'
 import MySelect from '../_components/select'
 import Images from '../_components/images'
 import { useTransition } from 'react'
-import { saveProduct } from '../action'
 import { ProductWithImages } from '@okkino/api/data-access-db'
 import ProductCrumbs from './product-crumbs'
 import { useRouter } from 'next/navigation'
+import DeleteProduct from './delete-product'
+import { saveProduct } from '../../../action'
 
 export default function ProductForm({ product }: { product?: ProductWithImages }) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const {
-    watch,
     control,
     register,
     handleSubmit,
@@ -31,9 +31,7 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
     resolver: zodResolver(productSchema),
     defaultValues: product ? productSchema.parse(product) : undefined
   })
-  console.log(errors)
 
-  console.log(watch())
   const submit = (data: Product) => {
     if (isValid) {
       startTransition(async () => {
@@ -114,6 +112,7 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
           {isPending ? <span className="loading loading-spinner"></span> : null}
           save
         </button>
+        {product?.id && <DeleteProduct id={product.id} name={product.name} />}
       </form>
     </div>
   )

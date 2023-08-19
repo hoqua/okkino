@@ -35,10 +35,11 @@ export default async function Page({ params }: IPageParams) {
               }
               placeholder="blur"
               blurDataURL={hexToDataUrl(block.image.bgColor)}
+              sizes="(min-width: 1640px) 688px, (min-width: 1040px) calc(41.03vw + 23px), (min-width: 780px) calc(100vw - 112px), calc(100vw - 48px)"
               priority
               fill
               title={block.image.title}
-            ></Image>
+            />
           </Link>
         )
       })}
