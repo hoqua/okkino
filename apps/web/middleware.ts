@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
-import Negotiator from 'negotiator'
+// eslint-disable-next-line @typescript-eslint/no-var-requires, unicorn/prefer-module, no-var
+var Negotiator = require('negotiator')
 import { i18n } from './i18n/i18n-config'
 
 function getLocale(request: NextRequest): string | undefined {
@@ -32,7 +33,8 @@ export function middleware(request: NextRequest) {
       '/favicon.ico',
       '/logo.svg'
       // Your other files in `public`
-    ].includes(pathname)
+    ].includes(pathname) ||
+    pathname.startsWith('/static-images/')
   )
     return
 

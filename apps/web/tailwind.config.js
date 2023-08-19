@@ -8,9 +8,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1600px'
+      },
       colors: {
         black: '#262217',
-        beigeLight: '#FFFDF8',
+        white: '#FFFDF8',
         gray: {
           100: '#EAE9E8',
           200: '#D4D3D1',
@@ -25,5 +28,5 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins: [require('tailwind-scrollbar-hide')]
 }

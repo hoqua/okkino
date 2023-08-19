@@ -1,11 +1,14 @@
-import '../../styles/global.css'
-import { Lato } from '@next/font/google'
+import { Lato } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { i18n, Locale } from '../../i18n/i18n-config'
 import { getDictionary } from '../../i18n/get-dirctionary'
-import LocaleSwitcher from './component/locale-switcher'
+import { LocaleSwitcher } from './components/menu/locale-switcher'
+import MobileMenu from './components/menu/mobile-menu/mobile-menu'
+import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
+import { CartIcon } from './components/menu/cart-icon'
+import { getProductCategories } from '@okkino/api/data-access-db'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -25,14 +28,15 @@ export default async function RootLayout({
   children: ReactNode
   params: { lang: Locale }
 }) {
-  const { navBar } = await getDictionary(params.lang)
+  const t = await getDictionary(params.lang)
+  const productCategories = await getProductCategories()
 
   return (
     <html lang={params.lang} className={lato.className}>
-      <body className="flex flex-col items-center">
-        <div className="w-full max-w-screen-2xl pr-6 pl-6 md:pl-14 md:pr-14">
+      <body className="flex flex-col items-center bg-white">
+        <div className="w-full max-w-screen-2xl pl-6 pr-6 md:pl-14 md:pr-14">
           <nav className="flex h-20 items-center justify-between md:h-28 lg:h-36">
-            <Link href={'/'}>
+            <Link href={`/${params.lang}`}>
               <Image
                 src={'/logo.svg'}
                 width={85}
@@ -43,19 +47,26 @@ export default async function RootLayout({
             </Link>
 
             <div className="flex items-center gap-10">
-              <Link href={'/menu'} className="text-xs uppercase text-black">
-                {navBar.menu}
-              </Link>
-              <Link href={'/cart'} className="text-xs uppercase text-black">
-                {navBar.cart}
-              </Link>
+              <DesktopMenu
+                navigationTranslation={t.navigation}
+                productCategoriesTranslation={t.product_categories}
+                productCategories={productCategories}
+                locale={params.lang}
+              />
 
-              <LocaleSwitcher />
+              <MobileMenu
+                navigationTranslation={t.navigation}
+                productCategoriesTranslation={t.product_categories}
+                productCategories={productCategories}
+                locale={params.lang}
+              />
+
+              <CartIcon locale={params.lang} />
+
+              <LocaleSwitcher locale={params.lang} />
             </div>
           </nav>
           {children}
-
-          <footer className="h-20  md:h-28 lg:h-36" />
         </div>
       </body>
     </html>

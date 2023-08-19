@@ -1,0 +1,32 @@
+{
+  "name": "web-utils-env-admin",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/web/utils-env-admin/src",
+  "projectType": "library",
+  "targets": {
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx ts-node libs/web/utils-env-admin/src/index.ts"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/web/utils-env-admin",
+        "main": "libs/web/utils-env-admin/src/index.ts",
+        "tsConfig": "libs/web/utils-env-admin/tsconfig.lib.json",
+        "assets": ["libs/web/utils-env-admin/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/web/utils-env-admin/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["scope:web"]
+}
