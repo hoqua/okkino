@@ -28,8 +28,5 @@ export const webEnv = getEnv({
   },
   sentry: {
     auth: process.env['SENTRY_AUTH_TOKEN']
-  },
-  db: {
-    url: process.env['OKKINO_DB_URL']
   }
 })
