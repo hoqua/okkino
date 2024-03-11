@@ -3,7 +3,9 @@ import { CheckoutProduct } from '@okkino/web/utils-shared'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const NodeCache = require('node-cache')
 
-export const db = new PrismaClient()
+export const db = new PrismaClient({
+  datasourceUrl: process.env?.['DB_URL'] || '',
+})
 
 const cache = new NodeCache({ stdTTL: 1, checkperiod: 2 })
 
