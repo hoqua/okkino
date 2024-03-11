@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "sereve:all": "pnpm dlx concurrently --kill-others-on-fail \"pnpm:start:*\"",
-    "----START----": "-------------------------",
     "start:db": "pnpm run db:dockers:dev",
-    "start:verify-env": "pnpm run validate:web-env && pnpm run validate:web-admin-env",
     "start:web": "nx serve web",
     "start:web-admin": "nx serve web-admin --port 3000",
     "----DB SECTION----": "-------------------------",
@@ -34,6 +31,7 @@
     "@nx/next": "18.0.4",
     "@prisma/client": "^5.1.1",
     "@sentry/nextjs": "^7.63.0",
+    "@sentry/utils": "^7.106.1",
     "@stripe/stripe-js": "^1.54.1",
     "@swc/helpers": "~0.5.2",
     "@tiptap/pm": "^2.0.4",
