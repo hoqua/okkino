@@ -11,7 +11,8 @@
         "outputPath": "dist/libs/api/data-access-db",
         "main": "libs/api/data-access-db/src/index.ts",
         "tsConfig": "libs/api/data-access-db/tsconfig.lib.json",
-        "assets": ["libs/api/data-access-db/*.md"]
+        "assets": ["libs/api/data-access-db/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "lint": {

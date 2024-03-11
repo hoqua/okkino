@@ -11,7 +11,8 @@
         "outputPath": "dist/libs/web/utils-shared",
         "main": "libs/web/utils-shared/src/index.ts",
         "tsConfig": "libs/web/utils-shared/tsconfig.lib.json",
-        "assets": ["libs/web/utils-shared/*.md"]
+        "assets": ["libs/web/utils-shared/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "lint": {
