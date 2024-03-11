@@ -4,7 +4,7 @@ export const HOME_BLOCK_IMAGES = [
   {
     id: HOME_BLOCKS[0],
     title: 'left',
-    url: `https://uploadthing.com/f/91a31264-e263-46fc-82c2-be3d3b49602f_left.png`,
+    url: `https://utfs.io/f/91a31264-e263-46fc-82c2-be3d3b49602f_left.png`,
     bgColor: '#e2e2e0',
     order: 0,
     key: 'left'
@@ -12,7 +12,7 @@ export const HOME_BLOCK_IMAGES = [
   {
     id: HOME_BLOCKS[1],
     title: 'right',
-    url: `https://uploadthing.com/f/e2103b6e-b6fe-42a7-a561-1c1b9155a551_right.png`,
+    url: `https://utfs.io/f/e2103b6e-b6fe-42a7-a561-1c1b9155a551_right.png`,
     bgColor: '#e2e0df',
     order: 1,
     key: 'right'
