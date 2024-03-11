@@ -9,9 +9,6 @@ const webEnvSchema = z.object({
   }),
   sentry: z.object({
     auth: z.string()
-  }),
-  db: z.object({
-    url: z.string()
   })
 })
 
