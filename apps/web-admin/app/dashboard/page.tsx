@@ -65,12 +65,14 @@ export default async function DashboardPage() {
                 <div className="flex items-center space-x-3">
                   <div className="avatar">
                     <div className="mask  h-12 w-12">
-                      <Image
-                        src={product.images?.[0].url}
-                        alt={product.name}
-                        width={50}
-                        height={50}
-                      />
+                      {product.images?.[0]?.url && (
+                        <Image
+                          src={product.images?.[0]?.url}
+                          alt={product.name}
+                          width={50}
+                          height={50}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
