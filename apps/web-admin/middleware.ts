@@ -8,6 +8,9 @@ export default authMiddleware({
     if (!auth.userId && !auth.isPublicRoute) {
       const signInUrl = new URL('/sign-in', req.url)
       return NextResponse.redirect(signInUrl)
+    } else if (auth.userId && auth.isPublicRoute) {
+      const homeUrl = new URL('/dashboard')
+      return NextResponse.redirect(homeUrl)
     }
   }
 })
