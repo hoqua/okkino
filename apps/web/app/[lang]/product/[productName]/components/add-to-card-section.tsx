@@ -13,8 +13,6 @@ import { compareCartProducts } from '../../../../_shared/utils'
 import { useRouter } from 'next/navigation'
 import { CartProduct } from '@okkino/web/utils-shared'
 import './module.css'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {

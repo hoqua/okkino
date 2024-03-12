@@ -9,9 +9,6 @@ const webEnvSchema = z.object({
   }),
   sentry: z.object({
     auth: z.string()
-  }),
-  db: z.object({
-    url: z.string()
   })
 })
 
@@ -30,6 +27,7 @@ export const webEnv = getEnv({
     auth: process.env['SENTRY_AUTH_TOKEN']
   },
   db: {
-    url: process.env['OKKINO_DB_URL']
+    DB_URL: process.env['DB_URL'],
+    DB_URL_NON_POOLING: process.env['DB_URL_NON_POOLING']
   }
 })
