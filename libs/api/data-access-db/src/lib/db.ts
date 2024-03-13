@@ -4,7 +4,7 @@ import { CheckoutProduct } from '@okkino/web/utils-shared'
 const NodeCache = require('node-cache')
 
 export const db = new PrismaClient({
-  datasourceUrl: process.env?.['DB_PRISMA_URL'] || ''
+  datasourceUrl: process.env?.['DB_URL'] || ''
 })
 
 const cache = new NodeCache({ stdTTL: 1, checkperiod: 2 })
