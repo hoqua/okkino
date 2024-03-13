@@ -2,9 +2,26 @@ import { AddToCartSection } from './components/add-to-card-section'
 import { getDictionary } from '../../../../i18n/get-dirctionary'
 import { Locale } from '../../../../i18n/i18n-config'
 import { getProduct, getProductLength } from '@okkino/api/data-access-db'
+import { Metadata } from 'next'
+import { Product, WithContext } from 'schema-dts'
 
 interface IProductPageProps {
   params: { productName: string; lang: Locale }
+}
+
+export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {
+  const productName = decodeURI(params.productName)
+
+  const product = await getProduct(productName)
+
+  return {
+    title: product.name,
+    description: product.description,
+    referrer: 'origin-when-cross-origin',
+    openGraph: {
+      images: product.images.map((image) => image.url)
+    }
+  }
 }
 
 export default async function Page({ params }: IProductPageProps) {
@@ -17,8 +34,32 @@ export default async function Page({ params }: IProductPageProps) {
   const { price, discountPrice, availableColors, productSizes, description, id, images } = product
   const sortedImages = images.sort((a, b) => a.order - b.order)
 
+  const jsonLd: WithContext<Product> = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    image: images?.[0].url,
+    description,
+    brand: {
+      name: 'OK KINO'
+    },
+    offers: {
+      '@type': 'Offer',
+      price: price,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock'
+    },
+    mpn: id,
+    manufacturerName: 'Darya Golneva & Danis Caunov'
+  }
+
   return (
-    <div>
+    <section>
+      {/* Add JSON-LD to your page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="uppercase">{product.name}</h1>
 
       <div className="h-5" />
@@ -57,6 +98,6 @@ export default async function Page({ params }: IProductPageProps) {
           <p className="text-xs">{productTranslations.note}</p>
         </section>
       </div>
-    </div>
+    </section>
   )
 }
