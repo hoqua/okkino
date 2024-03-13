@@ -40,6 +40,9 @@ model Product {
   discountPrice Int?
   deleted       Boolean @default(false)
 
+  seoKeywords    String @default("")
+  seoDescription String @default("")
+
   images            Image[]
   availableColors   Color[]
   productCategories ProductCategory[]

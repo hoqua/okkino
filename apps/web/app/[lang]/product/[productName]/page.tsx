@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: IProductPageProps): Promise<M
 
   return {
     title: product.name,
-    description: product.description,
+    description: product.seoDescription,
     referrer: 'origin-when-cross-origin',
     openGraph: {
       images: product.images.map((image) => image.url)
@@ -31,8 +31,17 @@ export default async function Page({ params }: IProductPageProps) {
 
   const product = await getProduct(productName)
 
-  const { price, discountPrice, availableColors, productSizes, description, id, images, name } =
-    product
+  const {
+    price,
+    discountPrice,
+    availableColors,
+    productSizes,
+    description,
+    id,
+    images,
+    name,
+    seoDescription
+  } = product
   const sortedImages = images.sort((a, b) => a.order - b.order)
 
   const jsonLd: WithContext<Product> = {
@@ -40,7 +49,7 @@ export default async function Page({ params }: IProductPageProps) {
     '@type': 'Product',
     name,
     image: images?.[0].url,
-    description,
+    description: seoDescription,
     brand: 'OK KINO',
     offers: {
       '@type': 'Offer',

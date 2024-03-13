@@ -1,6 +1,11 @@
 import { PrismaClient } from '@prisma/client'
 import { HOME_BLOCK_DATA, HOME_BLOCK_IMAGES } from './seed-data'
-import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_LENGTHS, PRODUCT_SIZES } from '../../libs/web/utils-shared/src'
+import {
+  PRODUCT_CATEGORIES,
+  PRODUCT_COLORS,
+  PRODUCT_LENGTHS,
+  PRODUCT_SIZES
+} from '../../libs/web/utils-shared/src'
 
 const prisma = new PrismaClient()
 

@@ -19,7 +19,7 @@
     "stripe-listen": "stripe listen --forward-to localhost:4200/api/fulfilled",
     "----DEPLOY SECTION----": "-----------------------",
     "cd:web": "pnpm run validate:web-env && prisma generate && pnpm dlx nx build web --prod",
-    "cd:web-admin": "pnpm run validate:web-admin-env && prisma generate && pnpm run cd:db-seed && pnpm dlx nx build web-admin --prod",
+    "cd:web-admin": "pnpm run validate:web-admin-env && prisma migrate && prisma generate && pnpm run cd:db-seed && pnpm dlx nx build web-admin --prod",
     "cd:db-push": "pnpm dlx prisma db push --accept-data-loss",
     "cd:db-seed": "pnpm dlx ts-node --project tools/tsconfig.tools.json tools/database/seed.prod.ts"
   },
