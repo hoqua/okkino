@@ -10,22 +10,17 @@ interface IPageParams {
   params: { lang: Locale }
 }
 
-export async function generateMetadata(
-): Promise<Metadata> {
-
+export async function generateMetadata(): Promise<Metadata> {
   const homeBlocks = await getHomeImages()
 
   return {
     title: 'OK KINO',
-    description: 'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
-    url: 'https://okkino-studio.com',
-    siteName: 'OK KINO STUDIO',
+    description:
+      'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
     referrer: 'origin-when-cross-origin',
     openGraph: {
-      images: homeBlocks.map((block) => block.image.url),
-    },
-    locale: 'en_US',
-    type: 'website',
+      images: homeBlocks.map((block) => block.image.url)
+    }
   }
 }
 
@@ -47,7 +42,6 @@ export default async function Page({ params }: IPageParams) {
              "
           >
             <Image
-
               src={block.image.url}
               alt={block.image.title}
               className={
