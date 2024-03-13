@@ -31,7 +31,8 @@ export default async function Page({ params }: IProductPageProps) {
 
   const product = await getProduct(productName)
 
-  const { price, discountPrice, availableColors, productSizes, description, id, images } = product
+  const { price, discountPrice, availableColors, productSizes, description, id, images, name } =
+    product
   const sortedImages = images.sort((a, b) => a.order - b.order)
 
   const jsonLd: WithContext<Product> = {
@@ -40,9 +41,7 @@ export default async function Page({ params }: IProductPageProps) {
     name,
     image: images?.[0].url,
     description,
-    brand: {
-      name: 'OK KINO'
-    },
+    brand: 'OK KINO',
     offers: {
       '@type': 'Offer',
       price: price,
@@ -50,7 +49,7 @@ export default async function Page({ params }: IProductPageProps) {
       availability: 'https://schema.org/InStock'
     },
     mpn: id,
-    manufacturerName: 'Darya Golneva & Danis Caunov'
+    manufacturer: 'Darya Golneva & Danis Caunov'
   }
 
   return (
@@ -60,7 +59,7 @@ export default async function Page({ params }: IProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="uppercase">{product.name}</h1>
+      <h1 className="uppercase">{name}</h1>
 
       <div className="h-5" />
 
