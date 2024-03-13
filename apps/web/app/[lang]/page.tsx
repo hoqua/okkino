@@ -15,7 +15,6 @@ export default async function Page({ params }: IPageParams) {
   return (
     <div className="grid gap-4 lg:grid-cols-2 lg:gap-7 xl:gap-12">
       {homeBlocks.map((block) => {
-        console.log(block.image.bgColor)
         return (
           <Link
             href={getI18nNavigationPath(params.lang, block.navigationPath)}
