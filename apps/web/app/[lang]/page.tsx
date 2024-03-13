@@ -4,9 +4,29 @@ import { hexToDataUrl } from '@okkino/web/utils-shared'
 import { Locale } from '../../i18n/i18n-config'
 import { getI18nNavigationPath } from './components/common/utils'
 import { getHomeImages } from '@okkino/api/data-access-db'
+import { Metadata } from 'next'
 
 interface IPageParams {
   params: { lang: Locale }
+}
+
+export async function generateMetadata(
+): Promise<Metadata> {
+
+  const homeBlocks = await getHomeImages()
+
+  return {
+    title: 'OK KINO',
+    description: 'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
+    url: 'https://okkino-studio.com',
+    siteName: 'OK KINO STUDIO',
+    referrer: 'origin-when-cross-origin',
+    openGraph: {
+      images: homeBlocks.map((block) => block.image.url),
+    },
+    locale: 'en_US',
+    type: 'website',
+  }
 }
 
 export default async function Page({ params }: IPageParams) {
@@ -27,6 +47,7 @@ export default async function Page({ params }: IPageParams) {
              "
           >
             <Image
+
               src={block.image.url}
               alt={block.image.title}
               className={
