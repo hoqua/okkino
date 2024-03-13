@@ -13,6 +13,7 @@ export const ourFileRouter = {
 
       // Throw if user isn't signed in
       if (!user) throw new Error('You must be logged in to upload a profile picture')
+      console.log('imageUploader middleware')
 
       // Return userId to be used in onUploadComplete
       return { userId: user.id }

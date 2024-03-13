@@ -2,12 +2,6 @@
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-
-import {
-  PRODUCT_CATEGORIES,
-  PRODUCT_COLORS,
-  PRODUCT_SIZES
-} from '../../../../../../tools/database/seed-data.prod'
 import Editor from '../_components/editor'
 import MySelect from '../_components/select'
 import Images from '../_components/images'
@@ -17,6 +11,7 @@ import ProductCrumbs from './product-crumbs'
 import { useRouter } from 'next/navigation'
 import DeleteProduct from './delete-product'
 import { saveProduct } from '../../../action'
+import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from '@okkino/web/utils-shared'
 
 export default function ProductForm({ product }: { product?: ProductWithImages }) {
   const [isPending, startTransition] = useTransition()

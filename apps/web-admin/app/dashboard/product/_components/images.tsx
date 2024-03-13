@@ -1,12 +1,12 @@
+'use client'
 import { Control, FieldErrors, useFieldArray } from 'react-hook-form'
 import Image from 'next/image'
-import '@uploadthing/react/styles.css'
-import { generateComponents } from '@uploadthing/react'
+import { generateUploadDropzone } from '@uploadthing/react'
 import { OurFileRouter } from '../../../api/uploadthing/core'
 import { UseFormRegister } from 'react-hook-form/dist/types/form'
 import { Product } from './form'
 
-const { UploadDropzone } = generateComponents<OurFileRouter>()
+export const UploadDropzone = generateUploadDropzone<OurFileRouter>()
 
 interface Props {
   control: Control<Product>
@@ -84,10 +84,10 @@ export default function Images(props: Props) {
             (res || []).map((r) => ({ url: r.url, key: r.key, bgColor: '', order: Number.NaN }))
           )
         }}
-        // onUploadError={(error: Error) => {
-        //   // Do something with the error.
-        //   alert(`ERROR! ${error.message}`)
-        // }}
+        onUploadError={(error: Error) => {
+          // Do something with the error.
+          console.log(`ERROR! ${error.message}`)
+        }}
       />
     </div>
   )

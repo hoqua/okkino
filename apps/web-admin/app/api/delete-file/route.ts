@@ -1,7 +1,9 @@
-import { utapi } from 'uploadthing/server'
+import { UTApi } from 'uploadthing/server'
 import { currentUser } from '@clerk/nextjs'
 import { z } from 'zod'
 import { NextResponse } from 'next/server'
+
+const utapi = new UTApi()
 
 export async function POST(request: Request) {
   const user = await currentUser()

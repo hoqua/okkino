@@ -1,7 +1,6 @@
 import { EditorContent, useEditor, Editor as TEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
+
 interface EditorProps {
   onChange: (value: string) => void
   value: string

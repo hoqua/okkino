@@ -1,3 +1,4 @@
+'use client'
 import { Control, Controller } from 'react-hook-form'
 import ReactSelect, { CSSObjectWithLabel } from 'react-select'
 import chroma from 'chroma-js'
