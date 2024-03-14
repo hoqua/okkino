@@ -57,7 +57,7 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
           className={
             'input input-bordered w-full max-w-xs' + (errors.urlName ? ' border-red-500' : '')
           }
-          {...register('urlName')}
+          {...register('textName')}
         />
 
         {/*PRICE*/}
