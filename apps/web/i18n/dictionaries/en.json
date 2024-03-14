@@ -19,17 +19,10 @@
     "color": "Color",
     "length": "Length",
     "add_to_cart": "Add to cart",
-    "buy_now": "Buy now",
-    "note": "Note: Each item is carefully handcrafted and it will take up to 5 working days to produce."
+    "buy_now": "Buy now"
   },
   "size_guide": {
     "close": "close",
-    "size_and_fit": {
-      "title": "Size and Fit",
-      "fit": "Fits true to size, take your normal size",
-      "materials": "Mid-weight, non-stretchy fabric",
-      "model_size": "Model is 180 cm / 70,8 inch and is wearing a size S and 'Tall' length"
-    },
     "length": {
       "title": "Length",
       "select_height": "In order to ensure that OK KINO clothes fit perfectly, we have provided an option to select your height",

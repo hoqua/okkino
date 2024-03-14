@@ -75,7 +75,6 @@ export const PRODUCT_COLORS = [
   { name: 'prints', value: '' },
   { name: 'metallic', value: '#aaa9ad' },
   { name: 'gold', value: '#ffd700' },
-  { name: 'as shown', value: '' },
   { name: 'teal', value: '#008080' },
   { name: 'lavender', value: '#e6e6fa' },
   { name: 'olive', value: '#808000' },
@@ -98,9 +97,7 @@ export const PRODUCT_COLORS = [
   { name: 'graphite', value: '#251607' },
   { name: 'camel', value: '#c19a6b' },
   { name: 'moss green', value: '#8a9a5b' },
-  { name: 'sand', value: '#c2b280' },
-  { name: 'checkered', value: '' },
-  { name: 'striped', value: '' }
+  { name: 'sand', value: '#c2b280' }
 ]
 
 export const PRODUCT_LENGTHS = [
@@ -114,3 +111,5 @@ export const PRODUCT_LENGTHS = [
     name: 'tall'
   }
 ]
+
+export const TEXT_EDITOR_CLASSES = '[&>p:empty]:h-6 [&>p]:text-sm [&>p]:text-gray-600'

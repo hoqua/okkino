@@ -24,13 +24,6 @@ export default async function Page(props: IProductPageProps) {
       </div>
 
       <section>
-        <h3 className="mb-1 text-xs uppercase text-gray-700">{size_guide.size_and_fit.title}</h3>
-        <p className="text-sm text-black">{size_guide.size_and_fit.fit}</p>
-        <p className="text-sm text-black">{size_guide.size_and_fit.materials}</p>
-        <p className="text-sm text-black">{size_guide.size_and_fit.model_size}</p>
-
-        <div className="h-12"></div>
-
         <h3 className="mb-1 text-xs uppercase text-gray-700">{size_guide.length.title}</h3>
         <p className="text-sm text-black">{size_guide.length.select_height}</p>
         <p className="text-sm text-black">{size_guide.length.petit}</p>

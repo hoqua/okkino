@@ -4,14 +4,14 @@ import Image from 'next/image'
 import { generateUploadDropzone } from '@uploadthing/react'
 import { OurFileRouter } from '../../../api/uploadthing/core'
 import { UseFormRegister } from 'react-hook-form/dist/types/form'
-import { Product } from './form'
+import { ProductForm } from './form'
 
 export const UploadDropzone = generateUploadDropzone<OurFileRouter>()
 
 interface Props {
-  control: Control<Product>
-  register: UseFormRegister<Product>
-  errors: FieldErrors<Product>
+  control: Control<ProductForm>
+  register: UseFormRegister<ProductForm>
+  errors: FieldErrors<ProductForm>
 }
 
 export default function Images(props: Props) {

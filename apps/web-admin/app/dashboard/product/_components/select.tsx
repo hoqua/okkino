@@ -2,13 +2,13 @@
 import { Control, Controller } from 'react-hook-form'
 import ReactSelect, { CSSObjectWithLabel } from 'react-select'
 import chroma from 'chroma-js'
-import { Product } from './form'
+import { ProductForm } from './form'
 type Option = { value: string; name: string }
 interface Props {
-  control: Control<Product>
+  control: Control<ProductForm>
   options: Option[]
   isMulti?: boolean
-  name: keyof Product
+  name: keyof ProductForm
   isError?: boolean
 }
 

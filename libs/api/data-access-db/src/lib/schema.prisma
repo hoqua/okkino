@@ -34,11 +34,13 @@ model Order {
 
 model Product {
   id            String  @id @default(uuid())
-  name          String  @unique
+  urlName       String  @unique
+  textName      String
   description   String
   price         Int
   discountPrice Int?
   deleted       Boolean @default(false)
+  hasLength     Boolean @default(true)
 
   seoKeywords    String @default("")
   seoDescription String @default("")
@@ -58,11 +60,8 @@ model Image {
   bgColor   String
   order     Int
   //----Relations----//
-  /// @HideField()
   homeBlock HomeBlock?
-  /// @HideField()
   product   Product?   @relation(fields: [productId], references: [id])
-  /// @HideField()
   productId String?
 }
 
@@ -79,7 +78,6 @@ model ProductCategory {
   id String @id @default(uuid())
 
   name     String    @unique
-  /// @HideField()
   products Product[]
 }
 
@@ -87,7 +85,6 @@ model ProductSize {
   id String @id @default(uuid())
 
   name     String    @unique
-  /// @HideField()
   products Product[]
 }
 
@@ -95,6 +92,5 @@ model ProductLength {
   id String @id @default(uuid())
 
   name     String    @unique
-  /// @HideField()
   products Product[]
 }

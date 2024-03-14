@@ -32,6 +32,7 @@ export default async function Page({ params }: IPageParams) {
       {homeBlocks.map((block) => {
         return (
           <Link
+            prefetch
             href={getI18nNavigationPath(params.lang, block.navigationPath)}
             key={block.id}
             className="

@@ -3,9 +3,10 @@
 import { webAdminEnv } from '@okkino/web/utils-env-admin'
 import { currentUser } from '@clerk/nextjs'
 import { db, shipOrder } from '@okkino/api/data-access-db'
-import { Product } from './dashboard/product/_components/form'
+import { ProductForm } from './dashboard/product/_components/form'
 import { revalidatePath } from 'next/cache'
 import nodemailer from 'nodemailer'
+import { Prisma } from '@prisma/client'
 
 export async function emailAndShipOrder(data: {
   name: string
@@ -43,25 +44,22 @@ export async function redeploy() {
   await fetch(webAdminEnv.deployHook, { method: 'GET' })
 }
 
-export async function deleteProduct(id: string, name: string) {
+export async function deleteProduct(id: string) {
   const user = await currentUser()
   if (!user) throw new Error('You must be logged in to delete user')
 
-  await db.product.update({ where: { id }, data: { deleted: true, name: name + '_deleted_' + id } })
+  await db.product.update({ where: { id }, data: { deleted: true } })
   revalidatePath('/dashboard')
   revalidatePath(`/dashboard/product/${id}`)
 }
 
-export async function saveProduct(data: Product) {
+export async function saveProduct(data: ProductForm) {
   const user = await currentUser()
   if (!user) throw new Error('You must be logged to update products')
   revalidatePath('/dashboard')
 
-  const productBody = {
-    name: data.name,
-    description: data.description,
-    price: data.price,
-    discountPrice: data.discountPrice,
+  const productBody: Omit<Prisma.ProductCreateInput, 'images'> = {
+    ...data,
     productCategories: {
       connect: data.productCategories
     },
@@ -74,14 +72,14 @@ export async function saveProduct(data: Product) {
   }
 
   await db.product.upsert({
-    where: data.id ? { id: data.id } : { id: data.id, name: data.name },
+    where: { id: data.id },
     create: {
       ...productBody,
       images: {
         createMany: {
           data: data.images.map((image) => ({
             url: image.url,
-            title: data.name,
+            title: data.textName,
             bgColor: image.bgColor,
             order: image.order,
             key: image.key
@@ -101,7 +99,7 @@ export async function saveProduct(data: Product) {
         createMany: {
           data: data.images.map((image) => ({
             url: image.url,
-            title: data.name,
+            title: data.textName,
             bgColor: image.bgColor,
             order: image.order,
             key: image.key

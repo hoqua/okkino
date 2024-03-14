@@ -60,8 +60,8 @@ export async function getProducts(productCategory?: string) {
   return products as ProductWithImages[]
 }
 
-export async function getProduct(productName: string) {
-  const key = 'product_' + productName
+export async function getProduct(urlName: string) {
+  const key = 'product_' + urlName
   const fromCache = cache.get(key)
 
   if (fromCache) {
@@ -71,7 +71,7 @@ export async function getProduct(productName: string) {
   const product = await db.product.findUnique({
     where: {
       deleted: false,
-      name: productName
+      urlName: urlName
     },
     include
   })
