@@ -72,7 +72,7 @@ export async function saveProduct(data: ProductForm) {
   }
 
   await db.product.upsert({
-    where: { id: data.id },
+    where: { id: data.id, urlName: data.urlName },
     create: {
       ...productBody,
       images: {
