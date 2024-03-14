@@ -10,7 +10,7 @@ interface EditorProps {
 export default function Editor(props: EditorProps) {
   const tiptap = useEditor({
     extensions: [StarterKit],
-    content: '<p>Please add product description!</p>',
+    content: props.value ?? '<p>Please add product description!</p>',
     onUpdate: ({ editor }) => props.onChange(editor.getHTML())
   })
 
