@@ -17,8 +17,6 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
-  console.log('product', product)
-
   const {
     control,
     register,
