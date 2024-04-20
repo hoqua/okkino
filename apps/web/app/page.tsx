@@ -17,10 +17,10 @@ export default function TempPage() {
 
         <div className="grid grid-cols-2 gap-6 w-full max-w-[640px]">
           <div className="relative aspect-[308/461]">
-            <Image src="/static-images/l.png" alt="okkino coming soon left" fill />
+            <Image src="/static-images/l.png" alt="okkino coming soon left" fill priority />
           </div>
           <div className="relative aspect-[308/461]">
-            <Image src="/static-images/r.png" alt="okkino coming soon right" fill />
+            <Image src="/static-images/r.png" alt="okkino coming soon right" fill priority />
           </div>
         </div>
 
