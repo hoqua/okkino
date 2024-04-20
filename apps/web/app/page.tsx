@@ -11,7 +11,6 @@ const lato = Lato({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const homeBlocks = await getHomeImages()
 
   return {
     title: 'OK KINO',
