@@ -19,7 +19,7 @@
     "verify": "nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
     "stripe-listen": "stripe listen --forward-to localhost:4200/api/fulfilled",
     "----DEPLOY SECTION----": "-----------------------",
-    "cd:web": "pnpm run validate:web-env && prisma generate && prisma migrate && npnm run cd:db-seed && pnpm dlx nx build web --prod",
+    "cd:web": "pnpm run validate:web-env && prisma generate && prisma migrate deploy && npnm run cd:db-seed && pnpm dlx nx build web --prod",
     "cd:web-admin": "pnpm run validate:web-admin-env && prisma migrate && prisma generate && pnpm run cd:db-seed && pnpm dlx nx build web-admin --prod",
     "cd:db-seed": "pnpm dlx ts-node --project tools/tsconfig.tools.json tools/database/seed.prod.ts"
   },
