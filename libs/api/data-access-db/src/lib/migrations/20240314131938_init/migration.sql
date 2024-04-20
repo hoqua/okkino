@@ -26,11 +26,15 @@ CREATE TABLE "Order" (
 -- CreateTable
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "urlName" TEXT NOT NULL,
+    "textName" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "discountPrice" INTEGER,
     "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "hasLength" BOOLEAN NOT NULL DEFAULT true,
+    "seoKeywords" TEXT NOT NULL DEFAULT '',
+    "seoDescription" TEXT NOT NULL DEFAULT '',
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -109,7 +113,7 @@ CREATE TABLE "_ColorToProduct" (
 CREATE UNIQUE INDEX "HomeBlock_imageId_key" ON "HomeBlock"("imageId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
+CREATE UNIQUE INDEX "Product_urlName_key" ON "Product"("urlName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Image_key_key" ON "Image"("key");

@@ -38,7 +38,7 @@ export default function OrdersTable({ products }: { products: CartProduct[] }) {
               <span className="badge badge-ghost badge-sm">{p.color.name}</span>
             </td>
             <td>
-              <span className="badge badge-ghost badge-sm">{p.length}</span>
+              <span className="badge badge-ghost badge-sm">{p?.length}</span>
             </td>
             <td>
               <span className="badge badge-ghost badge-sm">{p.size}</span>

@@ -5,7 +5,7 @@ import {
   PRODUCT_COLORS,
   PRODUCT_LENGTHS,
   PRODUCT_SIZES
-} from './seed-data.prod'
+} from '../../libs/web/utils-shared/src'
 
 const prisma = new PrismaClient()
 

@@ -9,6 +9,7 @@ import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 import { CartIcon } from './components/menu/cart-icon'
 import { getProductCategories } from '@okkino/api/data-access-db'
+import { ALL_CATEGORY } from './shop/_components/constants'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -18,7 +19,17 @@ const lato = Lato({
 })
 
 export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }))
+  const productCategories = await getProductCategories()
+  productCategories.push({ id: ALL_CATEGORY, name: ALL_CATEGORY })
+  const categoryNames = productCategories.map((category) => category.name)
+
+  const params = []
+  for (const product of categoryNames) {
+    for (const locale of i18n.locales) {
+      params.push({ lang: locale, productName: product })
+    }
+  }
+  return params
 }
 
 export default async function RootLayout({

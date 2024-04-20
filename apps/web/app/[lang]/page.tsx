@@ -4,9 +4,24 @@ import { hexToDataUrl } from '@okkino/web/utils-shared'
 import { Locale } from '../../i18n/i18n-config'
 import { getI18nNavigationPath } from './components/common/utils'
 import { getHomeImages } from '@okkino/api/data-access-db'
+import { Metadata } from 'next'
 
 interface IPageParams {
   params: { lang: Locale }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const homeBlocks = await getHomeImages()
+
+  return {
+    title: 'OK KINO',
+    description:
+      'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
+    referrer: 'origin-when-cross-origin',
+    openGraph: {
+      images: homeBlocks.map((block) => block.image.url)
+    }
+  }
 }
 
 export default async function Page({ params }: IPageParams) {
@@ -15,9 +30,9 @@ export default async function Page({ params }: IPageParams) {
   return (
     <div className="grid gap-4 lg:grid-cols-2 lg:gap-7 xl:gap-12">
       {homeBlocks.map((block) => {
-        console.log(block.image.bgColor)
         return (
           <Link
+            prefetch
             href={getI18nNavigationPath(params.lang, block.navigationPath)}
             key={block.id}
             className="

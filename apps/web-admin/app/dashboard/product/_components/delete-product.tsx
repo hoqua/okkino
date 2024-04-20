@@ -2,7 +2,7 @@ import { useState, useTransition } from 'react'
 import { deleteProduct } from '../../../action'
 import { useRouter } from 'next/navigation'
 
-export default function DeleteProduct(props: { id: string; name: string }) {
+export default function DeleteProduct(props: { id: string }) {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -10,7 +10,7 @@ export default function DeleteProduct(props: { id: string; name: string }) {
   function handleDelete(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
     startTransition(async () => {
-      await deleteProduct(props.id, props.name)
+      await deleteProduct(props.id)
       setOpen(false)
       router.push('/dashboard')
     })

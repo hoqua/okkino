@@ -4,7 +4,7 @@ import { CheckoutProduct } from '@okkino/web/utils-shared'
 const NodeCache = require('node-cache')
 
 export const db = new PrismaClient({
-  datasourceUrl: process.env?.['DB_URL'] || '',
+  datasourceUrl: process.env?.['POSTGRES_PRISMA_URL'] || ''
 })
 
 const cache = new NodeCache({ stdTTL: 1, checkperiod: 2 })
@@ -60,8 +60,8 @@ export async function getProducts(productCategory?: string) {
   return products as ProductWithImages[]
 }
 
-export async function getProduct(productName: string) {
-  const key = 'product_' + productName
+export async function getProduct(urlName: string) {
+  const key = 'product_' + urlName
   const fromCache = cache.get(key)
 
   if (fromCache) {
@@ -71,7 +71,7 @@ export async function getProduct(productName: string) {
   const product = await db.product.findUnique({
     where: {
       deleted: false,
-      name: productName
+      urlName: urlName
     },
     include
   })
@@ -166,7 +166,7 @@ export async function shipOrder(id: string) {
   })
 }
 
-export async function getOrders(fulfilled = true) {
+export async function getOrders() {
   return db.order.findMany({
     orderBy: {
       createdAt: 'desc'

@@ -66,10 +66,10 @@ export default async function RootLayout(props: IRootLayoutProps) {
 
 export async function generateStaticParams() {
   const products = await getProducts()
-  const productNames = products.map((product) => product.name)
+  const urlProductNames = products.map((product) => product.urlName)
 
   const params = []
-  for (const product of productNames) {
+  for (const product of urlProductNames) {
     for (const locale of i18n.locales) {
       params.push({ lang: locale, productName: product })
     }

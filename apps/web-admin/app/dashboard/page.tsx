@@ -60,24 +60,26 @@ export default async function DashboardPage() {
         <tbody>
           {/* row 1 */}
           {products.map((product) => (
-            <tr key={product.name}>
+            <tr key={product.textName}>
               <td>
                 <div className="flex items-center space-x-3">
                   <div className="avatar">
                     <div className="mask  h-12 w-12">
-                      <Image
-                        src={product.images?.[0].url}
-                        alt={product.name}
-                        width={50}
-                        height={50}
-                      />
+                      {product.images?.[0]?.url && (
+                        <Image
+                          src={product.images?.[0]?.url}
+                          alt={product.textName}
+                          width={50}
+                          height={50}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
               </td>
               <td>
                 <div>
-                  <div className="font-bold">{product.name}</div>
+                  <div className="font-bold">{product.textName}</div>
                 </div>
               </td>
               <td>
@@ -101,7 +103,7 @@ export default async function DashboardPage() {
                 ))}
               </td>
               <td>
-                <Link href={`dashboard/product/${product.name}`}>
+                <Link href={`dashboard/product/${product.urlName}`}>
                   <button className="btn btn-ghost btn-xs">Edit</button>
                 </Link>
               </td>

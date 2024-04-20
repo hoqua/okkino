@@ -27,7 +27,7 @@ export const webEnv = getEnv({
     auth: process.env['SENTRY_AUTH_TOKEN']
   },
   db: {
-    DB_URL: process.env['DB_URL'],
-    DB_URL_NON_POOLING: process.env['DB_URL_NON_POOLING']
+    POSTGRES_PRISMA_URL: process.env['POSTGRES_PRISMA_URL'],
+    POSTGRES_URL_NON_POOLING: process.env['POSTGRES_URL_NON_POOLING']
   }
 })

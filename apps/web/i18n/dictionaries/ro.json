@@ -19,17 +19,10 @@
     "color": "Culoare",
     "length": "Lungime",
     "add_to_cart": "Adaugă în coș",
-    "buy_now": "Cumpără acum",
-    "note": "Notă: Fiecare articol este confecționat cu grijă manual și va dura până la 5 zile lucrătoare pentru producție."
+    "buy_now": "Cumpără acum"
   },
   "size_guide": {
     "close": "Închide",
-    "size_and_fit": {
-      "title": "Mărime și Potrivire",
-      "fit": "Se potrivește conform mărimii, alegeți mărimea normală",
-      "materials": "Material de greutate medie, nelățios",
-      "model_size": "Modelul are 180 cm și poartă mărimea S și lungimea 'Tall'"
-    },
     "length": {
       "title": "Lungime",
       "select_height": "Pentru a vă asigura că hainele OK KINO se potrivesc perfect, am furnizat opțiunea de a selecta înălțimea dumneavoastră",

@@ -1,7 +1,7 @@
 import { EditorContent, useEditor, Editor as TEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
+import { TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
+
 interface EditorProps {
   onChange: (value: string) => void
   value: string
@@ -10,14 +10,17 @@ interface EditorProps {
 export default function Editor(props: EditorProps) {
   const tiptap = useEditor({
     extensions: [StarterKit],
-    content: '<p>add description!</p>',
+    content: props.value ?? '<p>Please add product description!</p>',
     onUpdate: ({ editor }) => props.onChange(editor.getHTML())
   })
 
   return (
     <div className={'textarea border-gray-300 ' + (props.isError ? ' border-red-500' : '')}>
       <MenuBar editor={tiptap} />
-      <EditorContent editor={tiptap} />
+      <EditorContent
+        editor={tiptap}
+        className={'[&>.ProseMirror]:min-h-48 ' + TEXT_EDITOR_CLASSES}
+      />
     </div>
   )
 }
@@ -30,6 +33,7 @@ const MenuBar = ({ editor }: { editor: TEditor | null }) => {
   return (
     <div className="gap-4 [&>button]:mb-2  [&>button]:mr-2 [&>button]:rounded-sm [&>button]:border-2 [&>button]:border-gray-300 [&>button]:pl-2 [&>button]:pr-2">
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         className={editor.isActive('bold') ? 'is-active' : ''}
@@ -37,6 +41,7 @@ const MenuBar = ({ editor }: { editor: TEditor | null }) => {
         bold
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive('italic') ? 'is-active' : ''}
@@ -44,75 +49,90 @@ const MenuBar = ({ editor }: { editor: TEditor | null }) => {
         italic
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive('strike') ? 'is-active' : ''}
       >
         strike
       </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>clear marks</button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>clear nodes</button>
+      <button type="button" onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+        clear marks
+      </button>
+      <button type="button" onClick={() => editor.chain().focus().clearNodes().run()}>
+        clear nodes
+      </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().setParagraph().run()}
         className={editor.isActive('paragraph') ? 'is-active' : ''}
       >
         paragraph
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
       >
         h1
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
       >
         h2
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
       >
         h3
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
         className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
       >
         h4
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
         className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
       >
         h5
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
         className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
       >
         h6
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive('bulletList') ? 'is-active' : ''}
       >
         bullet list
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive('orderedList') ? 'is-active' : ''}
       >
         ordered list
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         className={editor.isActive('blockquote') ? 'is-active' : ''}
       >
         blockquote
       </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+      <button type="button" onClick={() => editor.chain().focus().setHorizontalRule().run()}>
         horizontal rule
       </button>
     </div>

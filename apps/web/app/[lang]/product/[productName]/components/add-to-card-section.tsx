@@ -25,10 +25,14 @@ export const AddToCartSection: FC<IProps> = (props) => {
     locale,
     productName,
     translations,
-    imageUrl
+    imageUrl,
+    hasLength
   } = props
   const [selectedSize, setSelectedSize] = useState({ value: '', hasError: false })
-  const [selectedLength, setSelectedLength] = useState({ value: 'regular', hasError: false })
+  const [selectedLength, setSelectedLength] = useState({
+    value: hasLength ? 'regular' : '',
+    hasError: false
+  })
   const [selectedColor, setSelectedColor] = useState({ value: '', hasError: false })
   const [, setCart] = useCart()
   const router = useRouter()
@@ -102,14 +106,15 @@ export const AddToCartSection: FC<IProps> = (props) => {
           </Link>
         }
       />
-
-      <ProductPropsSelector<Length>
-        label={translations.length}
-        items={productLengths}
-        selected={selectedLength.value}
-        hasErrors={selectedLength.hasError}
-        onSelect={(length) => setSelectedLength({ value: length, hasError: false })}
-      />
+      {hasLength && (
+        <ProductPropsSelector<Length>
+          label={translations.length}
+          items={productLengths}
+          selected={selectedLength.value}
+          hasErrors={selectedLength.hasError}
+          onSelect={(length) => setSelectedLength({ value: length, hasError: false })}
+        />
+      )}
 
       <ProductPropsSelector<Color>
         label={translations.color}
@@ -158,6 +163,7 @@ interface IProps {
   productSizes: Size[]
   availableColors: Color[]
   productLengths: Length[]
+  hasLength: boolean
   locale: Locale
   productName: string
   translations: IAddToCartSectionTranslations

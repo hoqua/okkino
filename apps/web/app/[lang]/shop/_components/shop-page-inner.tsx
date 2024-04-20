@@ -23,13 +23,13 @@ export default async function ShopPageInner(props: IProductPageProps) {
   return (
     <div className="object grid grid-cols-2 gap-x-2 gap-y-5 md:gap-x-4 md:gap-y-7 lg:grid-cols-3 ">
       {products.map((product, index) => {
-        const { availableColors, images, discountPrice, price } = product
+        const { availableColors, images, discountPrice, price, urlName, textName } = product
         const [mainImage, hoverImage] = images.sort((a, b) => a.order - b.order)
 
         return (
-          <section key={product.name}>
+          <section key={urlName}>
             <Link
-              href={getI18nNavigationPath(lang, RouteName.product + '/' + product.name)}
+              href={getI18nNavigationPath(lang, RouteName.product + '/' + urlName)}
               className="relative block aspect-[120/179]"
             >
               <Image
@@ -61,7 +61,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
             <div className="h-5 w-full" />
 
             <div className="flex flex-col items-end gap-1">
-              <h1 className="text-xs uppercase text-black">{product.name}</h1>
+              <h1 className="text-xs uppercase text-black">{textName}</h1>
 
               <Price price={price} discountPrice={discountPrice} />
             </div>
