@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Lato } from 'next/font/google'
 import { Metadata } from 'next'
+import about from '../public/static-images/about.webp'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -16,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
     referrer: 'origin-when-cross-origin',
     openGraph: {
-      images: ['/static-images/l.png', '/static-images/r.png']
+      images: [about.src]
     }
   }
 }
