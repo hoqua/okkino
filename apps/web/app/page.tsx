@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import { Lato } from 'next/font/google'
+import { Metadata } from 'next'
+import { getHomeImages } from '@okkino/api/data-access-db'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -7,6 +9,20 @@ const lato = Lato({
   style: 'normal',
   subsets: ['latin']
 })
+
+export async function generateMetadata(): Promise<Metadata> {
+  const homeBlocks = await getHomeImages()
+
+  return {
+    title: 'OK KINO',
+    description:
+      'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
+    referrer: 'origin-when-cross-origin',
+    openGraph: {
+      images: ['/static-images/l.png', '/static-images/r.png']
+    }
+  }
+}
 
 export default function TempPage() {
   return (
