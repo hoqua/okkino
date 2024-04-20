@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Lato } from 'next/font/google'
+import { Metadata } from 'next'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -7,6 +8,18 @@ const lato = Lato({
   style: 'normal',
   subsets: ['latin']
 })
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'OK KINO',
+    description:
+      'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
+    referrer: 'origin-when-cross-origin',
+    openGraph: {
+      images: ['/static-images/l.png', '/static-images/r.png']
+    }
+  }
+}
 
 export default function TempPage() {
   return (
@@ -17,10 +30,10 @@ export default function TempPage() {
 
         <div className="grid grid-cols-2 gap-6 w-full max-w-[640px]">
           <div className="relative aspect-[308/461]">
-            <Image src="/static-images/l.png" alt="okkino coming soon left" fill />
+            <Image src="/static-images/l.png" alt="okkino coming soon left" fill priority />
           </div>
           <div className="relative aspect-[308/461]">
-            <Image src="/static-images/r.png" alt="okkino coming soon right" fill />
+            <Image src="/static-images/r.png" alt="okkino coming soon right" fill priority />
           </div>
         </div>
 
