@@ -29,6 +29,7 @@ export function middleware(request: NextRequest) {
   // If you have one
   if (
     [
+      '/', //TODO: remove to after temp page removed
       '/manifest.json',
       '/favicon.ico',
       '/logo.svg'
