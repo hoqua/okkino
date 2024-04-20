@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
     referrer: 'origin-when-cross-origin',
     openGraph: {
-      images: ['/static-images/l.png', '/static-images/r.png']
+      images: ['../public/static-images/about.webp']
     }
   }
 }
