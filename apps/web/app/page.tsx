@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { Lato } from 'next/font/google'
 import { Metadata } from 'next'
-import { getHomeImages } from '@okkino/api/data-access-db'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -11,7 +10,6 @@ const lato = Lato({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-
   return {
     title: 'OK KINO',
     description:
