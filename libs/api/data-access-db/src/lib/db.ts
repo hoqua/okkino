@@ -145,7 +145,7 @@ export async function fulfillOrder(
   total: number,
   customerEmail: string
 ) {
-  await db.order.update({
+  return db.order.update({
     where: { id },
     data: {
       fulfilled: true,

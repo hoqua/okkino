@@ -6,6 +6,7 @@ import Stripe from 'stripe'
 import { webEnv } from '@okkino/web/utils-env'
 import { fulfillOrder } from '@okkino/api/data-access-db'
 import * as Sentry from '@sentry/nextjs'
+import { sendOrderPlacedEmail } from '@okkino/shared/mailer'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
@@ -36,13 +37,24 @@ export async function POST(req: NextRequest) {
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
       const object = event?.data.object as any
-      await fulfillOrder(
+      console.log('🔔  Payment was successful!', object)
+      const total = object.amount_total / 100
+      const order = await fulfillOrder(
         object.id,
         object.shipping.address,
         object.shipping.name,
-        object.amount_total / 100,
+        total,
         object.customer_details.email
       )
+
+      console.log('🔔  Order fulfilled!', order)
+
+      await sendOrderPlacedEmail({
+        total: total,
+        email: object.customer_details.email,
+        name: object.shipping.name,
+        pass: webEnv.email.pass
+      })
     }
   } catch (error) {
     const object = event?.data.object as any

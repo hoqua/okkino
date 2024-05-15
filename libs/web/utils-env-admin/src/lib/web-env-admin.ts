@@ -8,7 +8,6 @@ const webAdminEnvSchema = z.object({
   }),
   deployHook: z.string().url(),
   email: z.object({
-    name: z.string(),
     pass: z.string()
   })
 })
@@ -25,7 +24,6 @@ export const webAdminEnv = getEnv({
   },
   deployHook: process.env['DEPLOY_HOOK_URL'],
   email: {
-    name: process.env['EMAIL_NAME'],
     pass: process.env['EMAIL_PASS']
   }
 })

@@ -5,7 +5,6 @@ import { currentUser } from '@clerk/nextjs'
 import { db, shipOrder } from '@okkino/api/data-access-db'
 import { ProductForm } from './dashboard/product/_components/form'
 import { revalidatePath } from 'next/cache'
-import nodemailer from 'nodemailer'
 import { Prisma } from '@prisma/client'
 
 export async function emailAndShipOrder(data: {
@@ -14,24 +13,6 @@ export async function emailAndShipOrder(data: {
   message: string
   orderId: string
 }) {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: webAdminEnv.email.name,
-      pass: webAdminEnv.email.pass
-    }
-  })
-
-  const mailDetails = {
-    from: webAdminEnv.email.name,
-    to: data.email,
-    subject: 'Test mail',
-    text: 'Node.js testing mail'
-  }
-  await transporter.sendMail(mailDetails)
   await shipOrder(data.orderId)
   revalidatePath('/dashboard/order')
   revalidatePath(`/dashboard/order/${data.orderId}`)

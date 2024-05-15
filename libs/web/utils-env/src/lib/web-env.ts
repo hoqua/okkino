@@ -9,6 +9,13 @@ const webEnvSchema = z.object({
   }),
   sentry: z.object({
     auth: z.string()
+  }),
+  db: z.object({
+    POSTGRES_PRISMA_URL: z.string(),
+    POSTGRES_URL_NON_POOLING: z.string()
+  }),
+  email: z.object({
+    pass: z.string()
   })
 })
 
@@ -29,5 +36,8 @@ export const webEnv = getEnv({
   db: {
     POSTGRES_PRISMA_URL: process.env['POSTGRES_PRISMA_URL'],
     POSTGRES_URL_NON_POOLING: process.env['POSTGRES_URL_NON_POOLING']
+  },
+  email: {
+    pass: process.env['EMAIL_PASS']
   }
 })

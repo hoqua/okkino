@@ -1,0 +1,8 @@
+{
+  "name": "shared-mailer",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/mailer/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["scope:shared"]
+}
