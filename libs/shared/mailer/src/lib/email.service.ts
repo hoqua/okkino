@@ -10,7 +10,7 @@ export const getTransporter = (pass: string) =>
     port: 465,
     secure: true,
     auth: {
-      user: 'hello@studiookkino.com',
+      user: 'contact@studiookkino.com',
       pass
     }
   })
@@ -25,7 +25,7 @@ export type SendOrderArgs = {
 export async function sendOrderPlacedEmail(args: SendOrderArgs) {
   const { email, pass } = args
   const options: SendMailOptions = {
-    sender: 'hello@studiookkino.com',
+    sender: 'contact@studiookkino.com',
     to: email,
     subject: 'Thank you for buying OK KINO piece!',
     html: render(OrderPlaced(args))
