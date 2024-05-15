@@ -31,7 +31,14 @@ export async function sendOrderPlacedEmail(args: SendOrderArgs) {
   const { email, pass } = args
 
   const options: SendMailOptions = {
-    sender: 'OK KINO',
+    from: {
+      name: 'OK KINO',
+      address: 'contact@studiookkino.com'
+    },
+    sender: {
+      name: 'OK KINO',
+      address: 'contact@studiookkino.com'
+    },
     to: email,
     subject: 'Thank you for your purchase.',
     html: render(OrderPlaced(args))
