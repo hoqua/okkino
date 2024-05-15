@@ -1,15 +1,16 @@
 import { Column, Img, Row, Section, Text } from '@react-email/components'
 import * as React from 'react'
+import { OrderProduct } from '@okkino/shared/schema'
 
-export function ProductSection() {
+export function ProductSection(props: { product: OrderProduct }) {
+  const { product } = props
   return (
     <Section>
       <Text className="text-sm uppercase">Product name</Text>
       <Row>
-        <Column>
+        <Column className="w-36">
           <Img
             src="https://utfs.io/f/bd2587fb-1b3a-468a-90ba-977eb88988c0-yu6obf.webp"
-            alt="Cat"
             width="104"
             height="145"
           />
@@ -21,39 +22,50 @@ export function ProductSection() {
                 <td>
                   <Text className="m-0 text-gray-600 text-xs">COLOR</Text>
                 </td>
-                <td>blk</td>
+                <td>
+                  <div
+                    className="ml-2"
+                    style={{ backgroundColor: product.color.value, height: '8px', width: '8px' }}
+                  />
+                </td>
               </tr>
               <tr>
                 <td>
                   <Text className="m-0 text-gray-600 text-xs">SIZE</Text>
                 </td>
                 <td>
-                  <Text className="m-0 ml-2 text-xs font-bold uppercase">XXS</Text>
+                  <Text className="m-0 ml-2 text-xs font-bold uppercase">{product.size}</Text>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <Text className="m-0 text-gray-600 text-xs">LENGTH</Text>
-                </td>
-                <td>
-                  <Text className="m-0 ml-2 text-xs font-bold uppercase">Francisco Chang</Text>
-                </td>
-              </tr>
+
+              {product?.length && (
+                <tr>
+                  <td>
+                    <Text className="m-0 text-gray-600 text-xs">LENGTH</Text>
+                  </td>
+                  <td>
+                    <Text className="m-0 ml-2 text-xs font-bold uppercase">{product.length}</Text>
+                  </td>
+                </tr>
+              )}
+
               <tr>
                 <td>
                   <Text className="m-0 text-gray-600 text-xs">Q-TY</Text>
                 </td>
                 <td>
-                  <Text className="m-0 ml-2 text-xs font-bold uppercase">1</Text>
+                  <Text className="m-0 ml-2 text-xs font-bold uppercase">{product.quantity}</Text>
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <Text className="m-0 mt-11 text-gray-600 text-xs">TOTAL</Text>
+                  <Text className="m-0 mt-11 text-xs">TOTAL</Text>
                 </td>
                 <td>
-                  <Text className="m-0 mt-11 ml-2 text-xs font-bold uppercase">1</Text>
+                  <Text className="m-0 mt-11 ml-2 text-xs font-bold uppercase">
+                    {product.discountPrice || product.price}
+                  </Text>
                 </td>
               </tr>
             </tbody>

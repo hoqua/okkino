@@ -1,15 +1,15 @@
 import { getOrder } from '@okkino/api/data-access-db'
-import { CartProductSchema } from '@okkino/web/utils-shared'
 import OrderCrumbs from '../_components/order-crumbs'
 
 import OrdersTable from '../_components/orders-table'
 import CustomerTable from '../_components/customer-table'
 import { objectToString } from '../_components/utils'
 import ShipOrderBtn from '../../_components/ship-order-btn'
+import { OrderProductSchema } from '@okkino/shared/schema'
 
 export default async function OrderDetails(props: { params: { id: string } }) {
   const order = await getOrder(props.params.id)
-  const products = CartProductSchema.array().parse(order?.products)
+  const products = OrderProductSchema.array().parse(order?.products)
 
   if (!order) throw new Error('Order not found')
 

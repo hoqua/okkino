@@ -11,7 +11,8 @@ import getStripe from '../utils'
 import { usePathname } from 'next/navigation'
 import { useCart } from '../../../_shared/hooks'
 import { compareCartProducts } from '../../../_shared/utils'
-import { CartProduct, CheckoutProduct, DeliveryOptions } from '@okkino/web/utils-shared'
+import { CheckoutProduct, DeliveryOptions } from '@okkino/web/utils-shared'
+import { OrderProduct } from '@okkino/shared/schema'
 
 interface IProps {
   cartTranslations: Translation['cart']
@@ -33,7 +34,7 @@ export default function Cart({ cartTranslations: t }: IProps) {
     })
   }, [])
 
-  function removeProductFromCart(removeProduct: CartProduct) {
+  function removeProductFromCart(removeProduct: OrderProduct) {
     // TODO remove not only by id
     setCart(cart.filter((p) => !compareCartProducts(p, removeProduct)))
   }

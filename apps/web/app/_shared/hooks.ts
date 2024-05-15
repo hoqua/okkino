@@ -1,11 +1,11 @@
 import { useLocalStorageSafe } from 'use-local-storage-safe'
-import { CartProduct, CartProductSchema } from '@okkino/web/utils-shared'
+import { OrderProduct, OrderProductSchema } from '@okkino/shared/schema'
 
 export const storageOptions = {
-  validateInit: (value) => CartProductSchema.array().safeParse(value).success
+  validateInit: (value) => OrderProductSchema.array().safeParse(value).success
 }
 export const storageDefaultValue = []
 
 export const useCart = () => {
-  return useLocalStorageSafe<CartProduct[]>('okkino-cart', storageDefaultValue, storageOptions)
+  return useLocalStorageSafe<OrderProduct[]>('okkino-cart', storageDefaultValue, storageOptions)
 }

@@ -77,7 +77,16 @@ export default function Images(props: Props) {
         })}
       </div>
 
+      <p>
+        Only PNG files are allowed. The first image is crucial and will be used for SEO, emails, and
+        other key purposes.
+      </p>
       <UploadDropzone
+        onBeforeUploadBegin={(files) => {
+          if (!files.every((file) => file.type === 'image/png')) {
+            throw new Error('Only PNG files are allowed')
+          }
+        }}
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           append(

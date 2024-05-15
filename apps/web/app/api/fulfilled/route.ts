@@ -7,6 +7,7 @@ import { webEnv } from '@okkino/web/utils-env'
 import { fulfillOrder } from '@okkino/api/data-access-db'
 import * as Sentry from '@sentry/nextjs'
 import { sendOrderPlacedEmail } from '@okkino/shared/mailer'
+import { OrderProduct } from '@okkino/shared/schema'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
@@ -39,6 +40,9 @@ export async function POST(req: NextRequest) {
       const object = event?.data.object as any
       console.log('🔔  Payment was successful!', object)
       const total = object.amount_total / 100
+      const subTotal = object.amount_subtotal / 100
+      const shipping = object.total_details.amount_shipping / 100
+
       const order = await fulfillOrder(
         object.id,
         object.shipping.address,
@@ -46,11 +50,18 @@ export async function POST(req: NextRequest) {
         total,
         object.customer_details.email
       )
+      const items = (order.products as OrderProduct[]).reduce((acc, product) => {
+        return acc + product.quantity
+      }, 0)
 
       console.log('🔔  Order fulfilled!', order)
 
       await sendOrderPlacedEmail({
-        total: total,
+        shipping,
+        items,
+        subTotal,
+        products: order.products as OrderProduct[],
+        total,
         email: object.customer_details.email,
         name: object.shipping.name,
         pass: webEnv.email.pass

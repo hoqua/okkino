@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import { CartProduct } from '@okkino/web/utils-shared'
+import { OrderProduct } from '@okkino/shared/schema'
 
-export default function OrdersTable({ products }: { products: CartProduct[] }) {
+export default function OrdersTable({ products }: { products: OrderProduct[] }) {
   return (
     <table className="table">
       {/* head */}

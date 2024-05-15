@@ -1,0 +1,19 @@
+{
+  "name": "shared-schema",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/schema/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/schema",
+        "main": "libs/shared/schema/src/index.ts",
+        "tsConfig": "libs/shared/schema/tsconfig.lib.json",
+        "assets": ["libs/shared/schema/*.md"]
+      }
+    }
+  },
+  "tags": ["scope:shared"]
+}

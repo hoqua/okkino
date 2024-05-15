@@ -11,8 +11,8 @@ import { RouteName } from '../../../components/common/constants'
 import { useCart } from '../../../../_shared/hooks'
 import { compareCartProducts } from '../../../../_shared/utils'
 import { useRouter } from 'next/navigation'
-import { CartProduct } from '@okkino/web/utils-shared'
 import './module.css'
+import { OrderProduct } from '@okkino/shared/schema'
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {
@@ -58,7 +58,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         discountPrice: discountPrice,
         imageUrl: imageUrl,
         quantity: 1
-      } satisfies CartProduct
+      } satisfies OrderProduct
       // TODO: FIX quantity
       const product = newCart.find((p) => compareCartProducts(p, newProduct))
 
@@ -75,7 +75,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
           discountPrice: discountPrice,
           imageUrl: imageUrl,
           quantity: 1
-        } satisfies CartProduct)
+        } satisfies OrderProduct)
       }
 
       return newCart

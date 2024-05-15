@@ -16,7 +16,7 @@ import { Footer } from './common/footer'
 import { SendOrderArgs } from '../email.service'
 
 export default function OrderPlaced(props: SendOrderArgs) {
-  const { name } = props
+  const { name, products, items, total, subTotal, shipping } = props
   return (
     <Html>
       <Head>
@@ -28,8 +28,28 @@ export default function OrderPlaced(props: SendOrderArgs) {
         />
         <title className="text-xl">Thanks for buying OK KINO piece!</title>
       </Head>
-      <Tailwind>
-        <Body className="bg-[#FFFDF8]">
+      <Tailwind
+        config={{
+          theme: {
+            colors: {
+              black: '#262217',
+              white: '#FFFDF8',
+              gray: {
+                100: '#F5F5F5',
+                200: '#EEEEEE',
+                300: '#E0E0E0',
+                400: '#BDBDBD',
+                500: '#9E9E9E',
+                600: '#757575',
+                700: '#616161',
+                800: '#424242',
+                900: '#212121'
+              }
+            }
+          }
+        }}
+      >
+        <Body className="bg-white text-black">
           <Container>
             <Img
               src="https://utfs.io/f/20c34913-02b0-442a-a629-ebdccb6d286f-1zbfv.png"
@@ -49,10 +69,14 @@ export default function OrderPlaced(props: SendOrderArgs) {
             </Text>
             <Section className="mt-20" />
 
-            <ProductSection />
-            <Section className="mt-20" />
+            {products.map((product) => (
+              <>
+                <ProductSection product={product} />
+                <Section className="mt-20" />
+              </>
+            ))}
 
-            <OrderDetails />
+            <OrderDetails items={items} shipping={shipping} subTotal={subTotal} total={total} />
             <Section className="mt-20" />
 
             <Footer />
