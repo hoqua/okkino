@@ -86,6 +86,7 @@ export default function Images(props: Props) {
           if (!files.every((file) => file.type === 'image/png')) {
             throw new Error('Only PNG files are allowed')
           }
+          return files
         }}
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
