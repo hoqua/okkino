@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { hexToDataUrl } from '@okkino/web/utils-shared'
 import { Locale } from '../../i18n/i18n-config'
 import { getI18nNavigationPath } from './components/common/utils'
 import { getHomeImages } from '@okkino/api/data-access-db'
 import { Metadata } from 'next'
+import { hexToDataUrl } from '@okkino/web/utils-shared'
 
 interface IPageParams {
   params: { lang: Locale }

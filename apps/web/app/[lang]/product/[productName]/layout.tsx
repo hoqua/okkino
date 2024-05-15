@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
-import { hexToDataUrl } from '@okkino/web/utils-shared'
 import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { getProduct, getProducts } from '@okkino/api/data-access-db'
+import { hexToDataUrl } from '@okkino/web/utils-shared'
 
 const IMAGES_ON_SCREEN = 2
 

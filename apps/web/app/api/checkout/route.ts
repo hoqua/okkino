@@ -3,7 +3,7 @@ import { webEnv } from '@okkino/web/utils-env'
 import { NextResponse } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
 import { createInitialOrder } from '@okkino/api/data-access-db'
-import { CheckoutProductSchema, DeliveryOptions } from '@okkino/web/utils-shared'
+import { CheckoutProductSchema, DeliveryOptions } from '@okkino/shared/schema'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',

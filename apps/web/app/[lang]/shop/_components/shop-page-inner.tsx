@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { hexToDataUrl } from '@okkino/web/utils-shared'
 import { Price } from '../../../_shared/price'
 import { getI18nNavigationPath } from '../../components/common/utils'
 import { RouteName } from '../../components/common/constants'
@@ -8,6 +7,7 @@ import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { ALL_CATEGORY } from './constants'
 import { getProductCategories, getProducts } from '@okkino/api/data-access-db'
 import { ProductColors } from './product-colors'
+import { hexToDataUrl } from '@okkino/web/utils-shared'
 
 const IMAGES_ON_SCREEN = 6
 

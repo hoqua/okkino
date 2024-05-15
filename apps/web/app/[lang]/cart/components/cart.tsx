@@ -11,7 +11,7 @@ import getStripe from '../utils'
 import { usePathname } from 'next/navigation'
 import { useCart } from '../../../_shared/hooks'
 import { compareCartProducts } from '../../../_shared/utils'
-import { CheckoutProduct, DeliveryOptions } from '@okkino/web/utils-shared'
+import { CheckoutProduct, DeliveryOptions } from '@okkino/shared/schema'
 import { OrderProduct } from '@okkino/shared/schema'
 
 interface IProps {

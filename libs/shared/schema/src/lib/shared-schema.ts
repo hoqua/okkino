@@ -13,3 +13,15 @@ export const OrderProductSchema = z.object({
 })
 
 export type OrderProduct = z.infer<typeof OrderProductSchema>
+
+export const DeliveryOptions = z.enum(['other', 'moldova'])
+export type DeliveryOptions = z.infer<typeof DeliveryOptions>
+
+export const CheckoutProductSchema = z.object({
+  host: z.string(),
+  language: z.string(),
+  delivery: DeliveryOptions,
+  products: OrderProductSchema.array()
+})
+
+export type CheckoutProduct = z.infer<typeof CheckoutProductSchema>

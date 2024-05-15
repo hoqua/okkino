@@ -1,15 +1,12 @@
 {
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  },
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist/out-tsc/tools",
-    "rootDir": "../",
+    "rootDir": ".",
     "module": "commonjs",
     "target": "es5",
     "types": ["node"],
-    "importHelpers": false,
+    "importHelpers": false
   },
   "include": ["**/*.ts"]
 }

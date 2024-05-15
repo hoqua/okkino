@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import { CheckoutProduct } from '@okkino/web/utils-shared'
+import { CheckoutProduct } from '@okkino/shared/schema'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const NodeCache = require('node-cache')
 
