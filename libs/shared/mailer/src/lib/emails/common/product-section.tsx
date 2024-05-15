@@ -9,11 +9,11 @@ export function ProductSection(props: { product: OrderProduct }) {
       <Text className="text-sm uppercase">{product.name}</Text>
 
       <Row>
-        <Column className="w-36">
+        <Column style={{ width: '50%' }}>
           <Img src={product.imageUrl} width="104" height="145" />
         </Column>
 
-        <Column valign="top">
+        <Column valign="top" style={{ width: '50%' }}>
           <table>
             <tbody>
               <tr>
