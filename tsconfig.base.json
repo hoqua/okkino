@@ -18,10 +18,10 @@
     "paths": {
       "@okkino/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
       "@okkino/shared/mailer": ["libs/shared/mailer/src/index.ts"],
+      "@okkino/shared/schema": ["libs/shared/schema/src/index.ts"],
       "@okkino/web/utils-env": ["libs/web/utils-env/src/index.ts"],
       "@okkino/web/utils-env-admin": ["libs/web/utils-env-admin/src/index.ts"],
-      "@okkino/web/utils-shared": ["libs/web/utils-shared/src/index.ts"],
-      "@okkino/shared/schema": ["libs/shared/schema/src/index.ts"]
+      "@okkino/web/utils-shared": ["libs/web/utils-shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
