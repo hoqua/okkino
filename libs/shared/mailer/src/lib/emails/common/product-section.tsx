@@ -6,15 +6,13 @@ export function ProductSection(props: { product: OrderProduct }) {
   const { product } = props
   return (
     <Section>
-      <Text className="text-sm uppercase">Product name</Text>
+      <Text className="text-sm uppercase">{product.name}</Text>
+
       <Row>
         <Column className="w-36">
-          <Img
-            src="https://utfs.io/f/bd2587fb-1b3a-468a-90ba-977eb88988c0-yu6obf.webp"
-            width="104"
-            height="145"
-          />
+          <Img src={product.imageUrl} width="104" height="145" />
         </Column>
+
         <Column valign="top">
           <table>
             <tbody>

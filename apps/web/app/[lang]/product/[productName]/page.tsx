@@ -87,7 +87,7 @@ export default async function Page({ params }: IProductPageProps) {
           productLengths={productLengths}
           hasLength={hasLength}
           locale={params.lang}
-          productName={productName}
+          productName={textName}
           imageUrl={sortedImages[0].url}
           translations={{
             sizeGuide: productTranslations.size_guide,
