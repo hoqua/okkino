@@ -1,13 +1,12 @@
 'use client'
 import Link from 'next/link'
-import { Locale } from '../../../../i18n/i18n-config'
 import { useCart } from '../../../_shared/hooks'
 
-export function CartIcon({ locale }: { locale: Locale }) {
+export function CartIcon() {
   const [cart] = useCart()
 
   return (
-    <Link className="okkino-text-hover text-xs uppercase text-black" href={`/${locale}/cart`}>
+    <Link className="okkino-text-hover text-xs uppercase text-black" href={`/cart`}>
       <div className="relative">
         {cart.length > 0 && (
           <div className="absolute right-1">

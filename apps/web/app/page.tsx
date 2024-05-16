@@ -12,6 +12,7 @@ const lato = Lato({
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
+    metadataBase: new URL('https://www.studiookkino.com/'),
     title: 'OK KINO',
     description:
       'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',

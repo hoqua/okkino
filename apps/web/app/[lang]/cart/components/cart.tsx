@@ -1,7 +1,6 @@
 'use client'
 
 import CartEmpty from './cart-empty'
-import { Translation } from '../../../../i18n/get-dirctionary'
 import Image from 'next/image'
 import { Price } from '../../../_shared/price'
 import { Button } from '../../../_shared/button'
@@ -14,13 +13,9 @@ import { compareCartProducts } from '../../../_shared/utils'
 import { CheckoutProduct, DeliveryOptions } from '@okkino/shared/schema'
 import { OrderProduct } from '@okkino/shared/schema'
 
-interface IProps {
-  cartTranslations: Translation['cart']
-}
-
 const deliveryPrice = 50
 
-export default function Cart({ cartTranslations: t }: IProps) {
+export default function Cart() {
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
   const { ref, inView } = useInView({ threshold: 0.99 })
@@ -65,7 +60,7 @@ export default function Cart({ cartTranslations: t }: IProps) {
     }
   }
 
-  if (cart.length === 0) return <CartEmpty cartTranslations={t} />
+  if (cart.length === 0) return <CartEmpty />
 
   // eslint-disable-next-line unicorn/no-array-reduce
   const prise = cart.reduce((a, b) => a + b.quantity * (b.discountPrice || b.price), 0)
@@ -221,4 +216,31 @@ export default function Cart({ cartTranslations: t }: IProps) {
       </div>
     </div>
   )
+}
+
+const t = {
+  product: {
+    size: 'Size',
+    color: 'Color',
+    length: 'Length',
+    remove: 'Remove',
+    quantity: 'q_ty'
+  },
+  overview: {
+    title: 'Order overview',
+    item: 'item',
+    items: 'items'
+  },
+  total: 'total',
+  delivery: {
+    delivery: 'delivery',
+    moldova: 'local-moldova',
+    other: 'other',
+    free: 'free'
+  },
+  info: {
+    paymentTitle: 'ACCEPTED PAYMENT METHODS',
+    paymentTypes: 'Visa, Paypal, Mastercard',
+    returnTitle: 'Return & exchange in 7 days, covered by client'
+  }
 }

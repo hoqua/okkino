@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
-import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { getProduct, getProducts } from '@okkino/api/data-access-db'
 import { hexToDataUrl } from '@okkino/web/utils-shared'
 
@@ -8,7 +7,7 @@ const IMAGES_ON_SCREEN = 2
 
 interface IRootLayoutProps {
   children: ReactNode
-  params: { lang: Locale; productName: string }
+  params: { productName: string }
 }
 
 export default async function RootLayout(props: IRootLayoutProps) {
@@ -70,9 +69,7 @@ export async function generateStaticParams() {
 
   const params = []
   for (const product of urlProductNames) {
-    for (const locale of i18n.locales) {
-      params.push({ lang: locale, productName: product })
-    }
+    params.push({ productName: product })
   }
   return params
 }

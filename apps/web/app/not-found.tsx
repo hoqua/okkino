@@ -1,16 +1,13 @@
 'use client'
 import Image from 'next/image'
 import { Button } from './_shared/button'
-import { usePathname, useRouter } from 'next/navigation'
-import { i18n, Locale } from '../i18n/i18n-config'
+import { useRouter } from 'next/navigation'
 
 export default function NotFound() {
-  const pathname = usePathname()
   const router = useRouter()
-  const locale = pathname.split('/')[1] as Locale
 
   const handleClick = () => {
-    router.push(i18n.locales.includes(locale) ? `/${locale}` : '/')
+    router.push('/')
   }
 
   return (

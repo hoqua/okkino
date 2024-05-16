@@ -1,51 +1,45 @@
 import Link from 'next/link'
-import { getI18nNavigationPath } from '../../../components/common/utils'
-import { Locale } from '../../../../../i18n/i18n-config'
 import { RouteName } from '../../../components/common/constants'
-import { getDictionary } from '../../../../../i18n/get-dirctionary'
 
 interface IProductPageProps {
-  params: { productName: string; lang: Locale }
+  params: { productName: string }
 }
 
 export default async function Page(props: IProductPageProps) {
   const { params } = props
-  const { size_guide } = await getDictionary(params.lang)
 
   return (
     <div className="left-0 top-16 h-max max-w-full bg-white p-6 text-8xl max-sm:absolute">
       <div className="flex w-full items-end ">
         <Link
-          href={getI18nNavigationPath(params.lang, RouteName.product + '/' + params.productName)}
+          href={RouteName.product + '/' + params.productName}
           className="okkino-text-hover w-full text-right text-xs uppercase"
         >
-          {size_guide.close}
+          {t.close}
         </Link>
       </div>
 
       <section>
-        <h3 className="mb-1 text-xs uppercase text-gray-700">{size_guide.length.title}</h3>
-        <p className="text-sm text-black">{size_guide.length.select_height}</p>
-        <p className="text-sm text-black">{size_guide.length.petit}</p>
-        <p className="text-sm text-black">{size_guide.length.regular}</p>
-        <p className="text-sm text-black">{size_guide.length.tall}</p>
+        <h3 className="mb-1 text-xs uppercase text-gray-700">{t.length.title}</h3>
+        <p className="text-sm text-black">{t.length.select_height}</p>
+        <p className="text-sm text-black">{t.length.petit}</p>
+        <p className="text-sm text-black">{t.length.regular}</p>
+        <p className="text-sm text-black">{t.length.tall}</p>
 
         <div className="h-12"></div>
 
-        <h3 className="mb-1 text-xs uppercase text-gray-700">{size_guide.size_guide.title}</h3>
+        <h3 className="mb-1 text-xs uppercase text-gray-700">{t.size_guide.title}</h3>
 
         <div className="overflow-x-auto ">
           <table className="-ml-10 table-fixed border-separate border-spacing-x-10 border-spacing-y-1 whitespace-nowrap text-left  text-sm text-black ">
             <thead>
               <tr>
                 <th className="sticky left-0 bg-white pb-2 text-xs font-normal uppercase">
-                  {size_guide.size_guide.size}
+                  {t.size_guide.size}
                 </th>
-                <th className="pb-2 text-xs font-normal uppercase">{size_guide.size_guide.bust}</th>
-                <th className="pb-2 text-xs font-normal uppercase">
-                  {size_guide.size_guide.waist}
-                </th>
-                <th className="pb-2 text-xs font-normal uppercase">{size_guide.size_guide.hips}</th>
+                <th className="pb-2 text-xs font-normal uppercase">{t.size_guide.bust}</th>
+                <th className="pb-2 text-xs font-normal uppercase">{t.size_guide.waist}</th>
+                <th className="pb-2 text-xs font-normal uppercase">{t.size_guide.hips}</th>
               </tr>
             </thead>
             <tbody>
@@ -91,12 +85,38 @@ export default async function Page(props: IProductPageProps) {
 
         <div className="h-7"></div>
 
-        <p className="text-xs text-black">{size_guide.how_to_measure.title}</p>
-        <p className="text-xs text-black">{size_guide.how_to_measure.guide}</p>
-        <p className="text-xs text-black">{size_guide.how_to_measure.bust}</p>
-        <p className="text-xs text-black">{size_guide.how_to_measure.waist}</p>
-        <p className="text-xs text-black">{size_guide.how_to_measure.hips}</p>
+        <p className="text-xs text-black">{t.how_to_measure.title}</p>
+        <p className="text-xs text-black">{t.how_to_measure.guide}</p>
+        <p className="text-xs text-black">{t.how_to_measure.bust}</p>
+        <p className="text-xs text-black">{t.how_to_measure.waist}</p>
+        <p className="text-xs text-black">{t.how_to_measure.hips}</p>
       </section>
     </div>
   )
+}
+
+const t = {
+  close: 'close',
+  length: {
+    title: 'Length',
+    select_height:
+      'In order to ensure that OK KINO clothes fit perfectly, we have provided an option to select your height',
+    petit: "If your height is up to 164 cm, then select 'Petite'",
+    regular: "If your height is between 165-175 cm, then select 'Regular'",
+    tall: "If your height is from 176 cm, then select 'Tall'"
+  },
+  how_to_measure: {
+    title: 'How to measure:',
+    guide: 'To choose the correct size for you, measure your body as follows.',
+    bust: 'Bust — Measure around fullest part',
+    waist: 'Waist — Measure around natural waistline',
+    hips: 'Hips — Measure 20cm down from the natural waistline'
+  },
+  size_guide: {
+    title: 'Size Guide',
+    size: 'Size',
+    bust: 'Bust',
+    waist: 'Waist',
+    hips: 'Hips'
+  }
 }

@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Price } from '../../../_shared/price'
-import { getI18nNavigationPath } from '../../components/common/utils'
 import { RouteName } from '../../components/common/constants'
-import { i18n, Locale } from '../../../../i18n/i18n-config'
 import { ALL_CATEGORY } from './constants'
 import { getProductCategories, getProducts } from '@okkino/api/data-access-db'
 import { ProductColors } from './product-colors'
@@ -12,11 +10,11 @@ import { hexToDataUrl } from '@okkino/web/utils-shared'
 const IMAGES_ON_SCREEN = 6
 
 interface IProductPageProps {
-  params: { lang: Locale; category?: string }
+  params: {  category?: string }
 }
 
 export default async function ShopPageInner(props: IProductPageProps) {
-  const { category, lang } = props.params
+  const { category } = props.params
 
   const products = await getProducts(category === ALL_CATEGORY ? undefined : category)
 
@@ -29,7 +27,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
         return (
           <section key={urlName}>
             <Link
-              href={getI18nNavigationPath(lang, RouteName.product + '/' + urlName)}
+              href={RouteName.product + '/' + urlName}
               className="relative block aspect-[120/179]"
             >
               <Image
@@ -80,9 +78,7 @@ export async function generateStaticParams() {
 
   const params = []
   for (const category of categories) {
-    for (const locale of i18n.locales) {
-      params.push({ lang: locale, category })
-    }
+    params.push({ category })
   }
   return params
 }

@@ -1,13 +1,11 @@
 import { AddToCartSection } from './components/add-to-card-section'
-import { getDictionary } from '../../../../i18n/get-dirctionary'
-import { Locale } from '../../../../i18n/i18n-config'
 import { getProduct, getProductLength } from '@okkino/api/data-access-db'
 import { Metadata } from 'next'
 import { Product, WithContext } from 'schema-dts'
 import { TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
 
 interface IProductPageProps {
-  params: { productName: string; lang: Locale }
+  params: { productName: string; }
 }
 
 export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {
@@ -16,6 +14,7 @@ export async function generateMetadata({ params }: IProductPageProps): Promise<M
   const product = await getProduct(productName)
 
   return {
+    metadataBase: new URL('https://www.studiookkino.com/'),
     title: product.textName,
     description: product.seoDescription,
     referrer: 'origin-when-cross-origin',
@@ -27,7 +26,6 @@ export async function generateMetadata({ params }: IProductPageProps): Promise<M
 }
 
 export default async function Page({ params }: IProductPageProps) {
-  const { product: productTranslations } = await getDictionary(params.lang)
   const productLengths = await getProductLength()
   const productName = decodeURI(params.productName)
 
@@ -86,17 +84,8 @@ export default async function Page({ params }: IProductPageProps) {
           availableColors={availableColors}
           productLengths={productLengths}
           hasLength={hasLength}
-          locale={params.lang}
           productName={textName}
           imageUrl={sortedImages[0].url}
-          translations={{
-            sizeGuide: productTranslations.size_guide,
-            size: productTranslations.size,
-            length: productTranslations.length,
-            color: productTranslations.color,
-            addToCart: productTranslations.add_to_cart,
-            buyNow: productTranslations.buy_now
-          }}
         />
 
         <div className="h-16" />

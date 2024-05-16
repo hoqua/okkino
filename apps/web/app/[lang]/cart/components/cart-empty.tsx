@@ -1,15 +1,18 @@
-import { i18n, Locale } from '../../../../i18n/i18n-config'
-import { Translation } from '../../../../i18n/get-dirctionary'
 import { Button } from '../../../_shared/button'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
-export default function CartEmpty({ cartTranslations }: { cartTranslations: Translation['cart'] }) {
-  const pathname = usePathname()
+const t = {
+  empty: {
+    title: 'Coșul dumneavoastră de cumpărături este gol',
+    buttonText: 'Continuați cumpărăturile'
+  }
+}
+
+export default function CartEmpty() {
   const router = useRouter()
-  const locale = pathname.split('/')[1] as Locale
 
   const handleClick = () => {
-    router.push(i18n.locales.includes(locale) ? `/${locale}/shop/all` : '/shop/all')
+    router.push('/shop/all')
   }
 
   return (
@@ -19,9 +22,9 @@ export default function CartEmpty({ cartTranslations }: { cartTranslations: Tran
         'h-[calc(100vh-5.5rem)] md:h-[calc(100vh-7.5rem)] lg:h-[calc(100vh-18rem)]'
       }
     >
-      <h1 className="uppercase">{cartTranslations.empty.title}</h1>
+      <h1 className="uppercase">{t.empty.title}</h1>
 
-      <Button label={cartTranslations.empty.buttonText} onClick={handleClick} />
+      <Button label={t.empty.buttonText} onClick={handleClick} />
     </div>
   )
 }

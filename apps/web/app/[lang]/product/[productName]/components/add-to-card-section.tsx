@@ -5,8 +5,6 @@ import { Price } from '../../../../_shared/price'
 import { ProductPropsSelector } from './product-props-selector'
 import { Button } from '../../../../_shared/button'
 import Link from 'next/link'
-import { getI18nNavigationPath } from '../../../components/common/utils'
-import { Locale } from '../../../../../i18n/i18n-config'
 import { RouteName } from '../../../components/common/constants'
 import { useCart } from '../../../../_shared/hooks'
 import { compareCartProducts } from '../../../../_shared/utils'
@@ -22,9 +20,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
     productSizes,
     productLengths,
     availableColors,
-    locale,
     productName,
-    translations,
     imageUrl,
     hasLength
   } = props
@@ -82,33 +78,30 @@ export const AddToCartSection: FC<IProps> = (props) => {
     })
 
     if (isBuyNow) {
-      router.push(getI18nNavigationPath(locale, RouteName.cart))
+      router.push(RouteName.cart)
     }
   }
 
   return (
     <section className={'flex flex-col gap-6 ' + (isError ? 'shake' : '')}>
       <ProductPropsSelector<Size>
-        label={translations.size}
+        label={t.size}
         items={productSizes}
         selected={selectedSize.value}
         onSelect={(size) => setSelectedSize({ value: size, hasError: false })}
         hasErrors={selectedSize.hasError}
         actionItem={
           <Link
-            href={getI18nNavigationPath(
-              locale,
-              RouteName.product + '/' + productName + '/' + RouteName.sizeGuide
-            )}
+            href={RouteName.product + '/' + productName + '/' + RouteName.sizeGuide}
             className="okkino-text-hover text-xs font-light uppercase text-gray-600 hover:text-black"
           >
-            {translations.sizeGuide}
+            {t.size_guide}
           </Link>
         }
       />
       {hasLength && (
         <ProductPropsSelector<Length>
-          label={translations.length}
+          label={t.length}
           items={productLengths}
           selected={selectedLength.value}
           hasErrors={selectedLength.hasError}
@@ -117,7 +110,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
       )}
 
       <ProductPropsSelector<Color>
-        label={translations.color}
+        label={t.color}
         items={availableColors}
         selected={selectedColor.value}
         hasErrors={selectedColor.hasError}
@@ -134,22 +127,13 @@ export const AddToCartSection: FC<IProps> = (props) => {
         <Price price={price} discountPrice={discountPrice} />
 
         <div className="flex xl:flex-row-reverse">
-          <Button label={translations.addToCart} onClick={() => handleAddToCard()} />
+          <Button label={t.add_to_cart} onClick={() => handleAddToCard()} />
 
-          <Button label={translations.buyNow} flat onClick={() => handleAddToCard(true)} />
+          <Button label={t.buy_now} flat onClick={() => handleAddToCard(true)} />
         </div>
       </div>
     </section>
   )
-}
-
-interface IAddToCartSectionTranslations {
-  size: string
-  length: string
-  color: string
-  addToCart: string
-  buyNow: string
-  sizeGuide: string
 }
 
 type Size = { name: string }
@@ -164,8 +148,15 @@ interface IProps {
   availableColors: Color[]
   productLengths: Length[]
   hasLength: boolean
-  locale: Locale
   productName: string
-  translations: IAddToCartSectionTranslations
   imageUrl: string
+}
+
+const t = {
+  size_guide: 'Size guide',
+  size: 'Size',
+  color: 'Color',
+  length: 'Length',
+  add_to_cart: 'Add to cart',
+  buy_now: 'Buy now'
 }

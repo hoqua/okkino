@@ -2,17 +2,16 @@
 
 import Link from 'next/link'
 import { FC, useState } from 'react'
-import { getTranslationSafe } from '../../common/utils'
+import { ProductCategories } from '../contants'
 
 interface IProps {
   menuName: string
   itemsList: string[]
-  translations: Record<string, string>
   getNavigationPath: (itemKeyName?: string) => string
 }
 
 export const DesktopSubmenu: FC<IProps> = (props) => {
-  const { menuName, itemsList, translations, getNavigationPath } = props
+  const { menuName, itemsList, getNavigationPath } = props
   const [activeClasses, setClasses] = useState('opacity-0 -z-10')
 
   const handleMouseEnter = () => {
@@ -44,9 +43,7 @@ export const DesktopSubmenu: FC<IProps> = (props) => {
               key={itemKeyName}
               className="transition-color okkino-text-hover relative  mb-4 mt-4 text-xs uppercase tracking-wide"
             >
-              <Link href={getNavigationPath(itemKeyName)}>
-                {getTranslationSafe(translations, itemKeyName)}
-              </Link>
+              <Link href={ProductCategories[itemKeyName]}>{ProductCategories[itemKeyName]}</Link>
             </li>
           ))}
         </ul>

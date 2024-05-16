@@ -1,21 +1,13 @@
 'use client'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '../../_shared/button'
-import { i18n, Locale } from '../../../i18n/i18n-config'
-import { Translation } from '../../../i18n/get-dirctionary'
 import { useCart } from '../../_shared/hooks'
 import { useEffect } from 'react'
 
-interface IProps {
-  paymentTranslations: Translation['payment']
-}
-
-export default function PostCheckoutPageContent({ paymentTranslations }: IProps) {
+export default function PostCheckoutPageContent() {
   const searchParams = useSearchParams()
-  const pathname = usePathname()
   const [, setCart] = useCart()
   const router = useRouter()
-  const locale = pathname.split('/')[1] as Locale
   const paymentSuccess = searchParams.get('success') === 'true'
 
   useEffect(() => {
@@ -26,7 +18,7 @@ export default function PostCheckoutPageContent({ paymentTranslations }: IProps)
 
   const handleClick = () => {
     const destination = paymentSuccess ? '/' : '/cart'
-    router.push(i18n.locales.includes(locale) ? `/${locale}${destination}` : destination)
+    router.push(destination)
   }
 
   return (
@@ -39,23 +31,29 @@ export default function PostCheckoutPageContent({ paymentTranslations }: IProps)
       <div className="h-10" />
 
       <p className="text-md font-semibold uppercase text-black">
-        {paymentSuccess ? paymentTranslations.success.title : paymentTranslations.error.title}
+        {paymentSuccess ? t.success.title : t.error.title}
       </p>
 
       <div className="h-1" />
 
-      <p className="text-gray-600">
-        {paymentSuccess ? paymentTranslations.success.text : paymentTranslations.error.text}
-      </p>
+      <p className="text-gray-600">{paymentSuccess ? t.success.text : t.error.text}</p>
 
       <div className="h-20" />
 
-      <Button
-        label={
-          paymentSuccess ? paymentTranslations.success.button : paymentTranslations.error.button
-        }
-        onClick={handleClick}
-      />
+      <Button label={paymentSuccess ? t.success.button : t.error.button} onClick={handleClick} />
     </div>
   )
+}
+
+const t = {
+  success: {
+    title: 'Payment successful',
+    text: 'Thank you for purchasing the OK KINO piece.',
+    button: 'homepage'
+  },
+  error: {
+    title: 'Payment error',
+    text: 'Something went wrong. Please try again later.',
+    button: 'Try again'
+  }
 }

@@ -27,7 +27,6 @@
   "private": true,
   "dependencies": {
     "@clerk/nextjs": "^4.21.14",
-    "@formatjs/intl-localematcher": "^0.4.0",
     "@hookform/resolvers": "^3.2.0",
     "@nx/next": "18.0.4",
     "@prisma/client": "5.10.2",
