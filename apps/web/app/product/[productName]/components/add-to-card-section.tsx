@@ -1,16 +1,16 @@
 'use client'
 
 import { FC, useState } from 'react'
-import { Price } from '../../../../_shared/price'
 import { ProductPropsSelector } from './product-props-selector'
-import { Button } from '../../../../_shared/button'
 import Link from 'next/link'
 import { RouteName } from '../../../components/common/constants'
-import { useCart } from '../../../../_shared/hooks'
-import { compareCartProducts } from '../../../../_shared/utils'
 import { useRouter } from 'next/navigation'
 import './module.css'
 import { OrderProduct } from '@okkino/shared/schema'
+import { useCart } from '../../../_shared/hooks'
+import { compareCartProducts } from '../../../_shared/utils'
+import { Price } from '../../../_shared/price'
+import { Button } from '../../../_shared/button'
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {

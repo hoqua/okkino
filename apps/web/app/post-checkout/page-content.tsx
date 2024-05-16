@@ -1,8 +1,8 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Button } from '../../_shared/button'
-import { useCart } from '../../_shared/hooks'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useCart } from '../_shared/hooks'
+import { Button } from '../_shared/button'
 
 export default function PostCheckoutPageContent() {
   const searchParams = useSearchParams()
