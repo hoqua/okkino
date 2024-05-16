@@ -1,3 +1,8 @@
+// Example of default export
+export default function middleware(request) {
+  // Middleware logic
+}
+
 export const config = {
   matcher: [
     /*
