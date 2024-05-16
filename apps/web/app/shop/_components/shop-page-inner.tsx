@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Price } from '../../../_shared/price'
 import { RouteName } from '../../components/common/constants'
 import { ALL_CATEGORY } from './constants'
 import { getProductCategories, getProducts } from '@okkino/api/data-access-db'
 import { ProductColors } from './product-colors'
 import { hexToDataUrl } from '@okkino/web/utils-shared'
+import React from 'react'
+import { Price } from '../../_shared/price'
 
 const IMAGES_ON_SCREEN = 6
 

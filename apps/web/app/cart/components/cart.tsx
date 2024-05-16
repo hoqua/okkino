@@ -2,16 +2,16 @@
 
 import CartEmpty from './cart-empty'
 import Image from 'next/image'
-import { Price } from '../../../_shared/price'
-import { Button } from '../../../_shared/button'
+import { Price } from '../../_shared/price'
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState, useTransition } from 'react'
 import getStripe from '../utils'
 import { usePathname } from 'next/navigation'
-import { useCart } from '../../../_shared/hooks'
-import { compareCartProducts } from '../../../_shared/utils'
 import { CheckoutProduct, DeliveryOptions } from '@okkino/shared/schema'
 import { OrderProduct } from '@okkino/shared/schema'
+import { useCart } from '../../_shared/hooks'
+import { Button } from '../../_shared/button'
+import { compareCartProducts } from '../../_shared/utils'
 
 const deliveryPrice = 50
 

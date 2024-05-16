@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useCart } from '../../../_shared/hooks'
+import { useCart } from '../../_shared/hooks'
 
 export function CartIcon() {
   const [cart] = useCart()

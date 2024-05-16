@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function Page() {
+export default async function Old_page() {
   const homeBlocks = await getHomeImages()
 
   return (
