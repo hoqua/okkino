@@ -131,7 +131,7 @@ export async function createInitialOrder(id: string, checkout: CheckoutProduct) 
   await db.order.create({
     data: {
       id,
-      language: checkout.language,
+      language: 'en',
       products: checkout.products,
       address: {}
     }
