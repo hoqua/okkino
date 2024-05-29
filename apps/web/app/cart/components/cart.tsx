@@ -38,7 +38,6 @@ export default function Cart() {
     try {
       const checkout: CheckoutProduct = {
         host: window.location.origin,
-        language: pathname.split('/')[1],
         delivery,
         products: cart
       }
