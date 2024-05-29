@@ -5,7 +5,7 @@ import { Product, WithContext } from 'schema-dts'
 import { TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
 
 interface IProductPageProps {
-  params: { productName: string; }
+  params: { productName: string }
 }
 
 export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {

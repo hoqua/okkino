@@ -11,7 +11,7 @@ import { Price } from '../../_shared/price'
 const IMAGES_ON_SCREEN = 6
 
 interface IProductPageProps {
-  params: {  category?: string }
+  params: { category?: string }
 }
 
 export default async function ShopPageInner(props: IProductPageProps) {

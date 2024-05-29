@@ -39,8 +39,8 @@ export async function POST(request: Request) {
         checkout.delivery === DeliveryOptions.enum.moldova ? freeShipping : internationalShipping
       ],
       mode: 'payment',
-      success_url: `${checkout.host}/${checkout.language}/post-checkout?success=true`,
-      cancel_url: `${checkout.host}/${checkout.language}/cart`
+      success_url: `${checkout.host}/post-checkout?success=true`,
+      cancel_url: `${checkout.host}/cart`
     })
 
     await createInitialOrder(session.id, checkout)

@@ -19,7 +19,6 @@ export type DeliveryOptions = z.infer<typeof DeliveryOptions>
 
 export const CheckoutProductSchema = z.object({
   host: z.string(),
-  language: z.string(),
   delivery: DeliveryOptions,
   products: OrderProductSchema.array()
 })
