@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 
   const params = []
   for (const product of categoryNames) {
-    params.push({ productName: product })
+    params.push({ productUrlName: product })
   }
 
   return params

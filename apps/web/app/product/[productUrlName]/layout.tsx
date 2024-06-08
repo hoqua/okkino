@@ -7,13 +7,12 @@ const IMAGES_ON_SCREEN = 2
 
 interface IRootLayoutProps {
   children: ReactNode
-  params: { productName: string }
+  params: { productUrlName: string }
 }
 
 export default async function RootLayout(props: IRootLayoutProps) {
   const { params, children } = props
-  const productName = decodeURI(params.productName)
-  const product = await getProduct(productName)
+  const product = await getProduct(decodeURI(params.productUrlName))
   const { images } = product
   const sortedImages = images.sort((a, b) => a.order - b.order)
 
@@ -69,7 +68,7 @@ export async function generateStaticParams() {
 
   const params = []
   for (const product of urlProductNames) {
-    params.push({ productName: product })
+    params.push({ productUrlName: product })
   }
   return params
 }

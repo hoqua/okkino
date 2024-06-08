@@ -28,7 +28,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
         return (
           <section key={urlName}>
             <Link
-              href={RouteName.product + '/' + urlName}
+              href={'/' + RouteName.product + '/' + urlName}
               className="relative block aspect-[120/179]"
             >
               <Image
@@ -49,6 +49,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
                   alt={hoverImage.title}
                   sizes="(min-width: 1620px) 464px, (min-width: 1040px) 29.46vw, (min-width: 780px) calc(50vw - 64px), calc(50vw - 28px)"
                   className={'index absolute left-0 top-0 z-[-1] hidden lg:inline '}
+                  blurDataURL={hexToDataUrl(mainImage.bgColor)}
                   title={hoverImage.title}
                   fill
                 />

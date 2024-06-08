@@ -34,6 +34,7 @@ model Order {
 
 model Product {
   id            String  @id @default(uuid())
+  order         Int     @default(0)
   urlName       String  @unique
   textName      String
   description   String

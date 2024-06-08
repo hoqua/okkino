@@ -5,13 +5,11 @@ import { Product, WithContext } from 'schema-dts'
 import { TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
 
 interface IProductPageProps {
-  params: { productName: string }
+  params: { productUrlName: string }
 }
 
 export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {
-  const productName = decodeURI(params.productName)
-
-  const product = await getProduct(productName)
+  const product = await getProduct(decodeURI(params.productUrlName))
 
   return {
     metadataBase: new URL('https://www.studiookkino.com/'),
@@ -27,9 +25,8 @@ export async function generateMetadata({ params }: IProductPageProps): Promise<M
 
 export default async function Page({ params }: IProductPageProps) {
   const productLengths = await getProductLength()
-  const productName = decodeURI(params.productName)
 
-  const product = await getProduct(productName)
+  const product = await getProduct(decodeURI(params.productUrlName))
 
   const {
     price,
@@ -42,7 +39,8 @@ export default async function Page({ params }: IProductPageProps) {
     textName,
     seoDescription,
     seoKeywords,
-    hasLength
+    hasLength,
+    urlName
   } = product
   const sortedImages = images.sort((a, b) => a.order - b.order)
 
@@ -86,6 +84,7 @@ export default async function Page({ params }: IProductPageProps) {
           hasLength={hasLength}
           productName={textName}
           imageUrl={sortedImages[0].url}
+          urlName={urlName}
         />
 
         <div className="h-16" />

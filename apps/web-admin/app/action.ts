@@ -37,7 +37,6 @@ export async function deleteProduct(id: string) {
 export async function saveProduct(data: ProductForm) {
   const user = await currentUser()
   if (!user) throw new Error('You must be logged to update products')
-  revalidatePath('/dashboard')
 
   const productBody: Omit<Prisma.ProductCreateInput, 'images'> = {
     ...data,
@@ -53,7 +52,7 @@ export async function saveProduct(data: ProductForm) {
   }
 
   await db.product.upsert({
-    where: { id: data.id, urlName: data.urlName },
+    where: { id: data.id },
     create: {
       ...productBody,
       images: {
@@ -72,11 +71,7 @@ export async function saveProduct(data: ProductForm) {
     update: {
       ...productBody,
       images: {
-        deleteMany: {
-          key: {
-            notIn: data.images.map((image) => image.key)
-          }
-        },
+        deleteMany: {},
         createMany: {
           data: data.images.map((image) => ({
             url: image.url,
@@ -90,4 +85,6 @@ export async function saveProduct(data: ProductForm) {
       }
     }
   })
+
+  revalidatePath('/dashboard')
 }

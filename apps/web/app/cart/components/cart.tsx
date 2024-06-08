@@ -175,7 +175,7 @@ export default function Cart() {
               </div>
               <div className="h-2" />
               <span className="text-sm font-bold uppercase text-inherit">
-                {delivery === DeliveryOptions.enum.moldova ? t.delivery.free : `$${deliveryPrice}`}
+                {delivery === DeliveryOptions.enum.moldova ? t.delivery.free : `€${deliveryPrice}`}
               </span>
             </div>
           </div>

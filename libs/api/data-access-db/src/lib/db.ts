@@ -10,7 +10,11 @@ export const db = new PrismaClient({
 const cache = new NodeCache({ stdTTL: 1, checkperiod: 2 })
 
 const include: Prisma.ProductInclude = {
-  images: true,
+  images: {
+    orderBy: {
+      order: 'asc'
+    }
+  },
   productSizes: true,
   availableColors: true,
   productCategories: true
@@ -18,7 +22,11 @@ const include: Prisma.ProductInclude = {
 
 export type ProductWithImages = Prisma.ProductGetPayload<{
   include: {
-    images: true
+    images: {
+      orderBy: {
+        order: 'asc'
+      }
+    }
     productSizes: true
     availableColors: true
     productCategories: true
@@ -44,6 +52,9 @@ export async function getProducts(productCategory?: string) {
   }
 
   const products = await db.product.findMany({
+    orderBy: {
+      order: 'asc'
+    },
     where: {
       deleted: false,
       productCategories: {

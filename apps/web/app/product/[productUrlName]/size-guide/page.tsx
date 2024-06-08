@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { RouteName } from '../../../components/common/constants'
 
 interface IProductPageProps {
-  params: { productName: string }
+  params: { productUrlName: string }
 }
 
 export default async function Page(props: IProductPageProps) {
@@ -12,7 +12,7 @@ export default async function Page(props: IProductPageProps) {
     <div className="left-0 top-16 h-max max-w-full bg-white p-6 text-8xl max-sm:absolute">
       <div className="flex w-full items-end ">
         <Link
-          href={RouteName.product + '/' + params.productName}
+          href={'/' + RouteName.product + '/' + params.productUrlName}
           className="okkino-text-hover w-full text-right text-xs uppercase"
         >
           {t.close}

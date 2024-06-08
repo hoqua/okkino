@@ -22,7 +22,8 @@ export const AddToCartSection: FC<IProps> = (props) => {
     availableColors,
     productName,
     imageUrl,
-    hasLength
+    hasLength,
+    urlName
   } = props
   const [selectedSize, setSelectedSize] = useState({ value: '', hasError: false })
   const [selectedLength, setSelectedLength] = useState({
@@ -92,7 +93,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         hasErrors={selectedSize.hasError}
         actionItem={
           <Link
-            href={RouteName.product + '/' + productName + '/' + RouteName.sizeGuide}
+            href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.sizeGuide}
             className="okkino-text-hover text-xs font-light uppercase text-gray-600 hover:text-black"
           >
             {t.size_guide}
@@ -142,6 +143,7 @@ type Color = { value: string; name: string }
 
 interface IProps {
   id: string
+  urlName: string
   price: number
   discountPrice?: number
   productSizes: Size[]

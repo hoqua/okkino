@@ -14,6 +14,7 @@ import { saveProduct } from '../../../action'
 import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from '@okkino/web/utils-shared'
 
 export default function ProductForm({ product }: { product?: ProductWithImages }) {
+  console.log('product', product)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -40,6 +41,17 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
     <div>
       <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-4">
         <ProductCrumbs />
+
+        {/*ORDER*/}
+        <h1>ORDER</h1>
+        <input
+          type="text"
+          placeholder="product order"
+          className={
+            'input input-bordered w-full max-w-xs' + (errors.urlName ? ' border-red-500' : '')
+          }
+          {...register('order')}
+        />
 
         {/*NAME*/}
         <h1>NAME</h1>
@@ -164,6 +176,7 @@ const imagesSchema = z.object({
 
 const productSchema = z.object({
   id: z.string().optional(),
+  order: z.coerce.number().optional(),
   urlName: z.string().min(3),
   textName: z.string().min(3),
   availableColors: z.object({ name: z.string(), value: z.string().startsWith('#') }).array(),

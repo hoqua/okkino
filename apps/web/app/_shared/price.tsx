@@ -18,4 +18,4 @@ export const Price: FC<IProps> = (props: IProps) => {
   )
 }
 
-const priseFormatter = (price: number) => `$${price}`
+const priseFormatter = (price: number) => `€${price}`
