@@ -10,7 +10,11 @@ export const ProductColors: FC<IProps> = (props) => {
   return (
     <div className="absolute bottom-2 left-2 flex justify-between gap-x-2 md:bottom-[calc(-8px-24px)] md:left-0 md:gap-x-6">
       {colors.map(({ value }) => (
-        <div key={value} className="h-2 w-2" style={{ backgroundColor: value }} />
+        <div
+          key={value}
+          className="h-2 w-2 border-1 border-gray-50"
+          style={{ backgroundColor: value }}
+        />
       ))}
     </div>
   )

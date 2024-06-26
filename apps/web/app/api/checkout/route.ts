@@ -24,7 +24,7 @@ export async function POST(request: Request) {
             images: [product.imageUrl],
             description: `${product.quantity} x ${product.name}; Color: ${product.color.name}, Size: ${product.size}, Length: ${product.length}`
           },
-          currency: 'usd',
+          currency: 'eur',
           unit_amount: product.price * 100
         },
         quantity: product.quantity
@@ -57,7 +57,7 @@ const freeShipping = {
     type: 'fixed_amount',
     fixed_amount: {
       amount: 0,
-      currency: 'usd'
+      currency: 'eur'
     },
     display_name: 'Free shipping',
     delivery_estimate: {
@@ -78,7 +78,7 @@ const internationalShipping = {
     type: 'fixed_amount',
     fixed_amount: {
       amount: 5000,
-      currency: 'usd'
+      currency: 'eur'
     },
     display_name: 'Next day air',
     delivery_estimate: {

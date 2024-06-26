@@ -22,7 +22,8 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
     control,
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { errors, isValid },
+    getValues
   } = useForm<ProductForm>({
     resolver: zodResolver(productSchema),
     defaultValues: product ? productSchema.parse(product) : undefined
@@ -36,6 +37,7 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
       })
     }
   }
+  console.log('form', getValues())
 
   return (
     <div>
@@ -190,5 +192,6 @@ const productSchema = z.object({
   seoDescription: z.string().optional(),
   seoKeywords: z.string().optional()
 })
+
 // extracting the type
 export type ProductForm = z.infer<typeof productSchema>

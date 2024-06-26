@@ -52,7 +52,7 @@ export async function saveProduct(data: ProductForm) {
   }
 
   await db.product.upsert({
-    where: { id: data.id },
+    where: { id: data.id, urlName: data.urlName },
     create: {
       ...productBody,
       images: {
@@ -70,6 +70,15 @@ export async function saveProduct(data: ProductForm) {
     },
     update: {
       ...productBody,
+      productSizes: {
+        set: data.productSizes
+      },
+      productCategories: {
+        set: data.productCategories
+      },
+      availableColors: {
+        set: data.availableColors
+      },
       images: {
         deleteMany: {},
         createMany: {

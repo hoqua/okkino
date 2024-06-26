@@ -72,7 +72,6 @@ export const PRODUCT_COLORS = [
   { name: 'orange', value: '#ffa500' },
   { name: 'cream', value: '#fffdd0' },
   { name: 'neutrals', value: '#f5f5dc' },
-  { name: 'prints', value: '' },
   { name: 'metallic', value: '#aaa9ad' },
   { name: 'gold', value: '#ffd700' },
   { name: 'teal', value: '#008080' },

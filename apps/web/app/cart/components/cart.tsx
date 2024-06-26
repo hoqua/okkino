@@ -101,7 +101,7 @@ export default function Cart() {
               <div className="grid h-full auto-rows-max grid-cols-[1fr_2fr] items-center gap-y-2 last:align-bottom">
                 {/*col-2*/}
                 <span className="text-xs uppercase text-gray-600">{t.product.color}</span>
-                <div className="h-3 w-3" style={{ backgroundColor: product.color.value }} />
+                <div className="h-3 w-3 border border-gray-50" style={{ backgroundColor: product.color.value }} />
                 {/*col-2*/}
                 <span className="text-xs uppercase text-gray-600">{t.product.size}</span>
                 <span className="text-sm font-bold uppercase text-black">{product.size}</span>
@@ -149,7 +149,7 @@ export default function Cart() {
             <span className="text-xs uppercase text-inherit">
               {totalItems} {totalItems > 1 ? t.overview.items : t.overview.item}
             </span>
-            <span className="text-right text-sm font-bold text-inherit">${prise}</span>
+            <span className="text-right text-sm font-bold text-inherit">€{prise}</span>
 
             <span className="text-xs uppercase text-inherit">{t.delivery.delivery}</span>
             <div className="flex flex-col items-end">
@@ -186,7 +186,7 @@ export default function Cart() {
         {/*TOTAL PRICE*/}
         <div className="grid grid-cols-2">
           <span className="text-xs uppercase text-inherit">{t.total}</span>
-          <span className="text-right text-sm font-bold text-inherit">${totalPrice}</span>
+          <span className="text-right text-sm font-bold text-inherit">€{totalPrice}</span>
         </div>
 
         {/*CHECKOUT SPACER*/}

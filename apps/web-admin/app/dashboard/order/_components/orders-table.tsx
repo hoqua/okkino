@@ -32,7 +32,10 @@ export default function OrdersTable({ products }: { products: OrderProduct[] }) 
             </td>
             <td>{p.name}</td>
             <td>
-              <div className="h-4 w-4" style={{ backgroundColor: p.color.value }} />
+              <div
+                className="h-4 w-4 border-gray-50 border-1"
+                style={{ backgroundColor: p.color.value }}
+              />
             </td>
             <td>
               <span className="badge badge-ghost badge-sm">{p.color.name}</span>

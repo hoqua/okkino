@@ -79,7 +79,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
     })
 
     if (isBuyNow) {
-      router.push(RouteName.cart)
+      router.push('/' + RouteName.cart)
     }
   }
 
@@ -118,7 +118,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         onSelect={(colorName) => setSelectedColor({ value: colorName, hasError: false })}
         getSelectionComponent={(colorName) => {
           const color = availableColors.find((c) => c.name === colorName)
-          return <div className=" h-4 w-4" style={{ backgroundColor: color.value }} />
+          return <div className=" h-4 w-4 border-gray-50 border-1" style={{ backgroundColor: color.value }} />
         }}
       />
 

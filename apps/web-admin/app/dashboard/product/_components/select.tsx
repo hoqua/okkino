@@ -20,41 +20,51 @@ export default function MySelect(props: Props) {
     <Controller
       control={control}
       name={selectName}
-      render={({ field: { onChange, onBlur, value, name, ref } }) => (
-        <ReactSelect
-          classNames={{
-            control: () => (isError ? ' border-red-500 input-primary' : ' input-primary')
-          }}
-          instanceId={`id-${String(selectName)}`}
-          options={options}
-          isMulti={isMulti as false | undefined}
-          onChange={onChange}
-          onBlur={onBlur}
-          value={value}
-          getOptionLabel={(option: any) => option?.name}
-          name={String(name)}
-          ref={ref}
-          placeholder={String(selectName)}
-          styles={{
-            control: (styles: CSSObjectWithLabel) => ({
-              ...styles,
-              height: '48px',
-              borderRadius: '2px'
-            }),
-            ...(isColor
-              ? {
-                  multiValue: (styles, { data }) => {
-                    const color = chroma((data as { value: string }).value)
-                    return {
-                      ...styles,
-                      backgroundColor: color.alpha(0.3).css()
+      render={({ field: { onChange, onBlur, value, name, ref } }) => {
+        // react select needs value and name not all items has value
+        const mappedValue =
+          (value as unknown as { name: string; value?: string }[])?.map((val) => ({
+            value: val.value || val.name,
+            name: val.name
+          })) || []
+        return (
+          <ReactSelect
+            classNames={{
+              control: () => (isError ? ' border-red-500 input-primary' : ' input-primary')
+            }}
+            instanceId={`id-${String(selectName)}`}
+            options={options}
+            isMulti={isMulti as false | undefined}
+            onChange={(val) => {
+              onChange(val)
+            }}
+            onBlur={onBlur}
+            value={mappedValue}
+            getOptionLabel={(option: any) => option?.name}
+            name={String(name)}
+            ref={ref}
+            placeholder={String(selectName)}
+            styles={{
+              control: (styles: CSSObjectWithLabel) => ({
+                ...styles,
+                height: '48px',
+                borderRadius: '2px'
+              }),
+              ...(isColor
+                ? {
+                    multiValue: (styles, { data }) => {
+                      const color = chroma((data as { value: string }).value)
+                      return {
+                        ...styles,
+                        backgroundColor: color.alpha(0.3).css()
+                      }
                     }
                   }
-                }
-              : {})
-          }}
-        />
-      )}
+                : {})
+            }}
+          />
+        )
+      }}
     />
   )
 }

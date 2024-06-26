@@ -98,7 +98,7 @@ export default async function DashboardPage() {
                   <div
                     key={color.name}
                     style={{ backgroundColor: color.value }}
-                    className="m-2 h-3 w-3"
+                    className="m-2 h-3 w-3 border border-gray-50"
                   />
                 ))}
               </td>
