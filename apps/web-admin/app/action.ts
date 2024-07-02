@@ -35,6 +35,7 @@ export async function deleteProduct(id: string) {
 }
 
 export async function saveProduct(data: ProductForm) {
+  console.log('data', data)
   const user = await currentUser()
   if (!user) throw new Error('You must be logged to update products')
 
@@ -51,8 +52,10 @@ export async function saveProduct(data: ProductForm) {
     }
   }
 
+  const id = data.id
+  const urlName = data.id ? undefined : data.urlName
   await db.product.upsert({
-    where: { id: data.id, urlName: data.urlName },
+    where: { id, urlName },
     create: {
       ...productBody,
       images: {
