@@ -6,17 +6,17 @@ import { Price } from '../../_shared/price'
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState, useTransition } from 'react'
 import getStripe from '../utils'
-import { usePathname } from 'next/navigation'
 import { CheckoutProduct, DeliveryOptions } from '@okkino/shared/schema'
 import { OrderProduct } from '@okkino/shared/schema'
 import { useCart } from '../../_shared/hooks'
 import { Button } from '../../_shared/button'
 import { compareCartProducts } from '../../_shared/utils'
+import { ColorCube } from '../../components/common/color-cube'
+import { Color } from '../../product/[productUrlName]/components/add-to-card-section'
 
 const deliveryPrice = 50
 
 export default function Cart() {
-  const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
   const { ref, inView } = useInView({ threshold: 0.99 })
   const [delivery, setDelivery] = useState<DeliveryOptions>(DeliveryOptions.enum.other)
@@ -101,7 +101,7 @@ export default function Cart() {
               <div className="grid h-full auto-rows-max grid-cols-[1fr_2fr] items-center gap-y-2 last:align-bottom">
                 {/*col-2*/}
                 <span className="text-xs uppercase text-gray-600">{t.product.color}</span>
-                <div className="h-3 w-3 border border-gray-50" style={{ backgroundColor: product.color.value }} />
+                <span className="text-sm font-bold uppercase text-black">{product.color.name}</span>
                 {/*col-2*/}
                 <span className="text-xs uppercase text-gray-600">{t.product.size}</span>
                 <span className="text-sm font-bold uppercase text-black">{product.size}</span>

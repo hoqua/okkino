@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const isHome = pathname === '/'
 
   return (
-    <html lang="en" className={lato.className + isHome ? ' min-h-full min-w-full' : ''}>
+    <html lang="en" className={lato.className}>
       <body
         className={
           isHome

@@ -41,7 +41,7 @@ export const DesktopSubmenu: FC<IProps> = (props) => {
           {itemsList.map((itemKeyName) => (
             <li
               key={itemKeyName}
-              className="transition-color okkino-text-hover relative  mb-4 mt-4 text-xs uppercase tracking-wide"
+              className="transition-color hover:text-gray-600 relative  mb-4 mt-4 text-xs uppercase tracking-wide"
             >
               <Link href={ProductCategories[itemKeyName]}>{ProductCategories[itemKeyName]}</Link>
             </li>

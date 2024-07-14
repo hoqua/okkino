@@ -1,7 +1,10 @@
 export const ProductCategories = {
-  all: 'All',
-  coats_and_jackets: 'Coats and jackets',
+  all: 'View all',
+  coats_and_jackets: 'Coats & jackets',
   dresses: 'Dresses',
   new_arrivals: 'New Arrivals',
-  pants_and_skirts: 'Pants and skirts'
+  pants_and_skirts: 'Pants & skirts',
+  knitwear: 'Knitwear',
+  accessories: 'Accessories',
+  sale: 'Sale'
 }

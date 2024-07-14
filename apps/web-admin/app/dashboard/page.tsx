@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getProducts } from '@okkino/api/data-access-db'
 import UpdateSiteBtn from './_components/update-site-btn'
+import { ColorCube } from '../../../web/app/components/common/color-cube'
 
 export default async function DashboardPage() {
   const products = await getProducts()
@@ -95,11 +96,7 @@ export default async function DashboardPage() {
               </td>
               <td>
                 {product.availableColors.map((color) => (
-                  <div
-                    key={color.name}
-                    style={{ backgroundColor: color.value }}
-                    className="m-2 h-3 w-3 border border-gray-50"
-                  />
+                  <ColorCube color={color} size="lg" key={color.name} />
                 ))}
               </td>
               <td>

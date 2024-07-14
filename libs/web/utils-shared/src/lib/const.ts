@@ -1,15 +1,21 @@
 export const PRODUCT_CATEGORIES = [
   {
-    name: 'new_arrivals'
+    name: 'dresses'
+  },
+  {
+    name: 'knitwear'
   },
   {
     name: 'coats_and_jackets'
   },
   {
-    name: 'dresses'
+    name: 'pants_and_skirts'
   },
   {
-    name: 'pants_and_skirts'
+    name: 'accessories'
+  },
+  {
+    name: 'sale'
   }
 ]
 

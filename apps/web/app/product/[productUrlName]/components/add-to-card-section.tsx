@@ -11,6 +11,7 @@ import { useCart } from '../../../_shared/hooks'
 import { compareCartProducts } from '../../../_shared/utils'
 import { Price } from '../../../_shared/price'
 import { Button } from '../../../_shared/button'
+import { ColorCube } from '../../../components/common/color-cube'
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {
@@ -116,9 +117,9 @@ export const AddToCartSection: FC<IProps> = (props) => {
         selected={selectedColor.value}
         hasErrors={selectedColor.hasError}
         onSelect={(colorName) => setSelectedColor({ value: colorName, hasError: false })}
-        getSelectionComponent={(colorName) => {
+        getSelectionComponent={(colorName, selectedColorName) => {
           const color = availableColors.find((c) => c.name === colorName)
-          return <div className=" h-4 w-4 border-gray-50 border-1" style={{ backgroundColor: color.value }} />
+          return <ColorCube color={color} size="lg" selected={selectedColorName === color.name} />
         }}
       />
 
@@ -127,7 +128,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
       <div className="flex flex-col  justify-between gap-4 xl:flex-row xl:items-center ">
         <Price price={price} discountPrice={discountPrice} />
 
-        <div className="flex xl:flex-row-reverse">
+        <div className="flex xl:flex-row-reverse gap-2">
           <Button label={t.add_to_cart} onClick={() => handleAddToCard()} />
 
           <Button label={t.buy_now} flat onClick={() => handleAddToCard(true)} />
@@ -139,7 +140,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
 
 type Size = { name: string }
 type Length = { name: string }
-type Color = { value: string; name: string }
+export type Color = { value: string; name: string }
 
 interface IProps {
   id: string
