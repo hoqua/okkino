@@ -1,4 +1,4 @@
-import { currentUser } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
