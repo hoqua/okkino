@@ -36,6 +36,9 @@ export async function POST(request: Request) {
       })),
       invoice_creation: { enabled: true },
       billing_address_collection: 'required',
+      phone_number_collection: {
+        enabled: true
+      },
       shipping_address_collection: {
         allowed_countries:
           checkout.delivery === DeliveryOptions.enum.standard ? ['MD'] : ['US', 'MD']

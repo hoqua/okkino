@@ -8,6 +8,7 @@ export default function CustomerTable({ order }: { order: Prisma.OrderGetPayload
         <tr>
           <th>Customer name</th>
           <th>Customer email</th>
+          <th>Customer phone</th>
           <th>Order date</th>
           <th>Status</th>
           <th>Shipping</th>
@@ -18,7 +19,8 @@ export default function CustomerTable({ order }: { order: Prisma.OrderGetPayload
       <tbody>
         <tr>
           <td>{order?.customerName}</td>
-          <td>{order?.customerName}</td>
+          <td>{order?.customerEmail}</td>
+          <td>{order?.customerPhone}</td>
           <td>{order?.createdAt?.toJSON().slice(0, 10)}</td>
           <td>{order?.fulfilled ? 'fulfilled' : 'not fulfilled'}</td>
           <td>{order?.shipped ? 'shipped' : 'waits for shipping'}</td>

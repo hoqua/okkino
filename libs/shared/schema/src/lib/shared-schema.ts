@@ -10,7 +10,7 @@ export const OrderProductSchema = z.object({
   discountPrice: z.number().optional(),
   imageUrl: z.string(),
   quantity: z.number(),
-  urlName: z.string()
+  urlName: z.string().optional()
 })
 
 export type OrderProduct = z.infer<typeof OrderProductSchema>

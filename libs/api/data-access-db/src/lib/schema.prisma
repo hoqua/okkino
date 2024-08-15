@@ -23,8 +23,12 @@ model Order {
   address       Json
   customerName  String?
   customerEmail String?
+  customerPhone String?
   total         Int?
+  orderSubtotal Int?
   language      String
+  deliveryPrice Int?
+
 
   createdAt DateTime @default(now())
 
