@@ -46,7 +46,7 @@ export default function ShipOrderBtn(props: {
       <input
         placeholder="Tracking Number"
         className={`w-full h-12 rounded-sm pl-2 border ${
-          errors.tracking_number ? 'border-red-500' : 'border-black'
+          errors.tracking_number ? 'border-red-500 focus-visible:outline-red-500' : 'border-black'
         }`}
         {...register('tracking_number', { required: true })}
       />

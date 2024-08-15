@@ -1,13 +1,12 @@
-import React from 'react'
 import EmailLayout from './common/email-layout'
 import { Container, Img, Section, Text } from '@react-email/components'
 import { ProductSection } from './common/product-section'
 import { OrderDetails } from './common/order-details'
 import { Footer } from './common/footer'
-import { DispatchOrder, DispatchOrderArgs } from '../types'
+import { DispatchDetails, DispatchOrderArgs } from '../types'
 
 export default function OrderDispatched(props: DispatchOrderArgs) {
-  const { products, items, total, subTotal, shipping } = props.order
+  const { products, items, total, subTotal, shipping, name } = props.order
   return (
     <EmailLayout>
       <Container>
@@ -25,7 +24,7 @@ export default function OrderDispatched(props: DispatchOrderArgs) {
         </Text>
         <Text className="text-xs text-center text-gray-600">Don't hesitate to contact us.</Text>
         <Section className="mt-20" />
-        <DispatchedOrderDetails details={props.dispatchedOrder} />
+        <DispatchedOrderDetails details={props.dispatchDetails} clientName={name} />
 
         <Section className="mt-20" />
 
@@ -46,8 +45,14 @@ export default function OrderDispatched(props: DispatchOrderArgs) {
   )
 }
 
-function DispatchedOrderDetails({ details }: { details: DispatchOrder }) {
-  const { client_name, client_address, tracking_number } = details
+function DispatchedOrderDetails({
+  details,
+  clientName
+}: {
+  details: DispatchDetails
+  clientName: string
+}) {
+  const { client_address, tracking_number } = details
   return (
     <Section>
       <table>
@@ -70,8 +75,8 @@ function DispatchedOrderDetails({ details }: { details: DispatchOrder }) {
               </Text>
             </td>
             <td>
-              <Text className="m-0 ml-2 text-sx text-gray-800">${client_name}</Text>
-              <Text className="m-0 ml-2 text-sx text-gray-800">${client_address}</Text>
+              <Text className="m-0 ml-2 text-sx text-gray-800">{clientName}</Text>
+              <Text className="m-0 ml-2 text-sx text-gray-800">{client_address}</Text>
             </td>
           </tr>
         </tbody>

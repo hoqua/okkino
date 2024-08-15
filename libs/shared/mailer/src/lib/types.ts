@@ -11,13 +11,12 @@ export type SendOrderArgs = {
   shipping: number
 }
 
-export type DispatchOrder = {
-  client_name: string
+export type DispatchDetails = {
   client_address: string
   tracking_number: string
 }
 
 export type DispatchOrderArgs = {
   order: SendOrderArgs
-  dispatchedOrder: DispatchOrder
+  dispatchDetails: DispatchDetails
 }

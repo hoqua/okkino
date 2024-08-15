@@ -34,9 +34,8 @@ export async function emailAndShipOrder(data: {
       total: data.total,
       products: data.products
     },
-    dispatchedOrder: {
+    dispatchDetails: {
       client_address: data.address,
-      client_name: data.name,
       tracking_number: data.tracking_number
     }
   })
