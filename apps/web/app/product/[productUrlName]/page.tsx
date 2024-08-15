@@ -2,7 +2,7 @@ import { AddToCartSection } from './components/add-to-card-section'
 import { getProduct, getProductLength } from '@okkino/api/data-access-db'
 import { Metadata } from 'next'
 import { Product, WithContext } from 'schema-dts'
-import { TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
+import { PRODUCT_SIZES, TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
 
 interface IProductPageProps {
   params: { productUrlName: string }
@@ -43,7 +43,11 @@ export default async function Page({ params }: IProductPageProps) {
     urlName
   } = product
   const sortedImages = images.sort((a, b) => a.order - b.order)
-
+  const sortedSizes = productSizes.sort((a, b) => {
+    const indexOfA = PRODUCT_SIZES.findIndex((size) => size.name === a.name)
+    const indexOfB = PRODUCT_SIZES.findIndex((size) => size.name === b.name)
+    return indexOfA - indexOfB
+  })
   const jsonLd: WithContext<Product> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -78,7 +82,7 @@ export default async function Page({ params }: IProductPageProps) {
           id={id}
           price={price}
           discountPrice={discountPrice}
-          productSizes={productSizes}
+          productSizes={sortedSizes}
           availableColors={availableColors}
           productLengths={productLengths}
           hasLength={hasLength}

@@ -9,12 +9,13 @@ export const OrderProductSchema = z.object({
   color: z.object({ value: z.string(), name: z.string() }),
   discountPrice: z.number().optional(),
   imageUrl: z.string(),
-  quantity: z.number()
+  quantity: z.number(),
+  urlName: z.string()
 })
 
 export type OrderProduct = z.infer<typeof OrderProductSchema>
 
-export const DeliveryOptions = z.enum(['other', 'moldova'])
+export const DeliveryOptions = z.enum(['express', 'standard'])
 export type DeliveryOptions = z.infer<typeof DeliveryOptions>
 
 export const CheckoutProductSchema = z.object({

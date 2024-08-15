@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
 import { createInitialOrder } from '@okkino/api/data-access-db'
 import { CheckoutProductSchema, DeliveryOptions } from '@okkino/shared/schema'
+import { getDeliveryPrice } from '../../_shared/utils'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
@@ -15,6 +16,10 @@ const stripe = new Stripe(webEnv.stripe.secretKey, { apiVersion: '2022-11-15' })
 export async function POST(request: Request) {
   try {
     const checkout = CheckoutProductSchema.parse(await request.json())
+    const price = checkout.products.reduce(
+      (a, b) => a + b.quantity * (b.discountPrice || b.price),
+      0
+    )
 
     const session = await stripe.checkout.sessions.create({
       line_items: checkout.products.map((product) => ({
@@ -25,7 +30,7 @@ export async function POST(request: Request) {
             description: `${product.quantity} x ${product.name}; Color: ${product.color.name}, Size: ${product.size}, Length: ${product.length}`
           },
           currency: 'eur',
-          unit_amount: product.price * 100
+          unit_amount: product.discountPrice * 100 || product.price * 100
         },
         quantity: product.quantity
       })),
@@ -33,11 +38,9 @@ export async function POST(request: Request) {
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries:
-          checkout.delivery === DeliveryOptions.enum.moldova ? ['MD'] : ['US', 'MD']
+          checkout.delivery === DeliveryOptions.enum.standard ? ['MD'] : ['US', 'MD']
       },
-      shipping_options: [
-        checkout.delivery === DeliveryOptions.enum.moldova ? freeShipping : internationalShipping
-      ],
+      shipping_options: [getShippingDetails(checkout.delivery, price)],
       mode: 'payment',
       success_url: `${checkout.host}/post-checkout?success=true`,
       cancel_url: `${checkout.host}/cart`
@@ -52,44 +55,28 @@ export async function POST(request: Request) {
   }
 }
 
-const freeShipping = {
-  shipping_rate_data: {
-    type: 'fixed_amount',
-    fixed_amount: {
-      amount: 0,
-      currency: 'eur'
-    },
-    display_name: 'Free shipping',
-    delivery_estimate: {
-      minimum: {
-        unit: 'business_day',
-        value: 14
+function getShippingDetails(
+  method: DeliveryOptions,
+  price: number
+): Stripe.Checkout.SessionCreateParams.ShippingOption {
+  return {
+    shipping_rate_data: {
+      type: 'fixed_amount',
+      fixed_amount: {
+        amount: getDeliveryPrice(method, price) * 100,
+        currency: 'eur'
       },
-      maximum: {
-        unit: 'business_day',
-        value: 28
+      display_name: method === DeliveryOptions.enum.standard ? 'Standard' : 'Express',
+      delivery_estimate: {
+        minimum: {
+          unit: 'business_day',
+          value: 14
+        },
+        maximum: {
+          unit: 'business_day',
+          value: 28
+        }
       }
     }
   }
-} as any
-
-const internationalShipping = {
-  shipping_rate_data: {
-    type: 'fixed_amount',
-    fixed_amount: {
-      amount: 5000,
-      currency: 'eur'
-    },
-    display_name: 'Next day air',
-    delivery_estimate: {
-      minimum: {
-        unit: 'business_day',
-        value: 14
-      },
-      maximum: {
-        unit: 'business_day',
-        value: 28
-      }
-    }
-  }
-} as any
+}

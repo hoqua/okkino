@@ -55,7 +55,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
                 />
               )}
 
-              <ProductColors colors={availableColors} />
+              {availableColors.length > 1 && <ProductColors colors={availableColors} />}
             </Link>
 
             <div className="h-5 w-full" />

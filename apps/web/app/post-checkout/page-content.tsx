@@ -48,12 +48,12 @@ export default function PostCheckoutPageContent() {
 const t = {
   success: {
     title: 'Payment successful',
-    text: 'Thank you for purchasing the OK KINO piece.',
+    text: 'Thank you for your purchase.',
     button: 'homepage'
   },
   error: {
     title: 'Payment error',
-    text: 'Something went wrong. Please try again later.',
+    text: 'We apologize for the inconvenience. Please verify your payment details and try again. If issues persist, contact us at contact@studiookkino.com for assistance.',
     button: 'Try again'
   }
 }

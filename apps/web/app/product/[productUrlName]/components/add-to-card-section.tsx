@@ -55,7 +55,8 @@ export const AddToCartSection: FC<IProps> = (props) => {
         color: availableColors.find((c) => c.name === selectedColor.value),
         discountPrice: discountPrice,
         imageUrl: imageUrl,
-        quantity: 1
+        quantity: 1,
+        urlName
       } satisfies OrderProduct
       // TODO: FIX quantity
       const product = newCart.find((p) => compareCartProducts(p, newProduct))
@@ -72,7 +73,8 @@ export const AddToCartSection: FC<IProps> = (props) => {
           color: availableColors.find((c) => c.name === selectedColor.value),
           discountPrice: discountPrice,
           imageUrl: imageUrl,
-          quantity: 1
+          quantity: 1,
+          urlName
         } satisfies OrderProduct)
       }
 
@@ -128,10 +130,15 @@ export const AddToCartSection: FC<IProps> = (props) => {
       <div className="flex flex-col  justify-between gap-4 xl:flex-row xl:items-center ">
         <Price price={price} discountPrice={discountPrice} />
 
-        <div className="flex xl:flex-row-reverse gap-2">
+        <div className="flex items-center xl:flex-row-reverse gap-5">
           <Button label={t.add_to_cart} onClick={() => handleAddToCard()} />
 
-          <Button label={t.buy_now} flat onClick={() => handleAddToCard(true)} />
+          <Link
+            className="text-black text-sm font-light uppercase hover:underline"
+            href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.shippingGuide}
+          >
+            {t.shipping_guide}
+          </Link>
         </div>
       </div>
     </section>
@@ -161,5 +168,5 @@ const t = {
   color: 'Color',
   length: 'Length',
   add_to_cart: 'Add to cart',
-  buy_now: 'Buy now'
+  shipping_guide: 'Shipping & Returns'
 }
