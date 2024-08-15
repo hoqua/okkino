@@ -1,5 +1,5 @@
 import { UTApi } from 'uploadthing/server'
-import { currentUser } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
 import { z } from 'zod'
 import { NextResponse } from 'next/server'
 

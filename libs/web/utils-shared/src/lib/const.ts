@@ -15,6 +15,9 @@ export const PRODUCT_CATEGORIES = [
     name: 'accessories'
   },
   {
+    name: 'tops_and_blouses'
+  },
+  {
     name: 'sale'
   }
 ]
