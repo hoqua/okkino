@@ -3,5 +3,6 @@ export const RouteName = {
   shop: 'shop',
   product: 'product',
   sizeGuide: 'size-guide',
+  shippingGuide: 'shipping-guide',
   cart: 'cart'
 }

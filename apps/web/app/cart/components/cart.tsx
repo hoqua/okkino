@@ -10,16 +10,14 @@ import { CheckoutProduct, DeliveryOptions } from '@okkino/shared/schema'
 import { OrderProduct } from '@okkino/shared/schema'
 import { useCart } from '../../_shared/hooks'
 import { Button } from '../../_shared/button'
-import { compareCartProducts } from '../../_shared/utils'
-import { ColorCube } from '../../components/common/color-cube'
-import { Color } from '../../product/[productUrlName]/components/add-to-card-section'
-
-const deliveryPrice = 50
+import { compareCartProducts, getDeliveryPrice } from '../../_shared/utils'
+import { RouteName } from '../../components/common/constants'
+import Link from 'next/link'
 
 export default function Cart() {
   const [isPending, startTransition] = useTransition()
   const { ref, inView } = useInView({ threshold: 0.99 })
-  const [delivery, setDelivery] = useState<DeliveryOptions>(DeliveryOptions.enum.other)
+  const [delivery, setDelivery] = useState<DeliveryOptions>(DeliveryOptions.enum.standard)
   const [cart, setCart] = useCart()
 
   useEffect(() => {
@@ -62,8 +60,9 @@ export default function Cart() {
   if (cart.length === 0) return <CartEmpty />
 
   // eslint-disable-next-line unicorn/no-array-reduce
-  const prise = cart.reduce((a, b) => a + b.quantity * (b.discountPrice || b.price), 0)
-  const totalPrice = prise + (delivery === DeliveryOptions.enum.moldova ? 0 : 50)
+  const price = cart.reduce((a, b) => a + b.quantity * (b.discountPrice || b.price), 0)
+  const deliveryPrice = getDeliveryPrice(delivery, price)
+  const totalPrice = price + deliveryPrice
   const totalItems = cart.reduce((a, b) => a + b.quantity, 0)
 
   return (
@@ -149,33 +148,33 @@ export default function Cart() {
             <span className="text-xs uppercase text-inherit">
               {totalItems} {totalItems > 1 ? t.overview.items : t.overview.item}
             </span>
-            <span className="text-right text-sm font-bold text-inherit">€{prise}</span>
+            <span className="text-right text-sm font-bold text-inherit">€{price}</span>
 
             <span className="text-xs uppercase text-inherit">{t.delivery.delivery}</span>
             <div className="flex flex-col items-end">
               <div className="flex gap-8">
                 <span
-                  onClick={() => setDelivery(DeliveryOptions.enum.moldova)}
+                  onClick={() => setDelivery(DeliveryOptions.enum.standard)}
                   className={
                     'cursor-pointer text-sm font-bold uppercase text-inherit ' +
-                    (delivery === DeliveryOptions.enum.moldova ? ' underline' : '')
+                    (delivery === DeliveryOptions.enum.standard ? ' underline' : '')
                   }
                 >
-                  {t.delivery.moldova}
+                  {t.delivery.standard}
                 </span>
                 <span
-                  onClick={() => setDelivery(DeliveryOptions.enum.other)}
+                  onClick={() => setDelivery(DeliveryOptions.enum.express)}
                   className={
                     'cursor-pointer text-sm font-bold uppercase text-inherit ' +
-                    (delivery === DeliveryOptions.enum.other ? ' underline' : '')
+                    (delivery === DeliveryOptions.enum.express ? ' underline' : '')
                   }
                 >
-                  {t.delivery.other}
+                  {t.delivery.express}
                 </span>
               </div>
               <div className="h-2" />
               <span className="text-sm font-bold uppercase text-inherit">
-                {delivery === DeliveryOptions.enum.moldova ? t.delivery.free : `€${deliveryPrice}`}
+                {deliveryPrice === 0 ? t.delivery.free : `€${deliveryPrice}`}
               </span>
             </div>
           </div>
@@ -211,7 +210,14 @@ export default function Cart() {
 
         {inView && <div className="h-20" />}
 
-        {inView && <p className="text-sm uppercase text-inherit">{t.info.returnTitle}</p>}
+        {inView && (
+          <Link
+            href={'/' + RouteName.product + '/' + cart[0].urlName + '/' + RouteName.shippingGuide}
+            className="text-sm uppercase text-inherit"
+          >
+            {t.info.returnTitle}
+          </Link>
+        )}
       </div>
     </div>
   )
@@ -233,13 +239,13 @@ const t = {
   total: 'total',
   delivery: {
     delivery: 'delivery',
-    moldova: 'local-moldova',
-    other: 'other',
+    standard: 'standard',
+    express: 'express',
     free: 'free'
   },
   info: {
     paymentTitle: 'ACCEPTED PAYMENT METHODS',
     paymentTypes: 'Visa, Paypal, Mastercard',
-    returnTitle: 'Return & exchange in 7 days, covered by client'
+    returnTitle: 'Shipping & Returns'
   }
 }
