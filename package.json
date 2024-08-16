@@ -47,7 +47,7 @@
     "negotiator": "^0.6.3",
     "next": "^14.2.5",
     "node-cache": "^5.1.2",
-    "nodemailer": "^6.9.4",
+    "nodemailer": "^6.9.14",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-email": "^2.1.6",

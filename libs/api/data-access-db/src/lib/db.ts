@@ -149,13 +149,25 @@ export async function createInitialOrder(id: string, checkout: CheckoutProduct) 
   })
 }
 
-export async function fulfillOrder(
-  id: string,
-  address: Prisma.InputJsonValue,
-  customerName: string,
-  total: number,
+export async function fulfillOrder({
+  id,
+  address,
+  customerName,
+  total,
+  customerEmail,
+  deliveryPrice,
+  orderSubtotal,
+  customerPhone
+}: {
+  id: string
+  address: Prisma.InputJsonValue
+  customerName: string
+  total: number
   customerEmail: string
-) {
+  deliveryPrice: number
+  orderSubtotal: number
+  customerPhone: string
+}) {
   return db.order.update({
     where: { id },
     data: {
@@ -163,7 +175,10 @@ export async function fulfillOrder(
       address,
       customerName,
       total,
-      customerEmail
+      customerEmail,
+      deliveryPrice,
+      orderSubtotal,
+      customerPhone
     }
   })
 }
