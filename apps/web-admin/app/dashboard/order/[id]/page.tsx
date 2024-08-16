@@ -27,7 +27,7 @@ export default async function OrderDetails(props: { params: { id: string } }) {
       </div>
 
       <OrdersTable products={products} />
-      {order.shipped ? null : <ShipOrderBtn order={order} />}
+      {order.shipped ? null : <ShipOrderBtn order={order} products={products} />}
     </div>
   )
 }

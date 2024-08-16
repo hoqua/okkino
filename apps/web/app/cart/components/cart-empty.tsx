@@ -3,8 +3,8 @@ import { Button } from '../../_shared/button'
 
 const t = {
   empty: {
-    title: 'Coșul dumneavoastră de cumpărături este gol',
-    buttonText: 'Continuați cumpărăturile'
+    title: 'Your cart is empty',
+    buttonText: 'Continue Shopping'
   }
 }
 

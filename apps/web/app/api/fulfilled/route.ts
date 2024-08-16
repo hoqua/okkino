@@ -43,13 +43,16 @@ export async function POST(req: NextRequest) {
       const subTotal = object.amount_subtotal / 100
       const shipping = object.total_details.amount_shipping / 100
 
-      const order = await fulfillOrder(
-        object.id,
-        object.shipping.address,
-        object.shipping.name,
+      const order = await fulfillOrder({
+        id: object.id,
+        address: object.shipping.address,
+        customerName: object.shipping.name,
         total,
-        object.customer_details.email
-      )
+        customerEmail: object.customer_details.email,
+        customerPhone: object.customer_details.phone,
+        deliveryPrice: shipping,
+        orderSubtotal: subTotal
+      })
       const items = (order.products as OrderProduct[]).reduce((acc, product) => {
         return acc + product.quantity
       }, 0)
