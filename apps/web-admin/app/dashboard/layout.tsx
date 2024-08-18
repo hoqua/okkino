@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Link href={'/dashboard/order'}>Orders</Link>
           </li>
           <li>
-            <SignOutButton />
+            <SignOutButton redirectUrl="/sign-in" />
           </li>
         </ul>
       </div>

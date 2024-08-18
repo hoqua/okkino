@@ -2,7 +2,7 @@ import { useLocalStorageSafe } from 'use-local-storage-safe'
 import { OrderProduct, OrderProductSchema } from '@okkino/shared/schema'
 
 export const storageOptions = {
-  validateInit: (value) => OrderProductSchema.array().safeParse(value).success
+  validateInit: (value: unknown) => OrderProductSchema.array().safeParse(value).success
 }
 export const storageDefaultValue = []
 

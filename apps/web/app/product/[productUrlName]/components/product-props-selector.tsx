@@ -36,11 +36,11 @@ export const ProductPropsSelector = <T extends Selectable>(props: IProps<T>) => 
               'cursor-pointer border-b hover:border-black ' +
               (item.name === selected ? 'border-black' : 'border-transparent')
             }
-            onClick={() => onSelect(item.name)}
+            onClick={() => onSelect(item.name!)}
           >
             <div className="pb-1 ">
               {getSelectionComponent ? (
-                getSelectionComponent(item.name, selected)
+                getSelectionComponent(item.name!, selected)
               ) : (
                 <p className="text-sm uppercase leading-[14px]">{item.name}</p>
               )}
