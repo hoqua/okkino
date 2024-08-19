@@ -52,7 +52,10 @@ export const AddToCartSection: FC<IProps> = (props) => {
         price: price,
         size: selectedSize.value,
         length: selectedLength.value,
-        color: availableColors.find((c) => c.name === selectedColor.value),
+        color: availableColors.find((c) => c.name === selectedColor.value) || {
+          name: '',
+          value: ''
+        },
         discountPrice: discountPrice,
         imageUrl: imageUrl,
         quantity: 1,
@@ -70,7 +73,10 @@ export const AddToCartSection: FC<IProps> = (props) => {
           price: price,
           size: selectedSize.value,
           length: selectedLength.value,
-          color: availableColors.find((c) => c.name === selectedColor.value),
+          color: availableColors.find((c) => c.name === selectedColor.value) || {
+            name: '',
+            value: ''
+          },
           discountPrice: discountPrice,
           imageUrl: imageUrl,
           quantity: 1,
@@ -121,7 +127,13 @@ export const AddToCartSection: FC<IProps> = (props) => {
         onSelect={(colorName) => setSelectedColor({ value: colorName, hasError: false })}
         getSelectionComponent={(colorName, selectedColorName) => {
           const color = availableColors.find((c) => c.name === colorName)
-          return <ColorCube color={color} size="lg" selected={selectedColorName === color.name} />
+          return (
+            <ColorCube
+              color={color || { name: '', value: '' }}
+              size="lg"
+              selected={selectedColorName === color?.name}
+            />
+          )
         }}
       />
 

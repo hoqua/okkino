@@ -24,6 +24,7 @@ model Order {
   customerName  String?
   customerEmail String?
   customerPhone String?
+  paymentIntent String?
   total         Int?
   orderSubtotal Int?
   language      String
@@ -34,6 +35,8 @@ model Order {
 
   shipped   Boolean @default(false)
   fulfilled Boolean @default(false)
+  canceled  Boolean @default(false)
+  refunded  Boolean @default(false)
 }
 
 model Product {

@@ -2,12 +2,16 @@
 
 import { webAdminEnv } from '@okkino/web/utils-env-admin'
 import { currentUser } from '@clerk/nextjs/server'
-import { db, shipOrder } from '@okkino/api/data-access-db'
+import { cancelOrder, db, deleteOrder, shipOrder } from '@okkino/api/data-access-db'
 import { ProductForm } from './dashboard/product/_components/form'
 import { revalidatePath } from 'next/cache'
 import { Prisma } from '@prisma/client'
 import { OrderProduct } from '@okkino/shared/schema'
-import { sendDispatchedOrderEmail } from '@okkino/shared/mailer'
+import { sendCancelOrderEmail, sendDispatchedOrderEmail } from '@okkino/shared/mailer'
+import Stripe from 'stripe'
+import { redirect } from 'next/navigation'
+
+const stripe = new Stripe(webAdminEnv.stripe.secretKey, { apiVersion: '2022-11-15' })
 
 export async function emailAndShipOrder(data: {
   name: string
@@ -41,6 +45,37 @@ export async function emailAndShipOrder(data: {
   })
   revalidatePath('/dashboard/order')
   revalidatePath(`/dashboard/order/${data.orderId}`)
+}
+
+export async function emailAndCancelOrder(data: {
+  name: string
+  email: string
+  orderId: string
+  items: number
+  products: OrderProduct[]
+  total: number
+  shipping: number
+  subTotal: number
+}) {
+  await cancelOrder(data.orderId)
+
+  await sendCancelOrderEmail({
+    name: data.name,
+    shipping: data.shipping,
+    email: data.email,
+    pass: webAdminEnv.email.pass,
+    items: data.items,
+    subTotal: data.subTotal,
+    total: data.total,
+    products: data.products
+  })
+  revalidatePath('/dashboard/order')
+  revalidatePath(`/dashboard/order/${data.orderId}`)
+}
+
+export async function removeOrder(orderId: string) {
+  await deleteOrder(orderId)
+  redirect('/dashboard/order')
 }
 
 export async function redeploy() {
@@ -124,4 +159,23 @@ export async function saveProduct(data: ProductForm) {
   })
 
   revalidatePath('/dashboard')
+}
+
+export async function refundOrder(paymentIntent: string | null, orderId: string) {
+  try {
+    if (!paymentIntent) {
+      throw new Error('Payment intent is not provided')
+    }
+    await stripe.refunds.create({ payment_intent: paymentIntent })
+    return {
+      success: true,
+      msg: 'Refund request was submitted to customer bank or card issuer. Customer will see the refund as a credit approximately 5-10 business days later. If this did not happen, please access stripe dashboard for additional information.'
+    }
+  } catch (error) {
+    console.log((error as Error).message)
+    return {
+      success: false,
+      msg: (error as Error).message
+    }
+  }
 }

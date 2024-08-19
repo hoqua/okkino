@@ -20,6 +20,8 @@ export default async function OrdersPage(props: { searchParams: { sort: SortType
             <th>total</th>
             <th>fulfilled</th>
             <th>shipped</th>
+            <th>refunded</th>
+            <th>canceled</th>
             <th></th>
           </tr>
         </thead>
@@ -32,6 +34,8 @@ export default async function OrdersPage(props: { searchParams: { sort: SortType
               <td>{o.total}</td>
               <td>{o.fulfilled ? heartSvg : null}</td>
               <td>{o.shipped ? heartSvg : null}</td>
+              <td>{o.refunded ? heartSvg : null}</td>
+              <td>{o.canceled ? heartSvg : null}</td>
               <td>
                 {/* eslint-disable-next-line react/jsx-no-undef */}
                 <Link href={`/dashboard/order/${o.id}`}>

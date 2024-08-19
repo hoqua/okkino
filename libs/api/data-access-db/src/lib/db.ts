@@ -155,6 +155,7 @@ export async function fulfillOrder({
   customerName,
   total,
   customerEmail,
+  paymentIntent,
   deliveryPrice,
   orderSubtotal,
   customerPhone
@@ -165,6 +166,7 @@ export async function fulfillOrder({
   total: number
   customerEmail: string
   deliveryPrice: number
+  paymentIntent: string
   orderSubtotal: number
   customerPhone: string
 }) {
@@ -176,6 +178,7 @@ export async function fulfillOrder({
       customerName,
       total,
       customerEmail,
+      paymentIntent,
       deliveryPrice,
       orderSubtotal,
       customerPhone
@@ -192,6 +195,19 @@ export async function shipOrder(id: string) {
   })
 }
 
+export async function cancelOrder(id: string) {
+  await db.order.update({
+    where: { id },
+    data: {
+      canceled: true
+    }
+  })
+}
+
+export async function deleteOrder(id: string) {
+  await db.order.delete({ where: { id } })
+}
+
 export async function getOrders() {
   return db.order.findMany({
     orderBy: {
@@ -203,5 +219,14 @@ export async function getOrders() {
 export async function getOrder(id: string) {
   return db.order.findUnique({
     where: { id }
+  })
+}
+
+export async function updateRefundStatus(id: string) {
+  return db.order.update({
+    where: { id },
+    data: {
+      refunded: true
+    }
   })
 }
