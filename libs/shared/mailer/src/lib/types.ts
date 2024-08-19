@@ -20,3 +20,13 @@ export type DispatchOrderArgs = {
   order: SendOrderArgs
   dispatchDetails: DispatchDetails
 }
+
+export type OrderNotificationArgs = {
+  orderId: string
+  customerName: string
+  items: number
+  total: number
+  subTotal: number
+  shipping: number
+  pass: string
+}
