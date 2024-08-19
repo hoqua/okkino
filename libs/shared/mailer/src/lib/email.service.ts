@@ -3,9 +3,10 @@ import { render } from '@react-email/render'
 
 import type { SendMailOptions } from 'nodemailer'
 import OrderPlaced from './emails/order-placed'
-import { DispatchOrderArgs, SendOrderArgs } from './types'
+import { DispatchOrderArgs, OrderNotificationArgs, SendOrderArgs } from './types'
 import OrderDispatched from './emails/order-dispatched'
 import OrderCanceled from './emails/order-cancelled'
+import OrderNotificationTemplate from './emails/order-notification'
 
 const defaultEmailOptions = {
   from: {
@@ -67,5 +68,17 @@ export async function sendCancelOrderEmail(args: SendOrderArgs) {
   }
 
   const transporter = getTransporter(pass)
+  await transporter.sendMail(options)
+}
+
+export async function sendEmailOrderNotification(args: OrderNotificationArgs) {
+  const options: SendMailOptions = {
+    ...defaultEmailOptions,
+    to: 'contact@studiookkino.com',
+    subject: `New OKKINO Order Placed - Order #${args.orderId}`,
+    html: render(OrderNotificationTemplate(args))
+  }
+
+  const transporter = getTransporter(args.pass)
   await transporter.sendMail(options)
 }
