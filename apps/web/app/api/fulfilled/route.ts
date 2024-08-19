@@ -4,7 +4,7 @@ import { buffer } from 'node:stream/consumers'
 
 import Stripe from 'stripe'
 import { webEnv } from '@okkino/web/utils-env'
-import { fulfillOrder } from '@okkino/api/data-access-db'
+import { fulfillOrder, updateRefundStatus } from '@okkino/api/data-access-db'
 import * as Sentry from '@sentry/nextjs'
 import { sendOrderPlacedEmail } from '@okkino/shared/mailer'
 import { OrderProduct } from '@okkino/shared/schema'
@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
         total,
         customerEmail: object.customer_details.email,
         customerPhone: object.customer_details.phone,
+        paymentIntent: object.payment_intent,
         deliveryPrice: shipping,
         orderSubtotal: subTotal
       })
@@ -69,6 +70,11 @@ export async function POST(req: NextRequest) {
         name: object.shipping.name,
         pass: webEnv.email.pass
       })
+    } else if (event.type === 'charge.refunded') {
+      const object = event?.data.object as any
+      const paymentIntent = object.payment_intent
+      const sessions = await stripe.checkout.sessions.list({ payment_intent: paymentIntent })
+      await updateRefundStatus(sessions.data[0].id)
     }
   } catch (error) {
     const object = event?.data.object as any

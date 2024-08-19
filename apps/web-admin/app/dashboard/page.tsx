@@ -61,7 +61,7 @@ export default async function DashboardPage() {
         <tbody>
           {/* row 1 */}
           {products.map((product) => (
-            <tr key={product.textName}>
+            <tr key={product.id}>
               <td>
                 <div className="flex items-center space-x-3">
                   <div className="avatar">
