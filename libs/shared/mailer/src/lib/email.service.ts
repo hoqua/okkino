@@ -22,7 +22,7 @@ const defaultEmailOptions = {
 export const getTransporter = (pass: string) =>
   createTransport({
     host: 'mail.privateemail.com',
-    port: 465,
+    port: 587,
     secure: true,
     auth: {
       user: 'contact@studiookkino.com',
