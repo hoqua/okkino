@@ -22,7 +22,7 @@ const defaultEmailOptions = {
 export const getTransporter = (pass: string) =>
   createTransport({
     host: 'mail.privateemail.com',
-    port: 587,
+    port: 465,
     secure: true,
     auth: {
       user: 'contact@studiookkino.com',
@@ -54,7 +54,7 @@ export async function sendDispatchedOrderEmail(args: DispatchOrderArgs) {
     html: render(OrderDispatched(args))
   }
 
-  const transporter = getTransporter('qbhq nodp apee fukj')
+  const transporter = getTransporter(pass)
   await transporter.sendMail(options)
 }
 
