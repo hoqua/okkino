@@ -1,4 +1,4 @@
-import { createTransport } from 'nodemailer'
+import { createTransport, Transporter,  } from 'nodemailer'
 import { render } from '@react-email/render'
 
 import type { SendMailOptions } from 'nodemailer'
@@ -19,34 +19,52 @@ const defaultEmailOptions = {
   }
 }
 
-export const getTransporter = (pass: string) =>
-  createTransport({
-    host: 'mail.privateemail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: 'contact@studiookkino.com',
-      pass
-    }
-  })
+let transporter: Transporter
+export const getTransporter = async (pass: string) => {
+  if(!transporter){
+    transporter = createTransport({
+      host: 'mail.privateemail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'contact@studiookkino.com',
+        pass
+      },
+    })
+
+    await new Promise((resolve, reject) => {
+      // verify connection configuration
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
+    });
+  }
+  
+  return transporter
+}
 
 export async function sendOrderPlacedEmail(args: SendOrderArgs) {
   const { email, pass } = args
 
   const options: SendMailOptions = {
     ...defaultEmailOptions,
-    to: email,
+    to: 'meat159@gmail.com',
     subject: 'Thank you for your purchase.',
     html: render(OrderPlaced(args))
   }
 
-  const transporter = getTransporter(pass)
+  const transporter = await getTransporter(pass)
   await transporter.sendMail(options)
 }
 
 export async function sendDispatchedOrderEmail(args: DispatchOrderArgs) {
   const { email, pass } = args.order
-  console.log(email, pass)
   const options: SendMailOptions = {
     ...defaultEmailOptions,
     to: email,
@@ -54,7 +72,7 @@ export async function sendDispatchedOrderEmail(args: DispatchOrderArgs) {
     html: render(OrderDispatched(args))
   }
 
-  const transporter = getTransporter(pass)
+  const transporter = await getTransporter(pass)
   await transporter.sendMail(options)
 }
 
@@ -67,7 +85,7 @@ export async function sendCancelOrderEmail(args: SendOrderArgs) {
     html: render(OrderCanceled(args))
   }
 
-  const transporter = getTransporter(pass)
+  const transporter = await getTransporter(pass)
   await transporter.sendMail(options)
 }
 
@@ -79,6 +97,6 @@ export async function sendEmailOrderNotification(args: OrderNotificationArgs) {
     html: render(OrderNotificationTemplate(args))
   }
 
-  const transporter = getTransporter(args.pass)
+  const transporter = await getTransporter(args.pass)
   await transporter.sendMail(options)
 }
