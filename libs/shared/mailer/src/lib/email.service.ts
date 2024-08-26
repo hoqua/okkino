@@ -1,4 +1,4 @@
-import { createTransport, Transporter,  } from 'nodemailer'
+import { createTransport, Transporter } from 'nodemailer'
 import { render } from '@react-email/render'
 
 import type { SendMailOptions } from 'nodemailer'
@@ -21,7 +21,7 @@ const defaultEmailOptions = {
 
 let transporter: Transporter
 export const getTransporter = async (pass: string) => {
-  if(!transporter){
+  if (!transporter) {
     transporter = createTransport({
       host: 'mail.privateemail.com',
       port: 465,
@@ -29,23 +29,23 @@ export const getTransporter = async (pass: string) => {
       auth: {
         user: 'contact@studiookkino.com',
         pass
-      },
+      }
     })
 
     await new Promise((resolve, reject) => {
       // verify connection configuration
       transporter.verify(function (error, success) {
         if (error) {
-          console.log(error);
-          reject(error);
+          console.log(error)
+          reject(error)
         } else {
-          console.log("Server is ready to take our messages");
-          resolve(success);
+          console.log('Server is ready to take our messages')
+          resolve(success)
         }
-      });
-    });
+      })
+    })
   }
-  
+
   return transporter
 }
 
@@ -54,7 +54,7 @@ export async function sendOrderPlacedEmail(args: SendOrderArgs) {
 
   const options: SendMailOptions = {
     ...defaultEmailOptions,
-    to: 'meat159@gmail.com',
+    to: email,
     subject: 'Thank you for your purchase.',
     html: render(OrderPlaced(args))
   }
