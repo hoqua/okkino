@@ -8,6 +8,7 @@ import { fulfillOrder, updateRefundStatus } from '@okkino/api/data-access-db'
 import * as Sentry from '@sentry/nextjs'
 import { sendOrderPlacedEmail } from '@okkino/shared/mailer'
 import { OrderProduct } from '@okkino/shared/schema'
+import { sendEmailOrderNotification } from '@okkino/shared/mailer'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
@@ -30,8 +31,7 @@ export async function POST(req: NextRequest) {
       )
     } catch {
       return NextResponse.json(
-        { message: 'Webhook signature verification failed' },
-        { status: 400 }
+        { message: 'Webhook signature verification failed', success: false }
       )
     }
 
@@ -69,6 +69,15 @@ export async function POST(req: NextRequest) {
         email: object.customer_details.email,
         name: object.shipping.name,
         pass: webEnv.email.pass
+      })
+      await sendEmailOrderNotification({
+        shipping,
+        subTotal,
+        total,
+        items,
+        customerName: object.shipping.name,
+        pass: webEnv.email.pass,
+        orderId: object.id
       })
     } else if (event.type === 'charge.refunded') {
       const object = event?.data.object as any
