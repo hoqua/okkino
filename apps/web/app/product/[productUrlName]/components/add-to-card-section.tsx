@@ -31,7 +31,10 @@ export const AddToCartSection: FC<IProps> = (props) => {
     value: hasLength ? 'regular' : '',
     hasError: false
   })
-  const [selectedColor, setSelectedColor] = useState({ value: '', hasError: false })
+  const [selectedColor, setSelectedColor] = useState({
+    value: availableColors.length <= 1 ? availableColors[0].name : '',
+    hasError: false
+  })
   const [, setCart] = useCart()
   const router = useRouter()
 
