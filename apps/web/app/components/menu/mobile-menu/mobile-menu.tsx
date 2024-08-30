@@ -54,13 +54,21 @@ export default function MobileMenu(props: IProps) {
                 )}
               </li>
 
-              <Link
-                className="okkino-text-hover text-xs uppercase text-black"
-                href={`/about`}
-                onClick={handleSubmenuClick}
-              >
-                About
-              </Link>
+              <li>
+                <Link
+                  className="okkino-text-hover text-xs uppercase text-black"
+                  href={`/about`}
+                  onClick={handleSubmenuClick}
+                >
+                  About
+                </Link>
+              </li>
+
+              <li>
+                <Link className="okkino-text-hover text-xs uppercase text-black" href={`/contact`}>
+                  Contacts
+                </Link>
+              </li>
             </ul>
 
             <button

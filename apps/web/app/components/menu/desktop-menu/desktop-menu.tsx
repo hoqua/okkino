@@ -23,6 +23,9 @@ export const DesktopMenu: FC<IProps> = (props) => {
       <Link className="okkino-text-hover text-xs uppercase text-black" href={`/about`}>
         About
       </Link>
+      <Link className="okkino-text-hover text-xs uppercase text-black" href={`/contact`}>
+        Contacts
+      </Link>
     </div>
   )
 }
