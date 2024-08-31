@@ -73,11 +73,11 @@ function getShippingDetails(
       delivery_estimate: {
         minimum: {
           unit: 'business_day',
-          value: 14
+          value: method === DeliveryOptions.enum.express ? 1 : 5
         },
         maximum: {
           unit: 'business_day',
-          value: 28
+          value: method === DeliveryOptions.enum.express ? 5 : 14
         }
       }
     }
