@@ -106,7 +106,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
         actionItem={
           <Link
             href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.sizeGuide}
-            className="okkino-text-hover text-xs font-light uppercase text-gray-600 hover:text-black"
+            className="okkino-text-hover text-xs uppercase"
           >
             {t.size_guide}
           </Link>
@@ -149,7 +149,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
           <Button label={t.add_to_cart} onClick={() => handleAddToCard()} />
 
           <Link
-            className="text-black text-sm font-light uppercase hover:underline"
+            className="text-black text-xs font-normal uppercase hover:underline"
             href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.shippingGuide}
           >
             {t.shipping_guide}
