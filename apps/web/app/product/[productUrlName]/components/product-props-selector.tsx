@@ -42,7 +42,7 @@ export const ProductPropsSelector = <T extends Selectable>(props: IProps<T>) => 
               {getSelectionComponent ? (
                 getSelectionComponent(item.name!, selected)
               ) : (
-                <p className="text-sm uppercase leading-[14px]">{item.name}</p>
+                <p className="text-sm font-bold uppercase leading-[14px]">{item.name}</p>
               )}
             </div>
           </div>

@@ -20,6 +20,13 @@ export default async function Page(props: IProductPageProps) {
       </div>
 
       <section>
+        <h3 className="mb-1 text-xs uppercase text-gray-700">{t.size_fit.title}</h3>
+        <p className="text-sm text-black">{t.size_fit.p1}</p>
+        <p className="text-sm text-black">{t.size_fit.p2}</p>
+        <p className="text-sm text-black">{t.size_fit.p3}</p>
+
+        <div className="h-12"></div>
+
         <h3 className="mb-1 text-xs uppercase text-gray-700">{t.length.title}</h3>
         <p className="text-sm text-black">{t.length.select_height}</p>
         <p className="text-sm text-black">{t.length.petit}</p>
@@ -97,6 +104,12 @@ export default async function Page(props: IProductPageProps) {
 
 const t = {
   close: 'close',
+  size_fit: {
+    title: 'Size and Fit',
+    p1: 'fits true to size, take your normal size',
+    p2: 'mid-weight, non-stretchy fabric',
+    p3: "model is 180 cm / 70,8 inch and is wearing a size S and 'Tall' length"
+  },
   length: {
     title: 'Length',
     select_height:

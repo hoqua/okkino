@@ -18,7 +18,7 @@ export const Button = (props: IProps) => {
         (flat
           ? 'border-transparent hover:border-b-black '
           : 'border-black hover:bg-black hover:text-white ') +
-        'border pb-3 pl-9 pr-9 pt-3  text-sm uppercase' +
+        'border pb-3 pl-9 pr-9 pt-3  text-xs uppercase' +
         (fullWidth ? ' w-full' : '') +
         ' ' +
         className
