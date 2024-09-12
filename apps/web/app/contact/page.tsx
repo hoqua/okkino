@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div className="grid gap-10 uppercase text-xs pb-10 3xl:grid-cols-[5fr_4fr] xl:grid-cols-[4fr_5fr]">
       <div className="relative aspect-square w-full">
-        <Image src="/static-images/contact.webp" alt="okkino notebook" fill priority />
+        <Image src="/static-images/contact.jpg" alt="okkino notebook" fill priority />
       </div>
       <div className="flex w-full  justify-center  text-center xl:justify-end xl:text-left">
         <div className="flex flex-col justify-between gap-16">

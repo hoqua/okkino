@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Metadata } from 'next'
-import about from '../public/static-images/about.jpg'
+import about from '../public/static-images/about.webp'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
