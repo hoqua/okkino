@@ -11,7 +11,7 @@ interface ISubmenuProps {
 }
 
 export const MobileSubmenu: FC<ISubmenuProps> = (props) => {
-  const { itemsList, onSubmenuClick } = props
+  const { itemsList, onSubmenuClick, getNavigationPath } = props
 
   return (
     <div className="absolute -top-8 left-44 z-10">
@@ -34,7 +34,7 @@ export const MobileSubmenu: FC<ISubmenuProps> = (props) => {
               </svg>
             )}
 
-            <Link href={ProductCategories[itemKeyName]} onClick={onSubmenuClick}>
+            <Link href={getNavigationPath(itemKeyName)} onClick={onSubmenuClick}>
               {ProductCategories[itemKeyName]}
             </Link>
           </li>

@@ -43,7 +43,7 @@ export const DesktopSubmenu: FC<IProps> = (props) => {
               key={itemKeyName}
               className="transition-color hover:text-gray-600 relative  mb-4 mt-4 text-xs uppercase tracking-wide"
             >
-              <Link href={ProductCategories[itemKeyName]}>{ProductCategories[itemKeyName]}</Link>
+              <Link href={getNavigationPath(itemKeyName)}>{ProductCategories[itemKeyName]}</Link>
             </li>
           ))}
         </ul>
