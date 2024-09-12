@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { MobileSubmenu } from './moblie-submenu'
+import { ALL_CATEGORY } from '../../../shop/_components/constants'
 
 enum Submenu {
   Shop = 'shop'
@@ -47,7 +48,10 @@ export default function MobileMenu(props: IProps) {
                 Shop
                 {Submenu.Shop === activeSubmenu && (
                   <MobileSubmenu
-                    itemsList={productCategories.map((category) => category.name)}
+                    itemsList={[
+                      ALL_CATEGORY,
+                      ...productCategories.map((category) => category.name)
+                    ]}
                     onSubmenuClick={handleSubmenuClick}
                     getNavigationPath={(itemKeyName) => `/shop/${itemKeyName}`}
                   />
@@ -65,7 +69,11 @@ export default function MobileMenu(props: IProps) {
               </li>
 
               <li>
-                <Link className="okkino-text-hover text-xs uppercase text-black" href={`/contact`}>
+                <Link
+                  onClick={handleSubmenuClick}
+                  className="okkino-text-hover text-xs uppercase text-black"
+                  href={`/contact`}
+                >
                   Contacts
                 </Link>
               </li>
