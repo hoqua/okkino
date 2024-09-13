@@ -1,6 +1,6 @@
 import { DeliveryOptions, OrderProduct } from '@okkino/shared/schema'
 
-export const STANDARD_DELIVERY_PRICE = 20
+export const STANDARD_DELIVERY_PRICE = 0
 export const EXPRESS_DELIVERY_PRICE = 85
 
 export function compareCartProducts(p1: OrderProduct, p2: OrderProduct) {
