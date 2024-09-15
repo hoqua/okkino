@@ -32,9 +32,7 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const productCategories = await getProductCategories()
-  const headersList = headers()
-  const pathname = headersList.get('x-pathname')
-  const isHome = pathname === '/'
+  const isHome = false
 
   return (
     <html lang="en" className={lato.className}>
