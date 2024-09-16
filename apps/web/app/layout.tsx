@@ -7,7 +7,6 @@ import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 import { CartIcon } from './components/menu/cart-icon'
 import { getProductCategories } from '@okkino/api/data-access-db'
 import { ALL_CATEGORY } from './shop/_components/constants'
-import { headers } from 'next/headers'
 import '../styles/global.css'
 
 const lato = Lato({
@@ -32,20 +31,11 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const productCategories = await getProductCategories()
-  const isHome = false
 
   return (
     <html lang="en" className={lato.className}>
-      <body
-        className={
-          isHome
-            ? 'min-h-full min-w-full flex items-center flex-col pl-6 pr-6 pt-[60px] bg-white'
-            : 'flex flex-col items-center bg-white'
-        }
-      >
-        {isHome ? (
-          children
-        ) : (
+      <body className="flex flex-col items-center bg-white">
+        {
           <div className="w-full max-w-screen-2xl pl-6 pr-6 md:pl-14 md:pr-14">
             <nav className="flex h-20 items-center justify-between md:h-28 lg:h-36">
               <Link href={`/`}>
@@ -69,7 +59,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
             {children}
           </div>
-        )}
+        }
       </body>
     </html>
   )
