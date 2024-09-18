@@ -40,7 +40,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
 
   const isError = selectedSize.hasError || selectedColor.hasError
 
-  const handleAddToCard = (isBuyNow?: boolean) => {
+  const handleAddToCard = () => {
     if (!selectedSize.value || !selectedColor.value) {
       setSelectedSize({ value: selectedSize.value, hasError: !selectedSize.value })
       setSelectedColor({ value: selectedColor.value, hasError: !selectedColor.value })
@@ -90,9 +90,7 @@ export const AddToCartSection: FC<IProps> = (props) => {
       return newCart
     })
 
-    if (isBuyNow) {
-      router.push('/' + RouteName.cart)
-    }
+    router.push('/' + RouteName.cart)
   }
 
   return (
