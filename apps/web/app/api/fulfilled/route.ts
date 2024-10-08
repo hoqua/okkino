@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
-      const object = event?.data.object as any
+      const object = event?.data.object as Stripe.Checkout.Session
       console.log('🔔  Payment was successful!', object)
       const total = object.amount_total / 100
       const subTotal = object.amount_subtotal / 100
@@ -45,12 +45,12 @@ export async function POST(req: NextRequest) {
 
       const order = await fulfillOrder({
         id: object.id,
-        address: object.shipping.address,
-        customerName: object.shipping.name,
+        address: object.shipping_details.address as object,
+        customerName: object.shipping_details.name,
         total,
         customerEmail: object.customer_details.email,
         customerPhone: object.customer_details.phone,
-        paymentIntent: object.payment_intent,
+        paymentIntent: String(object.payment_intent),
         deliveryPrice: shipping,
         orderSubtotal: subTotal
       })
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
         products: order.products as OrderProduct[],
         total,
         email: object.customer_details.email,
-        name: object.shipping.name,
+        name: object.shipping_details.name,
         pass: webEnv.email.pass
       })
       await sendEmailOrderNotification({
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
         subTotal,
         total,
         items,
-        customerName: object.shipping.name,
+        customerName: object.shipping_details.name,
         pass: webEnv.email.pass,
         orderId: object.id
       })

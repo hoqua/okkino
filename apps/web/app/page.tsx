@@ -1,8 +1,13 @@
 import Image from 'next/image'
+import Link from 'next/link'
+
+import { getHomeImages } from '@okkino/api/data-access-db'
 import { Metadata } from 'next'
-import about from '../public/static-images/about.webp'
+import { hexToDataUrl } from '@okkino/web/utils-shared'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const homeBlocks = await getHomeImages()
+
   return {
     metadataBase: new URL('https://www.studiookkino.com/'),
     title: 'OK KINO',
@@ -10,47 +15,45 @@ export async function generateMetadata(): Promise<Metadata> {
       'Official online store for OK KINO. An independent designer brand from Moldova. Designed by Darya Golneva and Denis Caunov.',
     referrer: 'origin-when-cross-origin',
     openGraph: {
-      images: [about.src]
+      images: homeBlocks.map((block) => block.image.url)
     }
   }
 }
 
-export default function TempPage() {
+export default async function Page() {
+  const homeBlocks = await getHomeImages()
+
   return (
-    <>
-      <Image src={'/logo.svg'} width={114} height={20} alt={'logo'} className="md:h-5 md:w-28" />
-      <div className="h-[60px]" />
-
-      <div className="grid grid-cols-2 gap-6 w-full max-w-[640px]">
-        <div className="relative aspect-[308/461]">
-          <Image src="/static-images/l.png" alt="okkino coming soon left" fill priority />
-        </div>
-        <div className="relative aspect-[308/461]">
-          <Image src="/static-images/r.png" alt="okkino coming soon right" fill priority />
-        </div>
-      </div>
-
-      <div className="h-[60px]" />
-
-      <div className="flex flex-col items-center w-full max-w-[375px]">
-        <p className="text-center text-md uppercase font-bold text-black tracking-wide leading-6">
-          We are rebranding our website, it will be back up and running soon.
-        </p>
-
-        <div className="h-3" />
-
-        <p className="text-gray-600 text-center">
-          For any questions regarding your current order or if you wish to place an order, please
-          message us on Instagram —{' '}
-          <a className="underline" href="https://www.instagram.com/okkino.studio">
-            @okkino.studio
-          </a>
-        </p>
-
-        <div className="h-[60px]" />
-
-        <p className="text-xs uppercase font-normal">Best regards, OK KINO team</p>
-      </div>
-    </>
+    <div className="grid gap-4 lg:grid-cols-2 lg:gap-7 xl:gap-12">
+      {homeBlocks.map((block) => {
+        return (
+          <Link
+            prefetch
+            href={block.navigationPath}
+            key={block.id}
+            className="
+             relative  flex
+             h-[calc(50vh-5.5rem)]
+             min-h-[232px] items-center justify-center gap-4
+             overflow-hidden md:h-[calc(50vh-7.5rem)] lg:h-[calc(100vh-18rem)]
+             "
+          >
+            <Image
+              src={block.image.url}
+              alt={block.image.title}
+              className={
+                'hover:transition-{scale} h-full object-cover duration-1000 hover:scale-105 '
+              }
+              placeholder="blur"
+              blurDataURL={hexToDataUrl(block.image.bgColor)}
+              sizes="(min-width: 1640px) 688px, (min-width: 1040px) calc(41.03vw + 23px), (min-width: 780px) calc(100vw - 112px), calc(100vw - 48px)"
+              priority
+              fill
+              title={block.image.title}
+            />
+          </Link>
+        )
+      })}
+    </div>
   )
 }

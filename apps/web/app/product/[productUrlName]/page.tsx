@@ -73,7 +73,7 @@ export default async function Page({ params }: IProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="uppercase">{textName}</h1>
+      <h1 className="uppercase font-semibold">{textName}</h1>
 
       <div className="h-5" />
 
