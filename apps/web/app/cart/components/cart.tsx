@@ -144,15 +144,15 @@ export default function Cart() {
         {inView && <div className="h-8" />}
 
         {inView && (
-          <div className="grid grid-cols-[1fr_3fr] gap-5">
+          <div className="grid grid-cols-[1fr_3fr] gap-5 items-center">
             <span className="text-xs uppercase text-inherit">
               {totalItems} {totalItems > 1 ? t.overview.items : t.overview.item}
             </span>
             <span className="text-right text-sm font-bold text-inherit">€{price}</span>
 
-            <span className="text-xs uppercase text-inherit">{t.delivery.delivery}</span>
-            <div className="flex flex-col items-end">
-              <div className="flex gap-8">
+            <div className="grid grid-cols-[1fr_3fr] gap-x-5 gap-y-2 items-center col-span-2">
+              <span className="text-xs uppercase text-inherit">{t.delivery.delivery}</span>
+              <div className="flex gap-8 place-self-end">
                 <span
                   onClick={() => setDelivery(DeliveryOptions.enum.standard)}
                   className={
@@ -172,8 +172,7 @@ export default function Cart() {
                   {t.delivery.express}
                 </span>
               </div>
-              <div className="h-2" />
-              <span className="text-sm font-bold uppercase text-inherit">
+              <span className="col-start-2 text-sm  justify-self-end font-bold uppercase text-inherit">
                 {deliveryPrice === 0 ? t.delivery.free : `€${deliveryPrice}`}
               </span>
             </div>

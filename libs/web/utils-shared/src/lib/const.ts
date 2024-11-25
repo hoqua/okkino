@@ -1,3 +1,4 @@
+import type Stripe from 'stripe'
 export const PRODUCT_CATEGORIES = [
   {
     name: 'dresses'
@@ -110,7 +111,7 @@ export const PRODUCT_COLORS = [
 
 export const PRODUCT_LENGTHS = [
   {
-    name: 'petit'
+    name: 'petite'
   },
   {
     name: 'regular'
@@ -121,3 +122,95 @@ export const PRODUCT_LENGTHS = [
 ]
 
 export const TEXT_EDITOR_CLASSES = '[&>p:empty]:h-6 [&>p]:text-sm [&>p]:text-gray-600'
+
+export const allowedCountries: Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[] =
+  [
+    'AL',
+    'AD',
+    'AM',
+    'AT',
+    'AZ',
+    'BY',
+    'BE',
+    'BA',
+    'BG',
+    'HR',
+    'CY',
+    'CZ',
+    'DK',
+    'EE',
+    'FI',
+    'FR',
+    'DE',
+    'GR',
+    'HU',
+    'IS',
+    'IE',
+    'IT',
+    'KZ',
+    'LV',
+    'LI',
+    'LT',
+    'LU',
+    'MT',
+    'MD',
+    'MC',
+    'ME',
+    'NL',
+    'MK',
+    'NO',
+    'PL',
+    'PT',
+    'RO',
+    'SM',
+    'RS',
+    'SK',
+    'SI',
+    'ES',
+    'SE',
+    'CH',
+    'TR',
+    'UA',
+    'GB',
+    'VA',
+    'BH',
+    'BN',
+    'CN',
+    'GE',
+    'IN',
+    'ID',
+    'IL',
+    'JP',
+    'JO',
+    'KW',
+    'LB',
+    'MY',
+    'MV',
+    'PH',
+    'QA',
+    'SA',
+    'SG',
+    'KR',
+    'LK',
+    'TH',
+    'AE',
+    'VN',
+    'DZ',
+    'EG',
+    'CI',
+    'MA',
+    'SC',
+    'ZA',
+    'CA',
+    'MX',
+    'US',
+    'AR',
+    'BR',
+    'CL',
+    'CO',
+    'EC',
+    'PE',
+    'UY',
+    'AU',
+    'NZ'
+  ]
