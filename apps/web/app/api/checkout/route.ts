@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/nextjs'
 import { createInitialOrder } from '@okkino/api/data-access-db'
 import { CheckoutProductSchema, DeliveryOptions } from '@okkino/shared/schema'
 import { getDeliveryPrice } from '../../_shared/utils'
+import { allowedCountries } from '@okkino/web/utils-shared'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
@@ -40,8 +41,7 @@ export async function POST(request: Request) {
         enabled: true
       },
       shipping_address_collection: {
-        allowed_countries:
-          checkout.delivery === DeliveryOptions.enum.standard ? ['MD'] : ['US', 'MD']
+        allowed_countries: allowedCountries
       },
       shipping_options: [getShippingDetails(checkout.delivery, price)],
       mode: 'payment',
