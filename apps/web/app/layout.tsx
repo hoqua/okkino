@@ -7,6 +7,7 @@ import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 import { CartIcon } from './components/menu/cart-icon'
 import { getProductCategories } from '@okkino/api/data-access-db'
 import { ALL_CATEGORY } from './shop/_components/constants'
+import { Analytics } from '@vercel/analytics/next'
 import '../styles/global.css'
 
 const lato = Lato({
@@ -60,6 +61,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             {children}
           </div>
         }
+        <Analytics />
       </body>
     </html>
   )
