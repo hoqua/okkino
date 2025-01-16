@@ -63,7 +63,8 @@
     "tslib": "^2.6.0",
     "uploadthing": "^6.5.2",
     "use-local-storage-safe": "^0.2.6",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zoomist": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",

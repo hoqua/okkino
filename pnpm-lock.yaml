@@ -119,6 +119,9 @@ importers:
       zod:
         specifier: ^3.21.4
         version: 3.22.4
+      zoomist:
+        specifier: ^2.1.1
+        version: 2.1.1
     devDependencies:
       '@babel/core':
         specifier: ^7.14.5
@@ -8137,6 +8140,9 @@ packages:
 
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+
+  zoomist@2.1.1:
+    resolution: {integrity: sha512-QSvR5LbeyG7zgixfDsS5OAXX0fBuc+3FGk9AM3N/USzgppHGVEEYQfufAqwGqQtIZJLsG1R2Rg8edtz3W3kFPw==}
 
 snapshots:
 
@@ -17901,3 +17907,5 @@ snapshots:
   yocto-queue@1.0.0: {}
 
   zod@3.22.4: {}
+
+  zoomist@2.1.1: {}
