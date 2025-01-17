@@ -15,23 +15,21 @@ export default function ZoomImageModal({
   setZoomImage: (props: ProductImageData | null) => void
 }) {
   const zoomistRef = useRef<HTMLDivElement>(null)
-  const zoomistInstanceRef = useRef<Zoomist | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const [imageLoaded, setImageLoaded] = useState(false)
 
   useEffect(() => {
-    if (imageLoaded && zoomistRef.current && !zoomistInstanceRef.current) {
-      zoomistInstanceRef.current = new Zoomist(zoomistRef.current, {
+    let zoomistInstance: Zoomist | null = null
+    if (imageLoaded && zoomistRef.current) {
+      zoomistInstance = new Zoomist(zoomistRef.current, {
         zoomer: true,
-        slider: true
       })
     }
 
     return () => {
-      if (zoomistInstanceRef.current) {
-        zoomistInstanceRef.current.destroy()
-        zoomistInstanceRef.current = null
+      if (zoomistInstance) {
+        zoomistInstance.destroy()
       }
     }
   }, [imageLoaded])
@@ -63,13 +61,14 @@ export default function ZoomImageModal({
                 blurDataURL={hexToDataUrl(img.bgColor)}
                 width={1080}
                 height={1610}
+                quality={100}
                 onLoad={() => setImageLoaded(true)}
               />
             </div>
           </div>
         </div>
         <div className="flex justify-end w-full">
-          <button className="mt-3 uppercase" onClick={() => setZoomImage(null)}>
+          <button className="mt-3 text-xs uppercase" onClick={() => setZoomImage(null)}>
             Back
           </button>
         </div>

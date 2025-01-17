@@ -1,10 +1,12 @@
 'use client'
 import { hexToDataUrl } from '@okkino/web/utils-shared'
 import type { Image as ProductImageData } from '@prisma/client'
+import dynamic from 'next/dynamic'
 
 import Image from 'next/image'
 import React, { useState } from 'react'
-import ZoomImageModal from './zoom-img-modal'
+
+const ZoomImageModal = dynamic(() => import('./zoom-img-modal'))
 
 const IMAGES_ON_SCREEN = 2
 
