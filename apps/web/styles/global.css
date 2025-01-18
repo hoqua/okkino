@@ -5,3 +5,7 @@
 .okkino-text-hover {
   @apply cursor-pointer hover:underline;
 }
+
+.zoom-cursor {
+  cursor: url('/static-images/zoom-plus.png'), auto;
+}
