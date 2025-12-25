@@ -46,7 +46,7 @@
     "chroma-js": "^2.4.2",
     "core-js": "^3.31.1",
     "negotiator": "^0.6.3",
-    "next": "^14.2.5",
+    "next": "14.2.35",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.14",
     "react": "18.2.0",
