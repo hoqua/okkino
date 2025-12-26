@@ -59,8 +59,8 @@ export async function sendOrderPlacedEmail(args: SendOrderArgs) {
     html: render(OrderPlaced(args))
   }
 
-  const transporter = await getTransporter(pass)
-  await transporter.sendMail(options)
+  const mailer = await getTransporter(pass)
+  await mailer.sendMail(options)
 }
 
 export async function sendDispatchedOrderEmail(args: DispatchOrderArgs) {
@@ -72,8 +72,8 @@ export async function sendDispatchedOrderEmail(args: DispatchOrderArgs) {
     html: render(OrderDispatched(args))
   }
 
-  const transporter = await getTransporter(pass)
-  await transporter.sendMail(options)
+  const mailer = await getTransporter(pass)
+  await mailer.sendMail(options)
 }
 
 export async function sendCancelOrderEmail(args: SendOrderArgs) {
@@ -85,8 +85,8 @@ export async function sendCancelOrderEmail(args: SendOrderArgs) {
     html: render(OrderCanceled(args))
   }
 
-  const transporter = await getTransporter(pass)
-  await transporter.sendMail(options)
+  const mailer = await getTransporter(pass)
+  await mailer.sendMail(options)
 }
 
 export async function sendEmailOrderNotification(args: OrderNotificationArgs) {
@@ -97,6 +97,6 @@ export async function sendEmailOrderNotification(args: OrderNotificationArgs) {
     html: render(OrderNotificationTemplate(args))
   }
 
-  const transporter = await getTransporter(args.pass)
-  await transporter.sendMail(options)
+  const mailer = await getTransporter(args.pass)
+  await mailer.sendMail(options)
 }

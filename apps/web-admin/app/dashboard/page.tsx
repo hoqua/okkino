@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getProducts } from '@okkino/api/data-access-db'
 import UpdateSiteBtn from './_components/update-site-btn'
-import { ColorCube } from '../../../web/app/components/common/color-cube'
+import { ColorCube } from './_components/color-cube'
 
 export default async function DashboardPage() {
   const products = await getProducts()

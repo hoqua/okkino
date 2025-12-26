@@ -25,7 +25,7 @@ export default function Modal({
             <div className="bg-white max-w-[500px] z-50 flex flex-col gap-2 p-5 mx-auto w-full relative rounded-lg">
               {children}
               <button className="btn w-full" onClick={() => setIsOpen(false)}>
-                {buttonCloseText ? buttonCloseText : 'Cancel'}
+                {buttonCloseText || 'Cancel'}
               </button>
             </div>
           </div>

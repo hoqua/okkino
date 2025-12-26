@@ -28,7 +28,7 @@ export default function RefundBtn({ order }: { order: Prisma.OrderGetPayload<any
       <div className="flex flex-col gap-10">
         <div className="text-center">
           {msg ? (
-            <p className={!refunded ? 'text-red-500' : ''}>{msg}</p>
+            <p className={refunded ? '' : 'text-red-500'}>{msg}</p>
           ) : (
             <p>Are you sure you want to refund money to customer?</p>
           )}
