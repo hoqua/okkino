@@ -30,9 +30,7 @@ export async function POST(req: NextRequest) {
         webEnv.stripe.endpointSecret
       )
     } catch {
-      return NextResponse.json(
-        { message: 'Webhook signature verification failed', success: false }
-      )
+      return NextResponse.json({ message: 'Webhook signature verification failed', success: false })
     }
 
     // Handle the checkout.session.completed event

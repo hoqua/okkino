@@ -16,7 +16,6 @@ export function CartIcon() {
             </span>
           </div>
         )}
-
         CART
       </div>
     </Link>
