@@ -2,6 +2,7 @@
 
 /dist
 /coverage
+pnpm-lock.yaml
 
 # Ignore all files that generated
 libs/web/data-access-graphql/src/lib/data-access.gql.gen.ts
