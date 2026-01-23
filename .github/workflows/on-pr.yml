@@ -21,6 +21,7 @@ jobs:
           cache: 'pnpm'
       - uses: nrwl/nx-set-shas@v3
       - run: pnpm install --frozen-lockfile
+      - run: npx prisma generate
 
       - run: npx nx format:check
       - run: npx nx affected --target=lint --parallel=3

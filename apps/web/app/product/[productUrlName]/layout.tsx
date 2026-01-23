@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { notFound } from 'next/navigation'
 import { getProduct, getProducts } from '@okkino/api/data-access-db'
 import ProductImages from './components/product-images'
 
@@ -10,6 +11,11 @@ interface IRootLayoutProps {
 export default async function RootLayout(props: IRootLayoutProps) {
   const { params, children } = props
   const product = await getProduct(decodeURI(params.productUrlName))
+
+  if (!product) {
+    notFound()
+  }
+
   const { images } = product
   const sortedImages = images.sort((a, b) => a.order - b.order)
 
