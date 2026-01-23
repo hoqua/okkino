@@ -3,9 +3,17 @@ import { CheckoutProduct } from '@okkino/shared/schema'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const NodeCache = require('node-cache')
 
-export const db = new PrismaClient({
-  datasourceUrl: process.env?.['POSTGRES_PRISMA_URL'] || ''
-})
+// Prisma singleton pattern for serverless environments (Vercel)
+// Prevents connection pool exhaustion by reusing the client across invocations
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
+
+export const db =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    datasourceUrl: process.env?.['POSTGRES_PRISMA_URL'] || ''
+  })
+
+globalForPrisma.prisma = db
 
 const cache = new NodeCache({ stdTTL: 1, checkperiod: 2 })
 
