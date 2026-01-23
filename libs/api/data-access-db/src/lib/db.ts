@@ -71,7 +71,7 @@ export async function getProducts(productCategory?: string) {
   return products as ProductWithImages[]
 }
 
-export async function getProduct(urlName: string) {
+export async function getProduct(urlName: string): Promise<ProductWithImages | null> {
   const key = 'product_' + urlName
   const fromCache = cache.get(key)
 
@@ -89,7 +89,7 @@ export async function getProduct(urlName: string) {
 
   cache.set(key, product)
 
-  return product as ProductWithImages
+  return product
 }
 
 export async function getProductCategories() {

@@ -1,4 +1,5 @@
 import { AddToCartSection } from './components/add-to-card-section'
+import { notFound } from 'next/navigation'
 import { getProduct, getProductLength } from '@okkino/api/data-access-db'
 import { Metadata } from 'next'
 import { Product, WithContext } from 'schema-dts'
@@ -10,6 +11,10 @@ interface IProductPageProps {
 
 export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {
   const product = await getProduct(decodeURI(params.productUrlName))
+
+  if (!product) {
+    return {}
+  }
 
   return {
     metadataBase: new URL('https://www.studiookkino.com/'),
@@ -25,8 +30,11 @@ export async function generateMetadata({ params }: IProductPageProps): Promise<M
 
 export default async function Page({ params }: IProductPageProps) {
   const productLengths = await getProductLength()
-
   const product = await getProduct(decodeURI(params.productUrlName))
+
+  if (!product) {
+    notFound()
+  }
 
   const {
     price,
