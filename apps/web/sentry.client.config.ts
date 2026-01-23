@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/nextjs'
 
 Sentry.init({
-  dsn: process.env.NODE_ENV === 'production'
-    ? 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288'
-    : undefined,
+  dsn:
+    process.env.NODE_ENV === 'production'
+      ? 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288'
+      : undefined,
   // Replay may only be enabled for the client-side
   integrations: [Sentry.replayIntegration()],
 
