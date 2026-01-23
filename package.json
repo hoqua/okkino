@@ -119,5 +119,12 @@
   },
   "prisma": {
     "schema": "libs/api/data-access-db/src/lib/schema.prisma"
-  }
+  },
+  "browserslist": [
+    "Chrome >= 92",
+    "Firefox >= 91",
+    "Safari >= 15.4",
+    "Edge >= 92",
+    "not dead"
+  ]
 }
