@@ -2,10 +2,15 @@ import { Lato } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
+import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
 import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
-import { CartIcon } from './components/menu/cart-icon'
+
+const CartIcon = dynamic(() => import('./components/menu/cart-icon').then((mod) => mod.CartIcon), {
+  ssr: false,
+  loading: () => <span className="text-xs uppercase text-black">CART</span>
+})
 import { getProductCategories } from '@okkino/api/data-access-db'
 import { ALL_CATEGORY } from './shop/_components/constants'
 import { Analytics } from '@vercel/analytics/next'
@@ -63,7 +68,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           </div>
         }
         <Analytics />
-        <Script id="facebook-pixel" strategy="afterInteractive">
+        <Script id="facebook-pixel" strategy="lazyOnload">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

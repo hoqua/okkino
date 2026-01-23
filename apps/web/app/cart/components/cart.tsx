@@ -21,6 +21,10 @@ export default function Cart() {
   const [cart, setCart] = useCart()
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     getStripe().catch((error) => {
       console.error('Error loading Stripe', error)
       throw error
