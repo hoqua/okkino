@@ -9,3 +9,11 @@
 .zoom-cursor {
   cursor: url('/static-images/zoom-plus.png'), auto;
 }
+
+.zoomist-container {
+  cursor: grab;
+}
+
+.zoomist-container:active {
+  cursor: grabbing;
+}

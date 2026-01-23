@@ -4,7 +4,6 @@ import { FC, useState } from 'react'
 import { ProductPropsSelector } from './product-props-selector'
 import Link from 'next/link'
 import { RouteName } from '../../../components/common/constants'
-import { useRouter } from 'next/navigation'
 import './module.css'
 import { OrderProduct } from '@okkino/shared/schema'
 import { useCart } from '../../../_shared/hooks'
@@ -12,6 +11,14 @@ import { compareCartProducts } from '../../../_shared/utils'
 import { Price } from '../../../_shared/price'
 import { Button } from '../../../_shared/button'
 import { ColorCube } from '../../../components/common/color-cube'
+import dynamic from 'next/dynamic'
+
+const CartPopup = dynamic(
+  () => import('../../../_shared/cart-popup').then((mod) => mod.CartPopup),
+  {
+    ssr: false
+  }
+)
 
 export const AddToCartSection: FC<IProps> = (props) => {
   const {
@@ -35,8 +42,8 @@ export const AddToCartSection: FC<IProps> = (props) => {
     value: availableColors.length <= 1 ? availableColors[0].name : '',
     hasError: false
   })
+  const [popupProduct, setPopupProduct] = useState<OrderProduct | null>(null)
   const [, setCart] = useCart()
-  const router = useRouter()
 
   const isError = selectedSize.hasError || selectedColor.hasError
 
@@ -47,114 +54,103 @@ export const AddToCartSection: FC<IProps> = (props) => {
       return
     }
 
+    const newProduct = {
+      id: id,
+      name: productName,
+      price: price,
+      size: selectedSize.value,
+      length: selectedLength.value,
+      color: availableColors.find((c) => c.name === selectedColor.value) || {
+        name: '',
+        value: ''
+      },
+      discountPrice: discountPrice,
+      imageUrl: imageUrl,
+      quantity: 1,
+      urlName
+    } satisfies OrderProduct
+
     setCart((prevState) => {
       const newCart = [...prevState]
-      const newProduct = {
-        id: id,
-        name: productName,
-        price: price,
-        size: selectedSize.value,
-        length: selectedLength.value,
-        color: availableColors.find((c) => c.name === selectedColor.value) || {
-          name: '',
-          value: ''
-        },
-        discountPrice: discountPrice,
-        imageUrl: imageUrl,
-        quantity: 1,
-        urlName
-      } satisfies OrderProduct
-      // TODO: FIX quantity
-      const product = newCart.find((p) => compareCartProducts(p, newProduct))
+      const existingProduct = newCart.find((p) => compareCartProducts(p, newProduct))
 
-      if (product) {
-        product.quantity += 1
+      if (existingProduct) {
+        existingProduct.quantity += 1
       } else {
-        newCart.push({
-          id: id,
-          name: productName,
-          price: price,
-          size: selectedSize.value,
-          length: selectedLength.value,
-          color: availableColors.find((c) => c.name === selectedColor.value) || {
-            name: '',
-            value: ''
-          },
-          discountPrice: discountPrice,
-          imageUrl: imageUrl,
-          quantity: 1,
-          urlName
-        } satisfies OrderProduct)
+        newCart.push(newProduct)
       }
 
       return newCart
     })
 
-    router.push('/' + RouteName.cart)
+    setPopupProduct(newProduct)
   }
 
   return (
-    <section className={'flex flex-col gap-6 ' + (isError ? 'shake' : '')}>
-      <ProductPropsSelector<Size>
-        label={t.size}
-        items={productSizes}
-        selected={selectedSize.value}
-        onSelect={(size) => setSelectedSize({ value: size, hasError: false })}
-        hasErrors={selectedSize.hasError}
-        actionItem={
-          <Link
-            href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.sizeGuide}
-            className="okkino-text-hover text-xs uppercase"
-          >
-            {t.size_guide}
-          </Link>
-        }
-      />
-      {hasLength && (
-        <ProductPropsSelector<Length>
-          label={t.length}
-          items={productLengths}
-          selected={selectedLength.value}
-          hasErrors={selectedLength.hasError}
-          onSelect={(length) => setSelectedLength({ value: length, hasError: false })}
+    <>
+      {popupProduct && <CartPopup product={popupProduct} onClose={() => setPopupProduct(null)} />}
+      <section className={'flex flex-col gap-6 ' + (isError ? 'shake' : '')}>
+        <ProductPropsSelector<Size>
+          label={t.size}
+          items={productSizes}
+          selected={selectedSize.value}
+          onSelect={(size) => setSelectedSize({ value: size, hasError: false })}
+          hasErrors={selectedSize.hasError}
+          actionItem={
+            <Link
+              href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.sizeGuide}
+              className="okkino-text-hover text-xs uppercase"
+            >
+              {t.size_guide}
+            </Link>
+          }
         />
-      )}
+        {hasLength && (
+          <ProductPropsSelector<Length>
+            label={t.length}
+            items={productLengths}
+            selected={selectedLength.value}
+            hasErrors={selectedLength.hasError}
+            onSelect={(length) => setSelectedLength({ value: length, hasError: false })}
+          />
+        )}
 
-      <ProductPropsSelector<Color>
-        label={t.color}
-        items={availableColors}
-        selected={selectedColor.value}
-        hasErrors={selectedColor.hasError}
-        onSelect={(colorName) => setSelectedColor({ value: colorName, hasError: false })}
-        getSelectionComponent={(colorName, selectedColorName) => {
-          const color = availableColors.find((c) => c.name === colorName)
-          return (
-            <ColorCube
-              color={color || { name: '', value: '' }}
-              size="lg"
-              selected={selectedColorName === color?.name}
-            />
-          )
-        }}
-      />
+        <ProductPropsSelector<Color>
+          label={t.color}
+          items={availableColors}
+          selected={selectedColor.value}
+          hasErrors={selectedColor.hasError}
+          onSelect={(colorName) => setSelectedColor({ value: colorName, hasError: false })}
+          getSelectionComponent={(colorName, selectedColorName) => {
+            const color = availableColors.find((c) => c.name === colorName)
+            return (
+              <ColorCube
+                color={color || { name: '', value: '' }}
+                size="lg"
+                selected={selectedColorName === color?.name}
+              />
+            )
+          }}
+        />
 
-      <div className="h-2"></div>
+        <div className="h-2"></div>
 
-      <div className="flex flex-col  justify-between gap-4 xl:flex-row xl:items-center ">
-        <Price price={price} discountPrice={discountPrice} />
+        <div className="flex flex-col  justify-between gap-4 xl:flex-row xl:items-center ">
+          <Price price={price} discountPrice={discountPrice} />
 
-        <div className="flex items-center xl:flex-row-reverse gap-5">
-          <Button label={t.add_to_cart} onClick={() => handleAddToCard()} />
+          <div className="flex items-center xl:flex-row-reverse gap-5">
+            <Button label={t.add_to_cart} onClick={() => handleAddToCard()} />
 
-          <Link
-            className="text-black text-xs font-normal uppercase hover:underline"
-            href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.shippingGuide}
-          >
-            {t.shipping_guide}
-          </Link>
+            <Link
+              className="text-black text-xs font-normal uppercase hover:underline"
+              href={'/' + RouteName.product + '/' + urlName + '/' + RouteName.shippingGuide}
+            >
+              {t.shipping_guide}
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 

@@ -34,14 +34,16 @@ export const DesktopSubmenu: FC<IProps> = (props) => {
 
       <div
         className={
-          'transition-{opacity} absolute  h-0 w-full duration-300 ease-in-out' + ' ' + activeClasses
+          'transition-{opacity} absolute duration-300 ease-in-out bg-white p-4 -ml-4' +
+          ' ' +
+          activeClasses
         }
       >
         <ul>
           {itemsList.map((itemKeyName) => (
             <li
               key={itemKeyName}
-              className="transition-color hover:text-gray-600 relative  mb-4 mt-4 text-xs uppercase tracking-wide"
+              className="transition-color hover:text-gray-600 relative mb-4 mt-4 text-xs uppercase tracking-wide first:mt-0 last:mb-0"
             >
               <Link href={getNavigationPath(itemKeyName)}>{ProductCategories[itemKeyName]}</Link>
             </li>

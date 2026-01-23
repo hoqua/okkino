@@ -9,7 +9,7 @@ import { allowedCountries } from '@okkino/web/utils-shared'
 
 Sentry.init({
   dsn: 'https://01f8c52ebd9b45fd8f645b61599970fd@o4505696827932672.ingest.sentry.io/4505696829964288',
-  tracesSampleRate: 1
+  tracesSampleRate: 0.1
 })
 
 const stripe = new Stripe(webEnv.stripe.secretKey, { apiVersion: '2022-11-15' })

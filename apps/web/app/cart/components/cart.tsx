@@ -1,8 +1,6 @@
 'use client'
 
 import CartEmpty from './cart-empty'
-import Image from 'next/image'
-import { Price } from '../../_shared/price'
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState, useTransition } from 'react'
 import getStripe from '../utils'
@@ -13,12 +11,17 @@ import { Button } from '../../_shared/button'
 import { compareCartProducts, getDeliveryPrice } from '../../_shared/utils'
 import { RouteName } from '../../components/common/constants'
 import Link from 'next/link'
+import { CartProductCard } from '../../_shared/cart-product-card'
 
 export default function Cart() {
   const [isPending, startTransition] = useTransition()
   const { ref, inView } = useInView({ threshold: 0.99 })
   const [delivery, setDelivery] = useState<DeliveryOptions>(DeliveryOptions.enum.standard)
   const [cart, setCart] = useCart()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     getStripe().catch((error) => {
@@ -70,57 +73,11 @@ export default function Cart() {
       <div className="grid gap-14 md:gap-24 lg:w-full lg:auto-rows-min">
         {/*PRODUCTS PAGE GRID*/}
         {cart.map((product) => (
-          <div key={JSON.stringify(product)} className="grid grid-cols-[1fr_2fr] gap-10 md:gap-20">
-            {/* PRODUCT LEFT COL*/}
-            <div className="flex flex-col gap-5">
-              <h3 className="text-xs uppercase text-black md:hidden">{product.name}</h3>
-
-              <div className="relative aspect-[120/179]">
-                <Image src={product.imageUrl} alt={product.name} fill />
-              </div>
-            </div>
-
-            {/*PRODUCT DESCRIPTION*/}
-            <div className="flex auto-rows-max flex-col gap-5">
-              {/*PRODUCT NAME + REMOVE COL*/}
-              <div className="grid auto-rows-max grid-cols-[1fr_2fr] items-center gap-y-2 last:align-bottom">
-                <span>
-                  <h3 className=" hidden text-xs uppercase text-black md:inline">{product.name}</h3>
-                </span>
-                <div className="flex w-full justify-end">
-                  <button
-                    className="okkino-text-hover text-xs uppercase text-black"
-                    onClick={() => removeProductFromCart(product)}
-                  >
-                    {t.product.remove}
-                  </button>
-                </div>
-              </div>
-              {/*PRODUCT INFO*/}
-              <div className="grid h-full auto-rows-max grid-cols-[1fr_2fr] items-center gap-y-2 last:align-bottom">
-                {/*col-2*/}
-                <span className="text-xs uppercase text-gray-600">{t.product.color}</span>
-                <span className="text-sm font-bold uppercase text-black">{product.color.name}</span>
-                {/*col-2*/}
-                <span className="text-xs uppercase text-gray-600">{t.product.size}</span>
-                <span className="text-sm font-bold uppercase text-black">{product.size}</span>
-                {/*col-2*/}
-                <span className="text-xs uppercase text-gray-600">{t.product.length}</span>
-                <span className="text-sm font-bold uppercase text-black">{product.length}</span>
-                {/*col-2*/}
-                <span className="text-xs uppercase text-gray-600">{t.product.quantity}</span>
-                <span className="text-sm font-bold uppercase text-black">{product.quantity}</span>
-              </div>
-              {/*col-2*/}
-              <div className="grid grid-cols-[1fr_2fr]">
-                <span className="text-sm uppercase text-black">{t.total}</span>
-                <Price
-                  price={product.price * product.quantity}
-                  discountPrice={product.discountPrice * product.quantity}
-                />
-              </div>
-            </div>
-          </div>
+          <CartProductCard
+            key={JSON.stringify(product)}
+            product={product}
+            onRemove={removeProductFromCart}
+          />
         ))}
       </div>
 
@@ -223,13 +180,6 @@ export default function Cart() {
 }
 
 const t = {
-  product: {
-    size: 'Size',
-    color: 'Color',
-    length: 'Length',
-    remove: 'Remove',
-    quantity: 'q_ty'
-  },
   overview: {
     title: 'Order overview',
     item: 'item',

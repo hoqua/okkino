@@ -64,7 +64,7 @@ export default function ZoomImageModal({
                 blurDataURL={hexToDataUrl(img.bgColor)}
                 width={1080}
                 height={1610}
-                quality={100}
+                quality={90}
                 onLoad={() => setImageLoaded(true)}
               />
             </div>

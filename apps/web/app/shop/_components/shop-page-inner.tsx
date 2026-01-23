@@ -51,6 +51,7 @@ export default async function ShopPageInner(props: IProductPageProps) {
                   className={'index absolute left-0 top-0 z-[-1] hidden lg:inline '}
                   blurDataURL={hexToDataUrl(mainImage.bgColor)}
                   title={hoverImage.title}
+                  loading="lazy"
                   fill
                 />
               )}
