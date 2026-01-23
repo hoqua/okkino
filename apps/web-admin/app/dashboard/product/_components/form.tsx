@@ -14,7 +14,6 @@ import { saveProduct } from '../../../action'
 import { PRODUCT_CATEGORIES, PRODUCT_COLORS, PRODUCT_SIZES } from '@okkino/web/utils-shared'
 
 export default function ProductForm({ product }: { product?: ProductWithImages }) {
-  console.log('product', product)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -37,7 +36,6 @@ export default function ProductForm({ product }: { product?: ProductWithImages }
       })
     }
   }
-  console.log('form', getValues())
 
   return (
     <div>
