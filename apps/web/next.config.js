@@ -25,6 +25,18 @@ const sentryWebpackPluginOptions = {
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  headers: async () => [
+    {
+      // Static assets - aggressive caching
+      source: '/static-images/:path*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable'
+        }
+      ]
+    }
+  ],
   sentry: {
     disableServerWebpackPlugin: true,
     disableClientWebpackPlugin: true,

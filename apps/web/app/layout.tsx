@@ -19,7 +19,6 @@ const CartIcon = dynamic(() => import('./components/menu/cart-icon').then((mod) 
   loading: () => <span className="text-xs uppercase text-black">CART</span>
 })
 import { getProductCategories } from '@okkino/api/data-access-db'
-import { ALL_CATEGORY } from './shop/_components/constants'
 import { Analytics } from '@vercel/analytics/next'
 import '../styles/global.css'
 
@@ -29,19 +28,6 @@ const lato = Lato({
   style: 'normal',
   subsets: ['latin']
 })
-
-export async function generateStaticParams() {
-  const productCategories = await getProductCategories()
-  productCategories.push({ id: ALL_CATEGORY, name: ALL_CATEGORY })
-  const categoryNames = productCategories.map((category) => category.name)
-
-  const params = []
-  for (const product of categoryNames) {
-    params.push({ productUrlName: product })
-  }
-
-  return params
-}
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const productCategories = await getProductCategories()
