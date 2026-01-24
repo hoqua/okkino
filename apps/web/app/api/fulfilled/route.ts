@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
+
+export const dynamic = 'force-dynamic'
 import { buffer } from 'node:stream/consumers'
 
 import Stripe from 'stripe'

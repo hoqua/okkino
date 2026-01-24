@@ -1,6 +1,8 @@
 import Stripe from 'stripe'
 import { webEnv } from '@okkino/web/utils-env'
 import { NextResponse } from 'next/server'
+
+export const dynamic = 'force-dynamic'
 import * as Sentry from '@sentry/nextjs'
 import { createInitialOrder } from '@okkino/api/data-access-db'
 import { CheckoutProductSchema, DeliveryOptions } from '@okkino/shared/schema'

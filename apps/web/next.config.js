@@ -25,7 +25,7 @@ const sentryWebpackPluginOptions = {
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-    sentry: {
+  sentry: {
     disableServerWebpackPlugin: true,
     disableClientWebpackPlugin: true,
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers
