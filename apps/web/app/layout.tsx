@@ -14,10 +14,13 @@ export const metadata: Metadata = {
 import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 
-const CartIcon = nextDynamic(() => import('./components/menu/cart-icon').then((mod) => mod.CartIcon), {
-  ssr: false,
-  loading: () => <span className="text-xs uppercase text-black">CART</span>
-})
+const CartIcon = nextDynamic(
+  () => import('./components/menu/cart-icon').then((mod) => mod.CartIcon),
+  {
+    ssr: false,
+    loading: () => <span className="text-xs uppercase text-black">CART</span>
+  }
+)
 import { getProductCategories } from '@okkino/api/data-access-db'
 import { Analytics } from '@vercel/analytics/next'
 import '../styles/global.css'
