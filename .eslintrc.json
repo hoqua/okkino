@@ -5,7 +5,7 @@
     "sourceType": "module"
   },
   "ignorePatterns": ["**/*"],
-  "plugins": ["@typescript-eslint", "@nrwl/nx", "unicorn", "prettier", "unused-imports"],
+  "plugins": ["@typescript-eslint", "@nx", "unicorn", "prettier", "unused-imports"],
   "overrides": [
     {
       "extends": [
@@ -41,7 +41,7 @@
         ],
         "@typescript-eslint/no-explicit-any": ["error"],
         "@typescript-eslint/no-shadow": ["error"],
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -66,12 +66,12 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
+      "extends": ["plugin:@nx/typescript"],
       "rules": {}
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nx/javascript"],
       "rules": {}
     },
     {
