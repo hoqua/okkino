@@ -10,3 +10,4 @@ libs/web/data-access-graphql/src/lib/types.ts
 libs/api/generated-db-types/src/index.ts
 
 /.nx/cache
+/.nx/workspace-data

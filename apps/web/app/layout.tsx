@@ -1,9 +1,16 @@
+import { Metadata } from 'next'
 import { Lato } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
+
+export const metadata: Metadata = {
+  other: {
+    'facebook-domain-verification': 'n6a8hudb0rzuys9itcm3o1ji5xrru2'
+  }
+}
 import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 
