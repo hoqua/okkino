@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { getHomeImages } from '@okkino/api/data-access-db'
+
+export const dynamic = 'force-static'
 import { Metadata } from 'next'
 import { hexToDataUrl } from '@okkino/web/utils-shared'
 

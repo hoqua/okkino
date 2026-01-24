@@ -4,6 +4,7 @@ import { getProduct, getProductLength } from '@okkino/api/data-access-db'
 import { Metadata } from 'next'
 import { Product, WithContext } from 'schema-dts'
 import { PRODUCT_SIZES, TEXT_EDITOR_CLASSES } from '@okkino/web/utils-shared'
+import { ScrollToTop } from './components/scroll-to-top'
 
 interface IProductPageProps {
   params: { productUrlName: string }
@@ -76,6 +77,7 @@ export default async function Page({ params }: IProductPageProps) {
 
   return (
     <section>
+      <ScrollToTop />
       {/* Add JSON-LD to your page */}
       <script
         type="application/ld+json"
