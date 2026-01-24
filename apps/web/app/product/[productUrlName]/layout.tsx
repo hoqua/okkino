@@ -56,3 +56,6 @@ export async function generateStaticParams() {
   }
   return params
 }
+
+export const dynamicParams = false
+export const dynamic = 'force-static'

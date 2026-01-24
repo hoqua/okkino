@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
+export const dynamic = 'force-static'
+
 export default function Page() {
   return (
     <div className="grid gap-10 uppercase text-xs pb-10 3xl:grid-cols-[5fr_4fr] xl:grid-cols-[4fr_5fr]">

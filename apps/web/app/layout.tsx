@@ -3,7 +3,7 @@ import { Lato } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
@@ -14,14 +14,18 @@ export const metadata: Metadata = {
 import MobileMenu from './components/menu/mobile-menu/mobile-menu'
 import { DesktopMenu } from './components/menu/desktop-menu/desktop-menu'
 
-const CartIcon = dynamic(() => import('./components/menu/cart-icon').then((mod) => mod.CartIcon), {
-  ssr: false,
-  loading: () => <span className="text-xs uppercase text-black">CART</span>
-})
+const CartIcon = nextDynamic(
+  () => import('./components/menu/cart-icon').then((mod) => mod.CartIcon),
+  {
+    ssr: false,
+    loading: () => <span className="text-xs uppercase text-black">CART</span>
+  }
+)
 import { getProductCategories } from '@okkino/api/data-access-db'
-import { ALL_CATEGORY } from './shop/_components/constants'
 import { Analytics } from '@vercel/analytics/next'
 import '../styles/global.css'
+
+export const dynamic = 'force-static'
 
 const lato = Lato({
   weight: ['400', '700'],
@@ -29,19 +33,6 @@ const lato = Lato({
   style: 'normal',
   subsets: ['latin']
 })
-
-export async function generateStaticParams() {
-  const productCategories = await getProductCategories()
-  productCategories.push({ id: ALL_CATEGORY, name: ALL_CATEGORY })
-  const categoryNames = productCategories.map((category) => category.name)
-
-  const params = []
-  for (const product of categoryNames) {
-    params.push({ productUrlName: product })
-  }
-
-  return params
-}
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const productCategories = await getProductCategories()

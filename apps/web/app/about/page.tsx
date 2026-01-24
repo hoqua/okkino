@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+export const dynamic = 'force-static'
+
 export default async function About() {
   return (
     <div className="3xl:grid-cols-[5fr_4fr] grid gap-10 xl:grid-cols-[4fr_5fr]">
