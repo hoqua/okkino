@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { RouteName } from '../../../components/common/constants'
 
+export const dynamic = 'force-static'
+
 interface IProductPageProps {
   params: { productUrlName: string }
 }
